@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "certifi>=2025.8.3",
+    "nba-api>=1.10.0",
     "pandas>=2.3.2",
     "psutil>=7.0.0",
     "selenium>=4.35.0",
