@@ -1,0 +1,1828 @@
+[
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.244695",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_accuracy_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.244720",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_accuracy_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.244734",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "shooting_overall_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.244749",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_frequency_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.244762",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_frequency_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.244775",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "shooting_overall_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.244787",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "shooting_overall_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.244800",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_frequency_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.244813",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "shooting_overall_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_transition_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/team_transition/team_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.244826",
+    "parsed_info": {
+      "stat_type": "on_off_team_transition",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_transition_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.244838",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_accuracy_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.244851",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_accuracy_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_transition_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/team_transition/team_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.244864",
+    "parsed_info": {
+      "stat_type": "on_off_team_transition",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_transition_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.244876",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "shooting_overall_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_transition_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/team_transition/team_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.244889",
+    "parsed_info": {
+      "stat_type": "on_off_team_transition",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_transition_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.244902",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_accuracy_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.244914",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "shooting_overall_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.244927",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_accuracy_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.244939",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_accuracy_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.244952",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "defense_and_rebounding_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.244964",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "defense_and_rebounding_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.244976",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_accuracy_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.244990",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "defense_and_rebounding_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245002",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "shooting_frequency_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245014",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "shooting_frequency_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.245027",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "offensive_overview_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.245039",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_accuracy_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.245051",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "offensive_overview_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245063",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "shooting_frequency_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.245074",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "offensive_overview_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245087",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.245099",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "foul_drawing_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.245111",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "shooting_accuracy_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245124",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.245136",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "offensive_overview_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245148",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_frequency_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.245160",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "foul_drawing_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.245174",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "shooting_accuracy_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.245189",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "shooting_accuracy_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.245203",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "defense_and_rebounding_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.245216",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_efficiency_&_four_factors_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245229",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "shooting_frequency_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.245242",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_shooting_accuracy_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245255",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_shooting_frequency_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245268",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_frequency_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245280",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_frequency_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.245292",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "shooting_accuracy_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245305",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_frequency_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.245318",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_shooting_accuracy_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245330",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_shooting_frequency_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.245343",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_transition_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.245394",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_efficiency_&_four_factors_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.245408",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_efficiency_&_four_factors_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.245420",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_transition_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.245433",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_efficiency_&_four_factors_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.245445",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_efficiency_&_four_factors_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.245465",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_transition_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.245477",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "foul_drawing_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.245490",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_transition_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245502",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "shooting_frequency_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_transition_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/team_transition/team_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.245515",
+    "parsed_info": {
+      "stat_type": "on_off_team_transition",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_transition_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.245527",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "foul_drawing_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.245540",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "on_off_efficiency_&_four_factors_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245552",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.245564",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "shooting_accuracy_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.245576",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "foul_drawing_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.245589",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_transition_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245600",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "shooting_frequency_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245613",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.245625",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "shooting_accuracy_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245637",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245650",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245662",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_frequency_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.245674",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "foul_drawing_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.245686",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "offensive_overview_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245699",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.245711",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "defense_and_rebounding_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.245723",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_frequency_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245736",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.245747",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "offensive_overview_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245760",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.245772",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "defense_and_rebounding_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.245784",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.246258",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_accuracy_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.247079",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_accuracy_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.247728",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "shooting_overall_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.248487",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_frequency_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.249307",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_frequency_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.250009",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "shooting_overall_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.250532",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "shooting_overall_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.251162",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_frequency_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.251954",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "shooting_overall_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_transition_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/team_transition/team_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.252544",
+    "parsed_info": {
+      "stat_type": "on_off_team_transition",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_transition_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.253068",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_accuracy_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.253567",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_accuracy_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_transition_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/team_transition/team_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.254213",
+    "parsed_info": {
+      "stat_type": "on_off_team_transition",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_transition_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.254677",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "shooting_overall_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_transition_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/team_transition/team_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.255085",
+    "parsed_info": {
+      "stat_type": "on_off_team_transition",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_transition_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.255542",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_accuracy_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_overall_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/shooting_overall/shooting_overall.csv",
+    "timestamp": "2025-08-23T22:47:31.255962",
+    "parsed_info": {
+      "stat_type": "shooting_overall",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "shooting_overall_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.256373",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_accuracy_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.256829",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_accuracy_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.257217",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "defense_and_rebounding_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.257659",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "defense_and_rebounding_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.258111",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_shooting_accuracy_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.258678",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "defense_and_rebounding_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.259269",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "shooting_frequency_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.259711",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "shooting_frequency_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.260128",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "offensive_overview_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_accuracy_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/on_off/team_shooting_accuracy/team_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.260621",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_accuracy_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.261261",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "offensive_overview_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.261790",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "shooting_frequency_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.262255",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "offensive_overview_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.262812",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.263247",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "foul_drawing_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.263668",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "shooting_accuracy_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.264276",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.264764",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "offensive_overview_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.265204",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_frequency_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.265852",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "foul_drawing_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.266512",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "shooting_accuracy_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.267011",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "shooting_accuracy_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.267634",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "defense_and_rebounding_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.268123",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_efficiency_&_four_factors_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.268640",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "shooting_frequency_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.269076",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_shooting_accuracy_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.269663",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_shooting_frequency_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.270191",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_frequency_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.270843",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_frequency_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.271493",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "shooting_accuracy_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.272101",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_shooting_frequency_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_accuracy_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/opponent_shooting_accuracy/opponent_shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.272753",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_shooting_accuracy_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_shooting_frequency_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/opponent_shooting_frequency/opponent_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.273588",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_shooting_frequency",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_shooting_frequency_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.274202",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_transition_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.274842",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_efficiency_&_four_factors_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.275456",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_efficiency_&_four_factors_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.276025",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_transition_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.276781",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_efficiency_&_four_factors_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.277656",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_efficiency_&_four_factors_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.278261",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_transition_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.278859",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "foul_drawing_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.279476",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_transition_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.280007",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "shooting_frequency_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_transition_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/team_transition/team_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.280496",
+    "parsed_info": {
+      "stat_type": "on_off_team_transition",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_transition_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.281078",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "foul_drawing_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_efficiency_&_four_factors_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/on_off/efficiency_four_factors/efficiency_four_factors.csv",
+    "timestamp": "2025-08-23T22:47:31.281686",
+    "parsed_info": {
+      "stat_type": "on_off_efficiency_&_four_factors",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "on_off_efficiency_&_four_factors_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.282330",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.282861",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "shooting_accuracy_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.283346",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "foul_drawing_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_transition_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/opponent_transition/opponent_transition.csv",
+    "timestamp": "2025-08-23T22:47:31.283947",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_transition",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_opponent_transition_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_frequency_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/shooting_frequency/shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.284439",
+    "parsed_info": {
+      "stat_type": "shooting_frequency",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "shooting_frequency_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.284950",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/shooting_accuracy_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/shooting_accuracy/shooting_accuracy.csv",
+    "timestamp": "2025-08-23T22:47:31.285457",
+    "parsed_info": {
+      "stat_type": "shooting_accuracy",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "shooting_accuracy_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.286002",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2024_25_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.286642",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.287601",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_frequency_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/foul_drawing_2022_23_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/playoffs/foul_drawing/foul_drawing.csv",
+    "timestamp": "2025-08-23T22:47:31.288230",
+    "parsed_info": {
+      "stat_type": "foul_drawing",
+      "season": "2022-23",
+      "season_type": "playoffs",
+      "original_filename": "foul_drawing_2022_23_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.288883",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "offensive_overview_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_opponent_halfcourt_&_putbacks_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/opponent_halfcourt_putbacks/opponent_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.289432",
+    "parsed_info": {
+      "stat_type": "on_off_opponent_halfcourt_&_putbacks",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_opponent_halfcourt_&_putbacks_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2024_25_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/playoffs/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.290181",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2024-25",
+      "season_type": "playoffs",
+      "original_filename": "defense_and_rebounding_2024_25_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_shooting_frequency_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/on_off/team_shooting_frequency/team_shooting_frequency.csv",
+    "timestamp": "2025-08-23T22:47:31.290787",
+    "parsed_info": {
+      "stat_type": "on_off_team_shooting_frequency",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "on_off_team_shooting_frequency_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2022_23_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2022-23/regular_season/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.291404",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2022-23",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2022_23_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/offensive_overview_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/offensive_overview/offensive_overview.csv",
+    "timestamp": "2025-08-23T22:47:31.292062",
+    "parsed_info": {
+      "stat_type": "offensive_overview",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "offensive_overview_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2023_24_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/regular_season/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.292567",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2023-24",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2023_24_regular_season.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/defense_and_rebounding_2023_24_playoffs.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2023-24/playoffs/defense_rebounding/defense_rebounding.csv",
+    "timestamp": "2025-08-23T22:47:31.293195",
+    "parsed_info": {
+      "stat_type": "defense_and_rebounding",
+      "season": "2023-24",
+      "season_type": "playoffs",
+      "original_filename": "defense_and_rebounding_2023_24_playoffs.csv"
+    }
+  },
+  {
+    "source": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data/on_off_team_halfcourt_&_putbacks_2024_25_regular_season.csv",
+    "target": "/Users/diyagamah/Documents/nba_props_model/data/ctg_data_organized/players/2024-25/regular_season/on_off/team_halfcourt_putbacks/team_halfcourt_putbacks.csv",
+    "timestamp": "2025-08-23T22:47:31.293823",
+    "parsed_info": {
+      "stat_type": "on_off_team_halfcourt_&_putbacks",
+      "season": "2024-25",
+      "season_type": "regular_season",
+      "original_filename": "on_off_team_halfcourt_&_putbacks_2024_25_regular_season.csv"
+    }
+  }
+]
