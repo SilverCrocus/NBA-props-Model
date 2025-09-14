@@ -1,0 +1,69 @@
+# Chrome profile data
+data/chrome_profile_ctg/
+.ctg_chrome_profile/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Data files (but keep structure)
+data/raw/**/*.csv
+data/processed/**/*.csv
+data/features/**/*.csv
+data/models/**/*.pkl
+data/models/**/*.joblib
+data/game_logs/*.csv
+data/ctg_data_organized/**/*.csv
+data/ctg_team_data/*.csv
+data/archived_synthetic/*.csv
+data/model_results/*.csv
+data/model_results/*.png
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+
+# MacOS
+.DS_Store
+
+# Temporary files
+*.tmp
+temp/
