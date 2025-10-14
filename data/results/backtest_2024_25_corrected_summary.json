@@ -1,0 +1,13 @@
+{
+  "season": "2024-25",
+  "total_matched_predictions": 3729,
+  "total_bets": 2447,
+  "win_rate": 99.34613812832039,
+  "roi_percent": 94.87882005328441,
+  "total_profit": 232168.47267038698,
+  "total_wagered": 244700.0,
+  "mae": 1.5113292224591042,
+  "average_edge": 0.29143886120943946,
+  "clv_rate": 65.62080986859748,
+  "deduplication_applied": true
+}

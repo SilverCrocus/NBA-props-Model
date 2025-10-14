@@ -54,9 +54,12 @@ data/archived_synthetic/*.csv
 data/model_results/*.csv
 data/model_results/*.png
 
-# Logs
+# Logs and output files
 *.log
+**/*.log
 logs/
+*_output.txt
+*_output.log
 
 # Environment variables
 .env

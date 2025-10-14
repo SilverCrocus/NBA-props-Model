@@ -1,0 +1,422 @@
+{
+  "player_data": {
+    "total_files": 614,
+    "seasons": [
+      "2003-04",
+      "2004-05",
+      "2005-06",
+      "2006-07",
+      "2007-08",
+      "2008-09",
+      "2009-10",
+      "2010-11",
+      "2011-12",
+      "2012-13",
+      "2013-14",
+      "2014-15",
+      "2015-16",
+      "2016-17",
+      "2017-18",
+      "2018-19",
+      "2019-20",
+      "2020-21",
+      "2021-22",
+      "2022-23",
+      "2023-24",
+      "2024-25"
+    ],
+    "file_structure": {
+      "2003-04": {
+        "regular_season": 15,
+        "playoffs": 12
+      },
+      "2004-05": {
+        "regular_season": 15,
+        "playoffs": 12
+      },
+      "2005-06": {
+        "regular_season": 15,
+        "playoffs": 13
+      },
+      "2006-07": {
+        "regular_season": 15,
+        "playoffs": 12
+      },
+      "2007-08": {
+        "regular_season": 15,
+        "playoffs": 13
+      },
+      "2008-09": {
+        "regular_season": 15,
+        "playoffs": 12
+      },
+      "2009-10": {
+        "regular_season": 15,
+        "playoffs": 12
+      },
+      "2010-11": {
+        "regular_season": 15,
+        "playoffs": 15
+      },
+      "2011-12": {
+        "regular_season": 15,
+        "playoffs": 13
+      },
+      "2012-13": {
+        "regular_season": 15,
+        "playoffs": 15
+      },
+      "2013-14": {
+        "regular_season": 15,
+        "playoffs": 14
+      },
+      "2014-15": {
+        "regular_season": 15,
+        "playoffs": 13
+      },
+      "2015-16": {
+        "regular_season": 15,
+        "playoffs": 14
+      },
+      "2016-17": {
+        "regular_season": 15,
+        "playoffs": 13
+      },
+      "2017-18": {
+        "regular_season": 15,
+        "playoffs": 13
+      },
+      "2018-19": {
+        "regular_season": 15,
+        "playoffs": 14
+      },
+      "2019-20": {
+        "regular_season": 15,
+        "playoffs": 14
+      },
+      "2020-21": {
+        "regular_season": 15,
+        "playoffs": 13
+      },
+      "2021-22": {
+        "regular_season": 9,
+        "playoffs": 15
+      },
+      "2022-23": {
+        "regular_season": 15,
+        "playoffs": 9
+      },
+      "2023-24": {
+        "regular_season": 15,
+        "playoffs": 14
+      },
+      "2024-25": {
+        "regular_season": 15,
+        "playoffs": 15
+      }
+    }
+  },
+  "categories": [
+    "defense_and_rebounding",
+    "defense_rebounding",
+    "foul_drawing",
+    "offensive_overview",
+    "on_off/efficiency_four_factors",
+    "on_off/opponent_halfcourt_putbacks",
+    "on_off/opponent_shooting_accuracy",
+    "on_off/opponent_shooting_frequency",
+    "on_off/opponent_transition",
+    "on_off/team_halfcourt_putbacks",
+    "on_off/team_shooting_accuracy",
+    "on_off/team_shooting_frequency",
+    "on_off/team_transition",
+    "shooting_accuracy",
+    "shooting_frequency",
+    "shooting_overall"
+  ],
+  "schemas": {
+    "offensive_overview": {
+      "columns": [
+        "Player",
+        "Age",
+        "Team",
+        "Pos",
+        "MIN",
+        "Usage Rank",
+        "Usage",
+        "PSA Rank",
+        "PSA",
+        "AST% Rank",
+        "AST%",
+        "AST:Usg Rank",
+        "AST:Usg",
+        "TOV% Rank",
+        "TOV%"
+      ],
+      "num_columns": 15,
+      "sample_rows": 5
+    },
+    "shooting_accuracy": {
+      "columns": [
+        "Player",
+        "Age",
+        "Team",
+        "Pos",
+        "MIN",
+        "eFG% Rank",
+        "eFG%",
+        "Rim Rank",
+        "Rim",
+        "Short Mid Rank",
+        "Short Mid",
+        "Long Mid Rank",
+        "Long Mid",
+        "All Mid Rank",
+        "All Mid",
+        "Corner Three Rank",
+        "Corner Three",
+        "Non Corner Rank",
+        "Non Corner",
+        "All Three Rank",
+        "All Three"
+      ],
+      "num_columns": 21,
+      "sample_rows": 5
+    },
+    "shooting_frequency": {
+      "columns": [
+        "Player",
+        "Age",
+        "Team",
+        "Pos",
+        "MIN",
+        "eFG% Rank",
+        "eFG%",
+        "Rim Rank",
+        "Rim",
+        "Short Mid Rank",
+        "Short Mid",
+        "Long Mid Rank",
+        "Long Mid",
+        "All Mid Rank",
+        "All Mid",
+        "Corner Three Rank",
+        "Corner Three",
+        "Non Corner Rank",
+        "Non Corner",
+        "All Three Rank",
+        "All Three"
+      ],
+      "num_columns": 21,
+      "sample_rows": 5
+    },
+    "defense_rebounding": {
+      "columns": [
+        "Player",
+        "Age",
+        "Team",
+        "Pos",
+        "MIN",
+        "BLK% Rank",
+        "BLK%",
+        "STL% Rank",
+        "STL%",
+        "FOUL% Rank",
+        "FOUL%",
+        "fgOR% Rank",
+        "fgOR%",
+        "fgDR% Rank",
+        "fgDR%",
+        "ftOR% Rank",
+        "ftOR%",
+        "ftDR% Rank",
+        "ftDR%"
+      ],
+      "num_columns": 19,
+      "sample_rows": 5
+    },
+    "foul_drawing": {
+      "columns": [
+        "Player",
+        "Age",
+        "Team",
+        "Pos",
+        "MIN",
+        "FT% Rank",
+        "FT%",
+        "SFLD% Rank",
+        "SFLD%",
+        "FFLD% Rank",
+        "FFLD%",
+        "AND1% Rank",
+        "AND1%"
+      ],
+      "num_columns": 13,
+      "sample_rows": 5
+    },
+    "on_off/efficiency_four_factors": {
+      "columns": [
+        "Player",
+        "Age",
+        "Team",
+        "Pos",
+        "MIN",
+        "Diff Rank",
+        "Diff",
+        "Exp W",
+        "OFFENSE: Pts/Poss Rank",
+        "OFFENSE: Pts/Poss",
+        "OFFENSE: eFG% Rank",
+        "OFFENSE: eFG%",
+        "OFFENSE: TOV% Rank",
+        "OFFENSE: TOV%",
+        "OFFENSE: ORB% Rank",
+        "OFFENSE: ORB%",
+        "OFFENSE: FT Rate Rank",
+        "OFFENSE: FT Rate",
+        "DEFENSE: Pts/Poss Rank",
+        "DEFENSE: Pts/Poss",
+        "DEFENSE: eFG% Rank",
+        "DEFENSE: eFG%",
+        "DEFENSE: TOV% Rank",
+        "DEFENSE: TOV%",
+        "DEFENSE: ORB% Rank",
+        "DEFENSE: ORB%",
+        "DEFENSE: FT Rate Rank",
+        "DEFENSE: FT Rate"
+      ],
+      "num_columns": 28,
+      "sample_rows": 5
+    },
+    "on_off/team_shooting_frequency": {
+      "columns": [
+        "Player",
+        "Age",
+        "Team",
+        "Pos",
+        "MIN",
+        "eFG% Rank",
+        "eFG%",
+        "SHOT FREQUENCY: Rim Rank",
+        "SHOT FREQUENCY: Rim",
+        "SHOT FREQUENCY: Short Mid Rank",
+        "SHOT FREQUENCY: Short Mid",
+        "SHOT FREQUENCY: Long Mid Rank",
+        "SHOT FREQUENCY: Long Mid",
+        "SHOT FREQUENCY: All Mid Rank",
+        "SHOT FREQUENCY: All Mid",
+        "SHOT FREQUENCY: Corner Three Rank",
+        "SHOT FREQUENCY: Corner Three",
+        "SHOT FREQUENCY: Non Corner Rank",
+        "SHOT FREQUENCY: Non Corner",
+        "SHOT FREQUENCY: All Three Rank",
+        "SHOT FREQUENCY: All Three"
+      ],
+      "num_columns": 21,
+      "sample_rows": 5
+    }
+  },
+  "quality_metrics": {
+    "files_analyzed": 5,
+    "total_rows": 2630,
+    "total_columns": 91,
+    "missing_data": [],
+    "data_issues": []
+  },
+  "team_data": {
+    "teams": 31,
+    "total_files": 270
+  },
+  "game_logs": {
+    "files": 21,
+    "combined_exists": true
+  },
+  "progress": {
+    "completed": 623,
+    "total": 660,
+    "completion_rate": "94.4%",
+    "missing": 37
+  },
+  "missing_files": [
+    [
+      "2020-21",
+      "Regular Season",
+      "Defense & Rebounding"
+    ],
+    [
+      "2020-21",
+      "Playoffs",
+      "Defense & Rebounding"
+    ],
+    [
+      "2020-21",
+      "Playoffs",
+      "On/Off Team Halfcourt & Putbacks"
+    ],
+    [
+      "2020-21",
+      "Playoffs",
+      "On/Off Team Transition"
+    ],
+    [
+      "2021-22",
+      "Regular Season",
+      "Defense & Rebounding"
+    ],
+    [
+      "2021-22",
+      "Regular Season",
+      "On/Off Team Transition"
+    ],
+    [
+      "2021-22",
+      "Playoffs",
+      "Defense & Rebounding"
+    ],
+    [
+      "2022-23",
+      "Regular Season",
+      "Defense & Rebounding"
+    ],
+    [
+      "2022-23",
+      "Playoffs",
+      "Defense & Rebounding"
+    ],
+    [
+      "2022-23",
+      "Playoffs",
+      "On/Off Team Halfcourt & Putbacks"
+    ],
+    [
+      "2022-23",
+      "Playoffs",
+      "On/Off Team Transition"
+    ],
+    [
+      "2023-24",
+      "Regular Season",
+      "Defense & Rebounding"
+    ],
+    [
+      "2023-24",
+      "Playoffs",
+      "Defense & Rebounding"
+    ],
+    [
+      "2023-24",
+      "Playoffs",
+      "On/Off Team Transition"
+    ],
+    [
+      "2024-25",
+      "Regular Season",
+      "Defense & Rebounding"
+    ],
+    [
+      "2024-25",
+      "Playoffs",
+      "Defense & Rebounding"
+    ]
+  ]
+}

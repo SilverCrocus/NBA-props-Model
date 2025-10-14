@@ -1,0 +1,33 @@
+FEATURE AUDIT REPORT
+============================================================
+
+Date: 2025-09-14 15:08:06.058521
+Original features: 24
+Safe features: 18
+
+REMOVED FEATURES:
+----------------------------------------
+  - Minutes_x_Efficiency
+  - Efficiency_x_Volume
+  - Opportunity_Score
+
+SAFE FEATURES:
+----------------------------------------
+  - USG_percent
+  - PSA
+  - MIN
+  - AST_percent
+  - AST_to_USG_Ratio
+  - fgDR_percent
+  - fgOR_percent
+  - Total_REB_percent
+  - eFG_percent
+  - TOV_percent
+  - Defensive_Activity
+  - Position_Inferred
+  - Player_Role
+  - Consistency_Score
+  - Usage_Stability
+  - Performance_Tier
+  - Playmaking_Efficiency
+  - Offensive_Load

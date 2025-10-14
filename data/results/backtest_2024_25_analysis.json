@@ -1,0 +1,23 @@
+{
+  "season": "2024-25",
+  "total_predictions": 23204,
+  "matched_predictions": 3386,
+  "match_rate": 14.592311670401656,
+  "total_bets": 2495,
+  "wins": 1297,
+  "losses": 1198,
+  "pushes": 0,
+  "win_rate": 51.983967935871746,
+  "total_wagered": 249500.0,
+  "total_profit": 2259.3930038988315,
+  "roi": 0.9055683382360047,
+  "mae_all_predictions": 7.9678751007624555,
+  "mae_bet_games": 9.924842367803368,
+  "clv_3plus": 73.68576491435323,
+  "clv_5plus": 56.379208505611345,
+  "clv_10plus": 24.74896633195511,
+  "avg_edge": 6.87021966680449,
+  "status": "NOT READY FOR PRODUCTION",
+  "recommendation": "DO NOT BET REAL MONEY",
+  "production_ready": false
+}
