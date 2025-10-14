@@ -1,0 +1,31 @@
+digest: f46bcc72
+name: dataset
+profile: '{"num_rows": 11327, "num_elements": 385118}'
+schema: '{"mlflow_colspec": [{"type": "long", "name": "PRA_lag1", "required": true},
+  {"type": "long", "name": "MIN_lag1", "required": true}, {"type": "long", "name":
+  "PRA_lag3", "required": true}, {"type": "long", "name": "MIN_lag3", "required":
+  true}, {"type": "long", "name": "PRA_lag5", "required": true}, {"type": "long",
+  "name": "MIN_lag5", "required": true}, {"type": "long", "name": "PRA_lag7", "required":
+  true}, {"type": "long", "name": "MIN_lag7", "required": true}, {"type": "double",
+  "name": "PRA_L5_mean", "required": true}, {"type": "double", "name": "PRA_L5_std",
+  "required": true}, {"type": "double", "name": "MIN_L5_mean", "required": true},
+  {"type": "double", "name": "PRA_L10_mean", "required": true}, {"type": "double",
+  "name": "PRA_L10_std", "required": true}, {"type": "double", "name": "MIN_L10_mean",
+  "required": true}, {"type": "double", "name": "PRA_L20_mean", "required": true},
+  {"type": "double", "name": "PRA_L20_std", "required": true}, {"type": "double",
+  "name": "MIN_L20_mean", "required": true}, {"type": "double", "name": "PRA_ewma5",
+  "required": true}, {"type": "double", "name": "PRA_ewma10", "required": true}, {"type":
+  "long", "name": "days_rest", "required": true}, {"type": "long", "name": "is_b2b",
+  "required": true}, {"type": "long", "name": "games_last_7d", "required": true},
+  {"type": "double", "name": "PRA_trend", "required": true}, {"type": "double", "name":
+  "CTG_USG", "required": true}, {"type": "double", "name": "CTG_PSA", "required":
+  true}, {"type": "double", "name": "CTG_AST_PCT", "required": true}, {"type": "double",
+  "name": "CTG_TOV_PCT", "required": true}, {"type": "double", "name": "CTG_eFG",
+  "required": true}, {"type": "double", "name": "CTG_REB_PCT", "required": true},
+  {"type": "long", "name": "MIN", "required": true}, {"type": "long", "name": "FGA",
+  "required": true}, {"type": "double", "name": "FG_PCT", "required": true}, {"type":
+  "long", "name": "FG3A", "required": true}, {"type": "long", "name": "FTA", "required":
+  true}]}'
+source: '{"tags": {"mlflow.user": "diyagamah", "mlflow.source.name": "scripts/training/walk_forward_training_leak_free.py",
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "be64429375e85d875069f33159928f62e54be637"}}'
+source_type: code

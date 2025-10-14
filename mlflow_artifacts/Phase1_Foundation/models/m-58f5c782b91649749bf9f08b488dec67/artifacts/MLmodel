@@ -1,0 +1,57 @@
+artifact_path: /Users/diyagamah/Documents/nba_props_model/mlflow_artifacts/Phase1_Foundation/models/m-58f5c782b91649749bf9f08b488dec67/artifacts
+flavors:
+  python_function:
+    data: model.xgb
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.12.11
+  xgboost:
+    code: null
+    data: model.xgb
+    model_class: xgboost.sklearn.XGBRegressor
+    model_format: xgb
+    xgb_version: 3.0.5
+is_signature_from_type_hint: false
+mlflow_version: 3.4.0
+model_id: m-58f5c782b91649749bf9f08b488dec67
+model_size_bytes: 1286339
+model_uuid: m-58f5c782b91649749bf9f08b488dec67
+prompts: null
+run_id: 5c0e3a5d7eba43ef9fb934682ebdfebb
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "long", "name": "PRA_lag1", "required": true}, {"type": "long",
+    "name": "MIN_lag1", "required": true}, {"type": "long", "name": "PRA_lag3", "required":
+    true}, {"type": "long", "name": "MIN_lag3", "required": true}, {"type": "long",
+    "name": "PRA_lag5", "required": true}, {"type": "long", "name": "MIN_lag5", "required":
+    true}, {"type": "long", "name": "PRA_lag7", "required": true}, {"type": "long",
+    "name": "MIN_lag7", "required": true}, {"type": "double", "name": "PRA_L5_mean",
+    "required": true}, {"type": "double", "name": "PRA_L5_std", "required": true},
+    {"type": "double", "name": "MIN_L5_mean", "required": true}, {"type": "double",
+    "name": "PRA_L10_mean", "required": true}, {"type": "double", "name": "PRA_L10_std",
+    "required": true}, {"type": "double", "name": "MIN_L10_mean", "required": true},
+    {"type": "double", "name": "PRA_L20_mean", "required": true}, {"type": "double",
+    "name": "PRA_L20_std", "required": true}, {"type": "double", "name": "MIN_L20_mean",
+    "required": true}, {"type": "double", "name": "PRA_ewma5", "required": true},
+    {"type": "double", "name": "PRA_ewma10", "required": true}, {"type": "long", "name":
+    "days_rest", "required": true}, {"type": "long", "name": "is_b2b", "required":
+    true}, {"type": "long", "name": "games_last_7d", "required": true}, {"type": "double",
+    "name": "PRA_trend", "required": true}, {"type": "double", "name": "CTG_USG",
+    "required": true}, {"type": "double", "name": "CTG_PSA", "required": true}, {"type":
+    "double", "name": "CTG_AST_PCT", "required": true}, {"type": "double", "name":
+    "CTG_TOV_PCT", "required": true}, {"type": "double", "name": "CTG_eFG", "required":
+    true}, {"type": "double", "name": "CTG_REB_PCT", "required": true}, {"type": "long",
+    "name": "MIN", "required": true}, {"type": "long", "name": "FGA", "required":
+    true}, {"type": "double", "name": "FG_PCT", "required": true}, {"type": "long",
+    "name": "FG3A", "required": true}, {"type": "long", "name": "FTA", "required":
+    true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-10-14 03:31:06.265243'

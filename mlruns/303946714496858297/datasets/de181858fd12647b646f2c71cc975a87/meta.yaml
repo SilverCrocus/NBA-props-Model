@@ -1,0 +1,9 @@
+digest: fbcf03ff
+name: dataset
+profile: '{"features_shape": [11327, 34], "features_size": 385118, "features_nbytes":
+  1540472}'
+schema: '{"mlflow_tensorspec": {"features": "[{\"type\": \"tensor\", \"tensor-spec\":
+  {\"dtype\": \"float32\", \"shape\": [-1, 34]}}]", "targets": null}}'
+source: '{"tags": {"mlflow.user": "diyagamah", "mlflow.source.name": "scripts/training/walk_forward_training_leak_free.py",
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "be64429375e85d875069f33159928f62e54be637"}}'
+source_type: code

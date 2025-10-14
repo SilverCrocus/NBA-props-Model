@@ -1,0 +1,14 @@
+artifact_uri: /Users/diyagamah/Documents/nba_props_model/mlflow_artifacts/Phase1_Foundation/5c0e3a5d7eba43ef9fb934682ebdfebb/artifacts
+end_time: 1760412751037
+entry_point_name: ''
+experiment_id: '303946714496858297'
+lifecycle_stage: active
+run_id: 5c0e3a5d7eba43ef9fb934682ebdfebb
+run_name: walk_forward_leak_free_2024-25
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760412648773
+status: 3
+tags: []
+user_id: diyagamah

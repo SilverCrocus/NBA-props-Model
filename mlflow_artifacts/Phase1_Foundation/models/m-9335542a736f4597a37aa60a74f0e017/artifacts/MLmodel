@@ -1,0 +1,22 @@
+artifact_path: /Users/diyagamah/Documents/nba_props_model/mlflow_artifacts/Phase1_Foundation/models/m-9335542a736f4597a37aa60a74f0e017/artifacts
+flavors:
+  python_function:
+    data: model.xgb
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.12.11
+  xgboost:
+    code: null
+    data: model.xgb
+    model_class: xgboost.sklearn.XGBRegressor
+    model_format: xgb
+    xgb_version: 3.0.5
+mlflow_version: 3.4.0
+model_id: m-9335542a736f4597a37aa60a74f0e017
+model_size_bytes: 1281258
+model_uuid: m-9335542a736f4597a37aa60a74f0e017
+prompts: null
+run_id: 5c0e3a5d7eba43ef9fb934682ebdfebb
+utc_time_created: '2025-10-14 03:32:29.134642'

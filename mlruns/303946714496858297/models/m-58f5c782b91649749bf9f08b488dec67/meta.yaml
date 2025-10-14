@@ -1,0 +1,10 @@
+artifact_location: /Users/diyagamah/Documents/nba_props_model/mlflow_artifacts/Phase1_Foundation/models/m-58f5c782b91649749bf9f08b488dec67/artifacts
+creation_timestamp: 1760412666249
+experiment_id: '303946714496858297'
+last_updated_timestamp: 1760412668367
+model_id: m-58f5c782b91649749bf9f08b488dec67
+model_type: null
+name: model
+source_run_id: 5c0e3a5d7eba43ef9fb934682ebdfebb
+status: 2
+status_message: null
