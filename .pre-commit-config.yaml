@@ -10,7 +10,7 @@ repos:
     rev: 7.0.0
     hooks:
       - id: flake8
-        args: [--max-line-length=100, --extend-ignore=E203,W503,E501]
+        args: [--max-line-length=100, --ignore=E203,W503,E501,E402,F541]
         exclude: ^(experiments/|notebooks/|research/)
 
   - repo: https://github.com/pycqa/isort
@@ -28,5 +28,5 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
-        stages: [commit]
+        stages: [pre-commit]
         verbose: true

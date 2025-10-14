@@ -73,3 +73,14 @@ module = [
 disallow_untyped_defs = true
 warn_redundant_casts = true
 warn_unused_ignores = true
+
+[dependency-groups]
+dev = [
+    "black>=25.9.0",
+    "flake8>=7.3.0",
+    "isort>=7.0.0",
+    "mypy>=1.18.2",
+    "pre-commit>=4.3.0",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+]

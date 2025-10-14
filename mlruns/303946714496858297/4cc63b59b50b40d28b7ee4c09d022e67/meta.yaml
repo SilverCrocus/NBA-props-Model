@@ -1,0 +1,14 @@
+artifact_uri: /Users/diyagamah/Documents/nba_props_model/mlflow_artifacts/Phase1_Foundation/4cc63b59b50b40d28b7ee4c09d022e67/artifacts
+end_time: 1760410309185
+entry_point_name: ''
+experiment_id: '303946714496858297'
+lifecycle_stage: active
+run_id: 4cc63b59b50b40d28b7ee4c09d022e67
+run_name: baseline_xgb_v1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760410245824
+status: 3
+tags: []
+user_id: diyagamah

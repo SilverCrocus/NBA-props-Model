@@ -1,0 +1,7 @@
+{
+  "n_samples": 372275,
+  "n_features": 140,
+  "data_source": "game_level_training_data.parquet",
+  "target": "PRA",
+  "validation_method": "time_series_cv"
+}

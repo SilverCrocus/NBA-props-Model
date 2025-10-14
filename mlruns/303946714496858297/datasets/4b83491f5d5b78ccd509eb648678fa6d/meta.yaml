@@ -1,0 +1,105 @@
+digest: 4339855f
+name: dataset
+profile: '{"num_rows": 62045, "num_elements": 8686300}'
+schema: '{"mlflow_colspec": [{"type": "long", "name": "SEASON_ID", "required": true},
+  {"type": "long", "name": "MIN", "required": true}, {"type": "long", "name": "FGM",
+  "required": true}, {"type": "long", "name": "FGA", "required": true}, {"type": "double",
+  "name": "FG_PCT", "required": true}, {"type": "long", "name": "FG3M", "required":
+  true}, {"type": "long", "name": "FG3A", "required": true}, {"type": "double", "name":
+  "FG3_PCT", "required": true}, {"type": "long", "name": "FTM", "required": true},
+  {"type": "long", "name": "FTA", "required": true}, {"type": "double", "name": "FT_PCT",
+  "required": true}, {"type": "long", "name": "OREB", "required": true}, {"type":
+  "long", "name": "DREB", "required": true}, {"type": "long", "name": "STL", "required":
+  true}, {"type": "long", "name": "BLK", "required": true}, {"type": "long", "name":
+  "TOV", "required": true}, {"type": "long", "name": "PF", "required": true}, {"type":
+  "long", "name": "PLUS_MINUS", "required": true}, {"type": "double", "name": "FANTASY_PTS",
+  "required": true}, {"type": "long", "name": "VIDEO_AVAILABLE", "required": true},
+  {"type": "double", "name": "DK_POINTS", "required": true}, {"type": "double", "name":
+  "FD_POINTS", "required": true}, {"type": "long", "name": "IS_HOME", "required":
+  true}, {"type": "double", "name": "Age", "required": true}, {"type": "double", "name":
+  "CTG_MIN", "required": true}, {"type": "double", "name": "eFG% Rank", "required":
+  true}, {"type": "double", "name": "Rim Rank", "required": true}, {"type": "double",
+  "name": "Short Mid Rank", "required": true}, {"type": "double", "name": "Long Mid
+  Rank", "required": true}, {"type": "double", "name": "All Mid Rank", "required":
+  true}, {"type": "double", "name": "Corner Three Rank", "required": true}, {"type":
+  "double", "name": "Non Corner Rank", "required": true}, {"type": "double", "name":
+  "All Three Rank", "required": true}, {"type": "double", "name": "BLK% Rank", "required":
+  true}, {"type": "double", "name": "STL% Rank", "required": true}, {"type": "double",
+  "name": "FOUL% Rank", "required": true}, {"type": "double", "name": "fgOR% Rank",
+  "required": true}, {"type": "double", "name": "fgDR% Rank", "required": true}, {"type":
+  "double", "name": "ftOR% Rank", "required": true}, {"type": "double", "name": "ftDR%
+  Rank", "required": true}, {"type": "double", "name": "FT% Rank", "required": true},
+  {"type": "double", "name": "SFLD% Rank", "required": true}, {"type": "double", "name":
+  "FFLD% Rank", "required": true}, {"type": "double", "name": "AND1% Rank", "required":
+  true}, {"type": "double", "name": "eFG% Rank_team_shooting_accuracy", "required":
+  true}, {"type": "double", "name": "TEAM FG%: Rim Rank", "required": true}, {"type":
+  "double", "name": "TEAM FG%: Short Mid Rank", "required": true}, {"type": "double",
+  "name": "TEAM FG%: Long Mid Rank", "required": true}, {"type": "double", "name":
+  "TEAM FG%: All Mid Rank", "required": true}, {"type": "double", "name": "TEAM FG%:
+  Corner Three Rank", "required": true}, {"type": "double", "name": "TEAM FG%: Non
+  Corner Rank", "required": true}, {"type": "double", "name": "TEAM FG%: All Three
+  Rank", "required": true}, {"type": "double", "name": "PRA_lag1", "required": true},
+  {"type": "double", "name": "PRA_lag3", "required": true}, {"type": "double", "name":
+  "PRA_lag5", "required": true}, {"type": "double", "name": "PRA_lag7", "required":
+  true}, {"type": "double", "name": "PRA_lag10", "required": true}, {"type": "double",
+  "name": "PTS_lag1", "required": true}, {"type": "double", "name": "PTS_lag3", "required":
+  true}, {"type": "double", "name": "PTS_lag5", "required": true}, {"type": "double",
+  "name": "PTS_lag7", "required": true}, {"type": "double", "name": "PTS_lag10", "required":
+  true}, {"type": "double", "name": "REB_lag1", "required": true}, {"type": "double",
+  "name": "REB_lag3", "required": true}, {"type": "double", "name": "REB_lag5", "required":
+  true}, {"type": "double", "name": "REB_lag7", "required": true}, {"type": "double",
+  "name": "REB_lag10", "required": true}, {"type": "double", "name": "AST_lag1", "required":
+  true}, {"type": "double", "name": "AST_lag3", "required": true}, {"type": "double",
+  "name": "AST_lag5", "required": true}, {"type": "double", "name": "AST_lag7", "required":
+  true}, {"type": "double", "name": "AST_lag10", "required": true}, {"type": "double",
+  "name": "MIN_lag1", "required": true}, {"type": "double", "name": "MIN_lag3", "required":
+  true}, {"type": "double", "name": "MIN_lag5", "required": true}, {"type": "double",
+  "name": "MIN_lag7", "required": true}, {"type": "double", "name": "MIN_lag10", "required":
+  true}, {"type": "double", "name": "PRA_L5_mean", "required": true}, {"type": "double",
+  "name": "PRA_L5_std", "required": true}, {"type": "double", "name": "PRA_L10_mean",
+  "required": true}, {"type": "double", "name": "PRA_L10_std", "required": true},
+  {"type": "double", "name": "PRA_L20_mean", "required": true}, {"type": "double",
+  "name": "PRA_L20_std", "required": true}, {"type": "double", "name": "PTS_L5_mean",
+  "required": true}, {"type": "double", "name": "PTS_L5_std", "required": true}, {"type":
+  "double", "name": "PTS_L10_mean", "required": true}, {"type": "double", "name":
+  "PTS_L10_std", "required": true}, {"type": "double", "name": "PTS_L20_mean", "required":
+  true}, {"type": "double", "name": "PTS_L20_std", "required": true}, {"type": "double",
+  "name": "REB_L5_mean", "required": true}, {"type": "double", "name": "REB_L5_std",
+  "required": true}, {"type": "double", "name": "REB_L10_mean", "required": true},
+  {"type": "double", "name": "REB_L10_std", "required": true}, {"type": "double",
+  "name": "REB_L20_mean", "required": true}, {"type": "double", "name": "REB_L20_std",
+  "required": true}, {"type": "double", "name": "AST_L5_mean", "required": true},
+  {"type": "double", "name": "AST_L5_std", "required": true}, {"type": "double", "name":
+  "AST_L10_mean", "required": true}, {"type": "double", "name": "AST_L10_std", "required":
+  true}, {"type": "double", "name": "AST_L20_mean", "required": true}, {"type": "double",
+  "name": "AST_L20_std", "required": true}, {"type": "double", "name": "MIN_L5_mean",
+  "required": true}, {"type": "double", "name": "MIN_L5_std", "required": true}, {"type":
+  "double", "name": "MIN_L10_mean", "required": true}, {"type": "double", "name":
+  "MIN_L10_std", "required": true}, {"type": "double", "name": "MIN_L20_mean", "required":
+  true}, {"type": "double", "name": "MIN_L20_std", "required": true}, {"type": "double",
+  "name": "FG_PCT_L5_mean", "required": true}, {"type": "double", "name": "FG_PCT_L5_std",
+  "required": true}, {"type": "double", "name": "FG_PCT_L10_mean", "required": true},
+  {"type": "double", "name": "FG_PCT_L10_std", "required": true}, {"type": "double",
+  "name": "FG_PCT_L20_mean", "required": true}, {"type": "double", "name": "FG_PCT_L20_std",
+  "required": true}, {"type": "double", "name": "PRA_ewma5", "required": true}, {"type":
+  "double", "name": "PRA_ewma10", "required": true}, {"type": "double", "name": "PRA_ewma15",
+  "required": true}, {"type": "double", "name": "PTS_ewma5", "required": true}, {"type":
+  "double", "name": "PTS_ewma10", "required": true}, {"type": "double", "name": "PTS_ewma15",
+  "required": true}, {"type": "double", "name": "REB_ewma5", "required": true}, {"type":
+  "double", "name": "REB_ewma10", "required": true}, {"type": "double", "name": "REB_ewma15",
+  "required": true}, {"type": "double", "name": "AST_ewma5", "required": true}, {"type":
+  "double", "name": "AST_ewma10", "required": true}, {"type": "double", "name": "AST_ewma15",
+  "required": true}, {"type": "double", "name": "MIN_ewma5", "required": true}, {"type":
+  "double", "name": "MIN_ewma10", "required": true}, {"type": "double", "name": "MIN_ewma15",
+  "required": true}, {"type": "double", "name": "days_rest", "required": true}, {"type":
+  "long", "name": "is_b2b", "required": true}, {"type": "long", "name": "games_last_7d",
+  "required": true}, {"type": "double", "name": "opp_allowed_PRA_L10", "required":
+  true}, {"type": "double", "name": "opp_allowed_PTS_L10", "required": true}, {"type":
+  "double", "name": "opp_allowed_REB_L10", "required": true}, {"type": "double", "name":
+  "opp_allowed_AST_L10", "required": true}, {"type": "double", "name": "PRA_trend",
+  "required": true}, {"type": "double", "name": "PTS_trend", "required": true}, {"type":
+  "double", "name": "REB_trend", "required": true}, {"type": "double", "name": "AST_trend",
+  "required": true}, {"type": "double", "name": "MIN_trend", "required": true}]}'
+source: '{"tags": {"mlflow.user": "diyagamah", "mlflow.source.name": "scripts/training/baseline_experiment_mlflow.py",
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "74ed8ca917823d1aba2c111b8d39fecf69e75a8e"}}'
+source_type: code

@@ -1,0 +1,9 @@
+digest: 68a53426
+name: dataset
+profile: '{"features_shape": [310230, 140], "features_size": 43432200, "features_nbytes":
+  173728800}'
+schema: '{"mlflow_tensorspec": {"features": "[{\"type\": \"tensor\", \"tensor-spec\":
+  {\"dtype\": \"float32\", \"shape\": [-1, 140]}}]", "targets": null}}'
+source: '{"tags": {"mlflow.user": "diyagamah", "mlflow.source.name": "scripts/training/baseline_experiment_mlflow.py",
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "74ed8ca917823d1aba2c111b8d39fecf69e75a8e"}}'
+source_type: code
