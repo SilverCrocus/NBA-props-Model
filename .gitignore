@@ -44,6 +44,7 @@ htmlcov/
 # Data files (but keep structure)
 data/raw/**/*.csv
 data/processed/**/*.csv
+data/processed/**/*.parquet
 data/features/**/*.csv
 data/models/**/*.pkl
 data/models/**/*.joblib
