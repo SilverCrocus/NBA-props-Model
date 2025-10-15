@@ -242,6 +242,29 @@ def ensure_directories_exist():
         directory.mkdir(parents=True, exist_ok=True)
 
 
+def validate_data_paths():
+    """
+    Validate that critical data paths exist.
+
+    Raises:
+        FileNotFoundError: If required data files are missing
+    """
+    critical_paths = {
+        "Game logs": data_config.GAME_LOGS_PATH,
+        "CTG data directory": data_config.CTG_DATA_PATH,
+    }
+
+    missing_paths = []
+    for name, path in critical_paths.items():
+        if not path.exists():
+            missing_paths.append(f"{name}: {path}")
+
+    if missing_paths:
+        raise FileNotFoundError(
+            f"Critical data paths missing:\n  - " + "\n  - ".join(missing_paths)
+        )
+
+
 if __name__ == "__main__":
     # Test configuration loading
     print("=" * 80)

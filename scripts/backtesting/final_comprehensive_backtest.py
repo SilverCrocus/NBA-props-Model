@@ -11,6 +11,7 @@ Proper methodology:
 This is the DEFINITIVE test of real-world performance.
 """
 
+import logging
 import sys
 from pathlib import Path
 
@@ -18,6 +19,10 @@ import pandas as pd
 from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import mean_absolute_error
 from tqdm import tqdm
+
+# Setup logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
 
 # Add project root
 project_root = Path(__file__).resolve().parents[2]
@@ -29,6 +34,7 @@ sys.path.append(str(Path(__file__).parent.parent / "training"))
 from walk_forward_training_advanced_features import calculate_all_features  # noqa: E402
 
 from config import data_config, model_config, validation_config  # noqa: E402
+from src.exceptions import FeatureCalculationError, PredictionError  # noqa: E402
 from src.models.two_stage_predictor import TwoStagePredictor  # noqa: E402
 from utils.ctg_feature_builder import CTGFeatureBuilder  # noqa: E402
 
@@ -143,6 +149,8 @@ print(f"    {len(prediction_dates)} prediction dates")
 # Generate predictions
 print("\n2.2 Generating predictions with walk-forward...")
 predictions = []
+failed_predictions = 0
+error_counts = {}
 
 for pred_date in tqdm(prediction_dates, desc="Walk-forward"):
     games_today = all_games[all_games["GAME_DATE"] == pred_date]
@@ -193,8 +201,30 @@ for pred_date in tqdm(prediction_dates, desc="Walk-forward"):
                     "predicted_MIN": pred_min[0],
                 }
             )
-        except Exception:  # noqa: E722
-            continue
+        except (KeyError, ValueError) as e:
+            # Missing required data or invalid values
+            failed_predictions += 1
+            error_type = type(e).__name__
+            error_counts[error_type] = error_counts.get(error_type, 0) + 1
+            logger.debug(f"Prediction failed for {player_name} on {pred_date}: {e}")
+        except (FeatureCalculationError, PredictionError) as e:
+            # Model-specific errors
+            failed_predictions += 1
+            error_type = type(e).__name__
+            error_counts[error_type] = error_counts.get(error_type, 0) + 1
+            logger.warning(f"Prediction error for {player_name} on {pred_date}: {e}")
+        except Exception as e:
+            # Unexpected errors - log for investigation
+            failed_predictions += 1
+            error_type = type(e).__name__
+            error_counts[error_type] = error_counts.get(error_type, 0) + 1
+            logger.error(f"Unexpected error for {player_name} on {pred_date}: {e}")
+
+# Log error summary
+if failed_predictions > 0:
+    logger.info(f"\nPrediction errors: {failed_predictions} failed")
+    for error_type, count in error_counts.items():
+        logger.info(f"  {error_type}: {count}")
 
 predictions_df = pd.DataFrame(predictions)
 print(f"\n✅ Generated {len(predictions_df):,} predictions")
