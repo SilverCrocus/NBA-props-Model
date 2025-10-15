@@ -34,9 +34,15 @@ logger = logging.getLogger(__name__)
 # Initialize MLflow tracking
 sys.path.append(str(Path(__file__).parent.parent.parent))
 from config import data_config, model_config, validation_config
+from src.features.calculator import FeatureCalculator
 from src.mlflow_integration.tracker import NBAPropsTracker, enable_autologging
 
-# ==================== BASIC FEATURES (from Day 3) ====================
+# Initialize centralized feature calculator
+_feature_calculator = FeatureCalculator()
+
+# ==================== BACKWARD-COMPATIBLE WRAPPERS ====================
+# These functions delegate to the centralized FeatureCalculator class
+# Maintained for backward compatibility with scripts that import from this file
 
 
 def calculate_lag_features(player_history: pd.DataFrame, lags=[1, 3, 5, 7]) -> dict:
@@ -347,7 +353,10 @@ def calculate_all_features(
     all_games: pd.DataFrame,
 ) -> dict:
     """
-    Calculate ALL features including new Day 4 features.
+    Calculate ALL features using centralized FeatureCalculator.
+
+    This function delegates to FeatureCalculator to eliminate code duplication.
+    Maintained here for backward compatibility with scripts that import it.
 
     Args:
         player_history: Player's games before current date
@@ -361,31 +370,16 @@ def calculate_all_features(
     Returns:
         Dictionary of all features
     """
-    features = {}
-
-    # Day 3 features (basic)
-    features.update(calculate_lag_features(player_history))
-    features.update(calculate_rolling_features(player_history))
-    features.update(calculate_ewma_features(player_history))
-    features.update(calculate_rest_features(player_history, current_date))
-    features.update(calculate_trend_features(player_history))
-
-    # Day 4 NEW features
-    features.update(calculate_efficiency_features(player_history))
-    features.update(calculate_normalization_features(player_history))
-    features.update(calculate_opponent_features(opponent_team, all_games, current_date))
-
-    # CTG season stats
-    ctg_feats = ctg_builder.get_player_ctg_features(player_name, season)
-    features.update(ctg_feats)
-
-    # REMOVED: current_game_stats section (redundant with lag features)
-    # - MIN duplicates MIN_lag1
-    # - FGA, FG_PCT, FG3A, FTA duplicate lag/rolling features
-    # - These stats aren't available in production (can't know current game stats before it happens)
-    # - Model should rely on historical lag/rolling features instead
-
-    return features
+    # Use centralized FeatureCalculator (eliminates code duplication)
+    return _feature_calculator.calculate_all_features(
+        player_history=player_history,
+        current_date=current_date,
+        player_name=player_name,
+        opponent_team=opponent_team,
+        season=season,
+        ctg_builder=ctg_builder,
+        all_games=all_games,
+    )
 
 
 # ==================== MAIN TRAINING FUNCTION ====================
