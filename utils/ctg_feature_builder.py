@@ -141,11 +141,19 @@ class CTGFeatureBuilder:
                 row = player_row.iloc[0]
 
                 # Extract rebounding %
-                # Check for common column names
-                for reb_col in ['REB%', 'TRB%', 'Total REB%']:
-                    if reb_col in row:
-                        features['CTG_REB_PCT'] = float(row[reb_col]) if pd.notna(row[reb_col]) else features['CTG_REB_PCT']
-                        break
+                # FIXED: CTG rebounding files have fgOR%, fgDR%, ftOR%, ftDR%
+                # Calculate total rebounding % as average of all components
+                reb_components = []
+
+                for reb_col in ['fgOR%', 'fgDR%', 'ftOR%', 'ftDR%']:
+                    if reb_col in row and pd.notna(row[reb_col]):
+                        reb_components.append(float(row[reb_col]))
+
+                # If we found rebounding data, calculate total REB%
+                if len(reb_components) > 0:
+                    # Total REB% = average of all available components
+                    # (field goal and free throw, offensive and defensive)
+                    features['CTG_REB_PCT'] = sum(reb_components) / len(reb_components)
 
                 features['CTG_Available'] = 1
 

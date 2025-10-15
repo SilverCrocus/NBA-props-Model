@@ -35,7 +35,6 @@ logger = logging.getLogger(__name__)
 sys.path.append(str(Path(__file__).parent.parent.parent))
 from src.mlflow_integration.tracker import NBAPropsTracker, enable_autologging
 
-
 # ==================== BASIC FEATURES (from Day 3) ====================
 
 
@@ -191,9 +190,7 @@ def calculate_efficiency_features(player_history: pd.DataFrame) -> dict:
     # Effective FG% = (FGM + 0.5 * FG3M) / FGA
     fgm_total = history.get("FGM", pd.Series([0])).sum()
     fg3m_total = history.get("FG3M", pd.Series([0])).sum()
-    features["eFG_pct"] = (
-        (fgm_total + 0.5 * fg3m_total) / fga_total if fga_total > 0 else 0
-    )
+    features["eFG_pct"] = (fgm_total + 0.5 * fg3m_total) / fga_total if fga_total > 0 else 0
 
     # Points per shot attempt
     features["PTS_per_shot"] = pts_total / fga_total if fga_total > 0 else 0
@@ -286,7 +283,10 @@ def calculate_opponent_features(
     opponent_team: str, all_games: pd.DataFrame, current_date: pd.Timestamp
 ) -> dict:
     """
-    Calculate opponent defensive features using games before current date.
+    Calculate opponent DEFENSIVE features using games before current date.
+
+    CRITICAL FIX: Calculate PRA ALLOWED by opponent (defensive stats),
+    not PRA SCORED by opponent (offensive stats).
 
     Args:
         opponent_team: Name of opponent team
@@ -298,30 +298,37 @@ def calculate_opponent_features(
     """
     features = {}
 
-    # Get opponent's recent games (last 10 games before current date)
+    # Get games BEFORE current date
     past_games = all_games[all_games["GAME_DATE"] < current_date]
-    opp_games = past_games[past_games["TEAM_NAME"] == opponent_team]
 
-    if len(opp_games) < 5:
+    # FIXED: Get games where OTHER teams played AGAINST this opponent
+    # This tells us how much PRA the opponent ALLOWS (their defense)
+    opponent_defense_games = past_games[past_games["OPP_TEAM"] == opponent_team]
+
+    if len(opponent_defense_games) < 5:
         features["opp_DRtg"] = 110.0  # League average
         features["opp_pace"] = 100.0  # League average
         features["opp_PRA_allowed"] = 30.0  # League average
         return features
 
-    # Use last 10 games for opponent stats
-    recent_opp = opp_games.sort_values("GAME_DATE", ascending=False).iloc[:10]
+    # Use last 20 games for better sample (opponent plays ~2-3x per week)
+    recent_def = opponent_defense_games.sort_values("GAME_DATE", ascending=False).iloc[:20]
 
-    # Opponent Defensive Rating (approximation): Points allowed per 100 possessions
-    # We'll use opponent's PRA allowed per game as proxy
-    features["opp_PRA_allowed"] = recent_opp["PRA"].mean()
+    # FIXED: PRA allowed = average PRA scored BY OPPONENTS against this team
+    features["opp_PRA_allowed"] = recent_def["PRA"].mean()
 
-    # Defensive Rating proxy: Lower is better (we invert the mean)
-    # If opponent allows more PRA, DRtg is higher (worse defense)
-    features["opp_DRtg"] = 100.0 + (features["opp_PRA_allowed"] - 30.0)  # Centered at 110
+    # Defensive Rating: Higher PRA allowed = worse defense = higher DRtg
+    # Scale: 100 (elite defense) to 120 (poor defense)
+    features["opp_DRtg"] = 95.0 + (features["opp_PRA_allowed"] - 30.0) * 0.5
 
-    # Pace approximation: Games played / minutes (higher = faster pace)
-    # We'll use average PRA as pace proxy (faster pace = more stats)
-    features["opp_pace"] = recent_opp["PRA"].mean() / 30.0 * 100.0
+    # Pace calculation: Get opponent's own games for pace
+    opp_games = past_games[past_games["TEAM_NAME"] == opponent_team]
+    if len(opp_games) >= 5:
+        recent_opp = opp_games.sort_values("GAME_DATE", ascending=False).iloc[:10]
+        # Pace proxy: higher PRA output = faster pace
+        features["opp_pace"] = 90.0 + (recent_opp["PRA"].mean() - 30.0) * 0.3
+    else:
+        features["opp_pace"] = 100.0
 
     return features
 
@@ -337,7 +344,6 @@ def calculate_all_features(
     season: str,
     ctg_builder: CTGFeatureBuilder,
     all_games: pd.DataFrame,
-    current_game_stats: dict = None,
 ) -> dict:
     """
     Calculate ALL features including new Day 4 features.
@@ -350,7 +356,6 @@ def calculate_all_features(
         season: Current season
         ctg_builder: CTG feature builder
         all_games: All games data (for opponent features)
-        current_game_stats: Current game stats (use last game as proxy)
 
     Returns:
         Dictionary of all features
@@ -373,19 +378,11 @@ def calculate_all_features(
     ctg_feats = ctg_builder.get_player_ctg_features(player_name, season)
     features.update(ctg_feats)
 
-    # Current game stats (use last game as proxy)
-    if current_game_stats is None and len(player_history) > 0:
-        last_game = player_history.sort_values("GAME_DATE", ascending=False).iloc[0]
-        current_game_stats = {
-            "MIN": last_game.get("MIN", 0),
-            "FGA": last_game.get("FGA", 0),
-            "FG_PCT": last_game.get("FG_PCT", 0),
-            "FG3A": last_game.get("FG3A", 0),
-            "FTA": last_game.get("FTA", 0),
-        }
-
-    if current_game_stats:
-        features.update(current_game_stats)
+    # REMOVED: current_game_stats section (redundant with lag features)
+    # - MIN duplicates MIN_lag1
+    # - FGA, FG_PCT, FG3A, FTA duplicate lag/rolling features
+    # - These stats aren't available in production (can't know current game stats before it happens)
+    # - Model should rely on historical lag/rolling features instead
 
     return features
 
@@ -435,7 +432,7 @@ def walk_forward_train_and_validate(
             raise FileNotFoundError(f"Game logs not found: {game_logs_path}")
 
         all_games_df = pd.read_csv(game_logs_path)
-        all_games_df["GAME_DATE"] = pd.to_datetime(all_games_df["GAME_DATE"], format='mixed')
+        all_games_df["GAME_DATE"] = pd.to_datetime(all_games_df["GAME_DATE"], format="mixed")
 
         logger.info(f"   Loaded {game_logs_path}: {len(all_games_df):,} games")
         all_games_df = all_games_df.sort_values("GAME_DATE").reset_index(drop=True)
