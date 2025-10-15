@@ -5,10 +5,16 @@ Uses predictions with NO temporal leakage to get true out-of-sample performance.
 """
 
 import json
+import sys
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error
+
+# Add project root to path
+sys.path.append(str(Path(__file__).parent.parent.parent))
+from config import data_config
 
 print("=" * 80)
 print("NBA PROPS MODEL - 2024-25 WALK-FORWARD BACKTEST")
@@ -16,7 +22,7 @@ print("=" * 80)
 
 # Load walk-forward predictions and odds
 print("\n1. Loading data...")
-preds_df = pd.read_csv("data/results/walk_forward_advanced_features_2024_25.csv")
+preds_df = pd.read_csv(data_config.RESULTS_DIR / "walk_forward_advanced_features_2024_25.csv")
 odds_df = pd.read_csv("data/historical_odds/2024-25/pra_odds.csv")
 
 print(f"✅ Loaded {len(preds_df):,} walk-forward predictions")
@@ -227,7 +233,7 @@ print(f"Average edge (absolute): {merged['abs_edge'].mean():.2f} points")
 print(f"Average edge (signed): {merged['edge'].mean():+.2f} points")
 
 # Save results
-output_file = "data/results/backtest_walkforward_2024_25.csv"
+output_file = data_config.RESULTS_DIR / "backtest_walkforward_2024_25.csv"
 merged.to_csv(output_file, index=False)
 print(f"\n✅ Saved detailed results to {output_file}")
 
@@ -248,7 +254,8 @@ if total_bets > 0:
         "clv_rate": float(clv_rate),
     }
 
-    with open("data/results/backtest_walkforward_2024_25_summary.json", "w") as f:
+    summary_file = data_config.RESULTS_DIR / "backtest_walkforward_2024_25_summary.json"
+    with open(summary_file, "w") as f:
         json.dump(summary, f, indent=2)
 
     print(f"\n" + "=" * 80)

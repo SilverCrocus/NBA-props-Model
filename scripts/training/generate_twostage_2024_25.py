@@ -17,6 +17,7 @@ from tqdm import tqdm
 project_root = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(project_root))
 
+from config import data_config
 from src.models.two_stage_predictor import TwoStagePredictor
 from utils.ctg_feature_builder import CTGFeatureBuilder
 
@@ -31,7 +32,8 @@ print("=" * 80)
 # Load trained two-stage model
 print("\n1. Loading trained two-stage model...")
 try:
-    predictor = TwoStagePredictor.load("models/two_stage_model")
+    model_path = data_config.MODELS_DIR / "two_stage_model"
+    predictor = TwoStagePredictor.load(model_path)
     print("✅ Model loaded successfully")
 except Exception as e:
     print(f"❌ Error loading model: {e}")
@@ -40,8 +42,8 @@ except Exception as e:
 
 # Load raw game logs
 print("\n2. Loading game logs...")
-game_logs_path = "data/game_logs/all_game_logs_with_opponent.csv"
-if not Path(game_logs_path).exists():
+game_logs_path = data_config.GAME_LOGS_PATH
+if not game_logs_path.exists():
     print(f"❌ Game logs not found: {game_logs_path}")
     sys.exit(1)
 
@@ -181,12 +183,13 @@ if len(predictions_df) > 0:
     print(f"   Within ±10 pts: {(predictions_df['abs_error'] <= 10).mean()*100:.1f}%")
 
     # Save predictions
-    output_file = "data/results/two_stage_predictions_2024_25_FULL.csv"
+    output_file = data_config.RESULTS_DIR / "two_stage_predictions_2024_25_FULL.csv"
     predictions_df.to_csv(output_file, index=False)
     print(f"\n✅ Saved to {output_file}")
 
     # Compare coverage to baseline
-    baseline_df = pd.read_csv("data/results/walk_forward_advanced_features_2024_25.csv")
+    baseline_file = data_config.RESULTS_DIR / "walk_forward_advanced_features_2024_25.csv"
+    baseline_df = pd.read_csv(baseline_file)
     print(f"\n📊 COVERAGE COMPARISON:")
     print(f"   Baseline: {len(baseline_df):,} predictions")
     print(f"   Two-stage: {len(predictions_df):,} predictions")

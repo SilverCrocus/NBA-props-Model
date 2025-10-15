@@ -28,6 +28,7 @@ sys.path.append(str(Path(__file__).parent.parent / "training"))
 
 from walk_forward_training_advanced_features import calculate_all_features  # noqa: E402
 
+from config import data_config, model_config, validation_config  # noqa: E402
 from src.models.two_stage_predictor import TwoStagePredictor  # noqa: E402
 from utils.ctg_feature_builder import CTGFeatureBuilder  # noqa: E402
 
@@ -50,7 +51,7 @@ print("=" * 80)
 
 # Load prepared dataset
 print("\n1.1 Loading prepared dataset...")
-df = pd.read_parquet("data/processed/game_level_training_data.parquet")
+df = pd.read_parquet(data_config.PROCESSED_DIR / "game_level_training_data.parquet")
 df = df.sort_values("GAME_DATE").reset_index(drop=True)
 print(f"✅ Loaded {len(df):,} games")
 
@@ -106,20 +107,8 @@ y_train_min = train_df["MIN"].copy()
 # Train two-stage model
 print("\n1.3 Training two-stage model...")
 predictor = TwoStagePredictor(
-    minutes_model_params={
-        "iterations": 300,
-        "depth": 5,
-        "learning_rate": 0.05,
-        "random_state": 42,
-        "verbose": False,
-    },
-    pra_model_params={
-        "iterations": 400,
-        "depth": 6,
-        "learning_rate": 0.04,
-        "random_state": 42,
-        "verbose": False,
-    },
+    minutes_model_params=model_config.CATBOOST_MINUTES_PARAMS,
+    pra_model_params=model_config.CATBOOST_PRA_PARAMS,
 )
 
 train_metrics = predictor.fit(X_train, y_train_pra, y_train_min)
@@ -134,7 +123,7 @@ print("=" * 80)
 
 # Load raw game logs
 print("\n2.1 Loading game logs...")
-all_games = pd.read_csv("data/game_logs/all_game_logs_with_opponent.csv")
+all_games = pd.read_csv(data_config.GAME_LOGS_PATH)
 all_games["GAME_DATE"] = pd.to_datetime(all_games["GAME_DATE"], format="mixed")
 all_games = all_games.sort_values("GAME_DATE").reset_index(drop=True)
 
@@ -243,8 +232,9 @@ print(f"\n✅ Calibrated MAE: {mae_calib:.2f} points")
 print(f"    Improvement: {mae_uncalib - mae_calib:+.2f} points")
 
 # Save predictions
-predictions_df.to_csv("data/results/FINAL_BACKTEST_predictions_2024_25.csv", index=False)
-print("✅ Saved to data/results/FINAL_BACKTEST_predictions_2024_25.csv")
+output_path = data_config.RESULTS_DIR / "FINAL_BACKTEST_predictions_2024_25.csv"
+predictions_df.to_csv(output_path, index=False)
+print(f"✅ Saved to {output_path}")
 
 # ============================================================================
 # STEP 4: BACKTEST WITH REAL ODDS
@@ -358,11 +348,11 @@ print("=" * 80)
 bets = merged[merged["bet_placed"]].copy()
 bets = bets.sort_values("game_date").reset_index(drop=True)
 
-starting_bankroll = 1000
+starting_bankroll = validation_config.STARTING_BANKROLL
 bankroll = starting_bankroll
-kelly_fraction = 0.25
-min_bet = 10
-max_bet_pct = 0.05
+kelly_fraction = validation_config.KELLY_FRACTION
+min_bet = validation_config.MIN_BET
+max_bet_pct = validation_config.MAX_BET_PCT
 
 bankroll_history = []
 

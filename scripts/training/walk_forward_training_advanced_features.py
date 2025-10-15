@@ -33,6 +33,7 @@ logger = logging.getLogger(__name__)
 
 # Initialize MLflow tracking
 sys.path.append(str(Path(__file__).parent.parent.parent))
+from config import data_config, model_config, validation_config
 from src.mlflow_integration.tracker import NBAPropsTracker, enable_autologging
 
 # ==================== BASIC FEATURES (from Day 3) ====================
@@ -426,9 +427,9 @@ def walk_forward_train_and_validate(
         logger.info("\n2. Loading raw game logs...")
 
         # Load combined game logs with opponent data
-        game_logs_path = "data/game_logs/all_game_logs_with_opponent.csv"
+        game_logs_path = data_config.GAME_LOGS_PATH
 
-        if not Path(game_logs_path).exists():
+        if not game_logs_path.exists():
             raise FileNotFoundError(f"Game logs not found: {game_logs_path}")
 
         all_games_df = pd.read_csv(game_logs_path)
@@ -443,9 +444,9 @@ def walk_forward_train_and_validate(
         )
 
         # Split into training and validation
-        train_start_date = pd.to_datetime("2023-10-01")
-        train_end_date = pd.to_datetime("2024-06-30")
-        val_start_date = pd.to_datetime("2024-10-01")
+        train_start_date = pd.to_datetime(validation_config.TRAIN_START_DATE)
+        train_end_date = pd.to_datetime(validation_config.TRAIN_END_DATE)
+        val_start_date = pd.to_datetime(validation_config.VAL_START_DATE)
         val_end_date = all_games_df["GAME_DATE"].max()
 
         train_games = all_games_df[
@@ -533,15 +534,7 @@ def walk_forward_train_and_validate(
         # Train model
         logger.info("\n5. Training XGBoost model...")
 
-        hyperparams = {
-            "n_estimators": 300,
-            "max_depth": 6,
-            "learning_rate": 0.05,
-            "subsample": 0.8,
-            "colsample_bytree": 0.8,
-            "random_state": 42,
-            "n_jobs": -1,
-        }
+        hyperparams = model_config.XGBOOST_PARAMS.copy()
         tracker.log_params(hyperparams)
 
         enable_autologging("xgboost")
@@ -623,7 +616,7 @@ def walk_forward_train_and_validate(
         tracker.log_validation_metrics(val_metrics)
 
         # Save predictions
-        output_path = Path("data/results/walk_forward_advanced_features_2024_25.csv")
+        output_path = data_config.RESULTS_DIR / "walk_forward_advanced_features_2024_25.csv"
         output_path.parent.mkdir(parents=True, exist_ok=True)
         val_df.to_csv(output_path, index=False)
 

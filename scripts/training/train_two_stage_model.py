@@ -30,6 +30,7 @@ from tqdm import tqdm
 # Add project root to path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
+from config import data_config, model_config
 from src.models.two_stage_predictor import TwoStagePredictor
 
 # Add utils for CTG features
@@ -64,9 +65,9 @@ def load_training_data() -> pd.DataFrame:
     logger.info("Loading raw game logs...")
 
     # Use raw game logs (same as Day 4)
-    game_logs_path = "data/game_logs/all_game_logs_with_opponent.csv"
+    game_logs_path = data_config.GAME_LOGS_PATH
 
-    if not Path(game_logs_path).exists():
+    if not game_logs_path.exists():
         raise FileNotFoundError(f"Game logs not found: {game_logs_path}")
 
     df = pd.read_csv(game_logs_path)
@@ -408,12 +409,12 @@ def save_results(predictions_df: pd.DataFrame, predictor: TwoStagePredictor):
     logger.info("=" * 80)
 
     # Save predictions
-    output_path = "data/results/two_stage_predictions_2024_25.csv"
+    output_path = data_config.RESULTS_DIR / "two_stage_predictions_2024_25.csv"
     predictions_df.to_csv(output_path, index=False)
     logger.info(f"   ✅ Predictions saved to {output_path}")
 
     # Save model
-    model_path = "models/two_stage_predictor"
+    model_path = data_config.MODELS_DIR / "two_stage_predictor"
     # Note: Can't save the last predictor from loop, need to retrain on full data
     # This is just a placeholder for now
     logger.info(f"   ⚠️ Model saving requires full dataset training (TODO)")
