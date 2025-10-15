@@ -55,6 +55,43 @@ data/archived_synthetic/*.csv
 data/model_results/*.csv
 data/model_results/*.png
 
+# Data results (intermediate analysis files)
+data/results/*_importance.csv
+data/results/diagnostic_*.csv
+data/results/opponent_*.png
+data/results/sequence_*.png
+data/results/betting_simulation*.csv
+data/results/betting_simulation*.png
+data/results/calibration_curve.png
+data/results/tomorrow_*.csv
+data/results/predictions_with_*.csv
+data/results/training_data_quality_report.json
+data/results/comprehensive_data_quality_assessment.json
+data/results/DATA_QUALITY_*.md
+data/results/backtest_calibrated*.csv
+data/results/backtest_calibrated*.json
+data/results/tree_ensemble_*.csv
+data/results/two_stage_predictions_2024_25_FULL.csv
+data/results/two_stage_calibrated_2024_25.csv
+data/results/walk_forward_calibrated_2024_25.csv
+data/results/walkforward_*.csv
+data/results/walkforward_*.png
+data/results/WINNER_*.csv
+data/results/week1_improvements_2024_25.csv
+data/results/position_defense_*.csv
+
+# MLflow experiment tracking
+mlflow_artifacts/
+mlruns/
+
+# Trained model files
+models/*.pkl
+models/*.cbm
+models/*.joblib
+
+# CatBoost training logs
+catboost_info/
+
 # Logs and output files
 *.log
 **/*.log
