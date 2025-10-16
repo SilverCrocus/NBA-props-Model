@@ -193,6 +193,111 @@ class MLflowConfig:
     MIN_BETTING_WIN_RATE: float = 0.55
 
 
+@dataclass
+class BettingConfig:
+    """
+    Optimal betting strategy configuration.
+
+    Based on comprehensive backtesting (October 2025), this configuration defines
+    the OPTIMAL betting filters that achieve 54.78% win rate and +5.95% ROI.
+
+    See: OPTIMAL_BETTING_STRATEGY.md for full research findings.
+    """
+
+    # Star players to EXCLUDE from betting
+    # These players have less efficient markets (44.59% win rate, -11.33% ROI)
+    STAR_PLAYERS: List[str] = field(
+        default_factory=lambda: [
+            # Superstars
+            "LeBron James",
+            "Stephen Curry",
+            "Kevin Durant",
+            "Giannis Antetokounmpo",
+            "Nikola Jokic",
+            "Joel Embiid",
+            "Luka Doncic",
+            "Jayson Tatum",
+            # All-Stars
+            "Damian Lillard",
+            "Anthony Davis",
+            "Kawhi Leonard",
+            "Jimmy Butler",
+            "Devin Booker",
+            "Donovan Mitchell",
+            "Trae Young",
+            "Ja Morant",
+            "Kyrie Irving",
+            "Paul George",
+            "Anthony Edwards",
+            "Shai Gilgeous-Alexander",
+            "Karl-Anthony Towns",
+            "Domantas Sabonis",
+            "Jaylen Brown",
+            "Bam Adebayo",
+            # High-usage players
+            "De'Aaron Fox",
+            "Tyrese Haliburton",
+            "Pascal Siakam",
+            "Zion Williamson",
+            "Brandon Ingram",
+            "DeMar DeRozan",
+            "Bradley Beal",
+            "Jrue Holiday",
+            "Kristaps Porzingis",
+            "Jaren Jackson Jr.",
+            "LaMelo Ball",
+            "Dejounte Murray",
+            "Fred VanVleet",
+            "Draymond Green",
+            "Klay Thompson",
+            "Jalen Brunson",
+            "Julius Randle",
+            "Rudy Gobert",
+            "CJ McCollum",
+            "Tyler Herro",
+            "Tobias Harris",
+            "Khris Middleton",
+            "Chris Paul",
+            "Russell Westbrook",
+            # Rising stars
+            "Paolo Banchero",
+            "Scottie Barnes",
+            "Lauri Markkanen",
+            "Jerami Grant",
+            "Cade Cunningham",
+            "Deni Avdija",
+            "Cole Anthony",
+            "Kyle Kuzma",
+            "Derrick White",
+            "Jalen Williams",
+            "Anfernee Simons",
+            "Jordan Poole",
+        ]
+    )
+
+    # Optimal edge filters (validated through backtesting)
+    EDGE_MEDIUM_MIN: float = 5.0  # Medium edge minimum (pts)
+    EDGE_MEDIUM_MAX: float = 7.0  # Medium edge maximum (pts)
+    EDGE_HUGE_MIN: float = 10.0  # Huge edge minimum (pts)
+
+    # Edge ranges to AVOID (unprofitable)
+    EDGE_SMALL_MIN: float = 3.0  # Small edge min (avoid: 50.9% win rate)
+    EDGE_SMALL_MAX: float = 5.0  # Small edge max
+    EDGE_LARGE_MIN: float = 7.0  # Large edge min (avoid: 50.0% win rate)
+    EDGE_LARGE_MAX: float = 10.0  # Large edge max
+
+    # Betting strategy flags
+    USE_OPTIMAL_STRATEGY: bool = True  # Use optimal filters (non-stars + edge filters)
+    USE_STAR_FILTER: bool = True  # Exclude star players
+    USE_EDGE_FILTER: bool = True  # Only bet on medium/huge edges
+
+    # Expected performance (based on 2024-25 backtest)
+    EXPECTED_WIN_RATE: float = 0.5478  # 54.78%
+    EXPECTED_ROI: float = 0.0595  # 5.95%
+    EXPECTED_BETS_PER_SEASON: int = 230
+    EXPECTED_BETS_PER_DAY: float = 1.4
+
+
 # Singleton instances for easy import
 data_config = DataConfig()
 model_config = ModelConfig()
