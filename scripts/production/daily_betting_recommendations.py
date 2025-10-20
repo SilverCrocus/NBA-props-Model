@@ -22,6 +22,7 @@ Output:
 """
 
 import argparse
+import os
 import pickle
 import sys
 from datetime import datetime, timedelta
@@ -30,6 +31,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import requests
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
 from scripts.utils.fast_feature_builder import FastFeatureBuilder
@@ -38,8 +43,8 @@ from scripts.utils.fast_feature_builder import FastFeatureBuilder
 # CONFIGURATION
 # ============================================================================
 
-# API Configuration (replace with your actual API details)
-ODDS_API_KEY = "YOUR_API_KEY_HERE"  # Set via environment variable or config file
+# API Configuration (loaded from .env file)
+ODDS_API_KEY = os.getenv("ODDS_API_KEY")
 ODDS_API_URL = "https://api.the-odds-api.com/v4/sports/basketball_nba/odds"
 
 # NBA API for game schedule
