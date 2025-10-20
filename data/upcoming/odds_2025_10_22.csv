@@ -1,0 +1,494 @@
+event_date,home_team,away_team,player_name,bookmaker,line,over_price,under_price,timestamp
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,betonlineag,27.5,-115.0,-112.0,2025-10-20T14:32:14.076366
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,23.5,-260.0,190.0,2025-10-20T14:32:14.075455
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,24.5,-210.0,155.0,2025-10-20T14:32:14.075466
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,25.5,-170.0,130.0,2025-10-20T14:32:14.075478
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,26.5,-135.0,105.0,2025-10-20T14:32:14.075489
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,27.5,-115.0,-115.0,2025-10-20T14:32:14.075501
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,28.5,105.0,-135.0,2025-10-20T14:32:14.075512
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,29.5,125.0,-165.0,2025-10-20T14:32:14.075523
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,30.5,150.0,-200.0,2025-10-20T14:32:14.075536
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,31.5,175.0,-240.0,2025-10-20T14:32:14.075548
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,bovada,32.5,210.0,-290.0,2025-10-20T14:32:14.075560
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,draftkings,27.5,-124.0,-105.0,2025-10-20T14:32:14.075327
+2025-10-22,Atlanta Hawks,Toronto Raptors,Brandon Ingram,fanduel,27.5,-112.0,-118.0,2025-10-20T14:32:14.075420
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,betonlineag,22.5,-114.0,-114.0,2025-10-20T14:32:14.076354
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,bovada,18.5,-290.0,210.0,2025-10-20T14:32:14.075572
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,bovada,19.5,-220.0,165.0,2025-10-20T14:32:14.075583
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,bovada,20.5,-180.0,135.0,2025-10-20T14:32:14.075595
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,bovada,21.5,-145.0,110.0,2025-10-20T14:32:14.075607
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,bovada,22.5,-115.0,-115.0,2025-10-20T14:32:14.075618
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,bovada,23.5,105.0,-135.0,2025-10-20T14:32:14.075634
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,bovada,24.5,130.0,-170.0,2025-10-20T14:32:14.075645
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,bovada,25.5,155.0,-210.0,2025-10-20T14:32:14.075657
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,bovada,26.5,185.0,-250.0,2025-10-20T14:32:14.075668
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,draftkings,21.5,-128.0,-102.0,2025-10-20T14:32:14.075361
+2025-10-22,Atlanta Hawks,Toronto Raptors,Dyson Daniels,fanduel,22.5,-114.0,-114.0,2025-10-20T14:32:14.075398
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,betonlineag,24.5,-109.0,-119.0,2025-10-20T14:32:14.076305
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,bovada,20.5,-275.0,200.0,2025-10-20T14:32:14.075679
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,bovada,21.5,-215.0,160.0,2025-10-20T14:32:14.075690
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,bovada,22.5,-170.0,130.0,2025-10-20T14:32:14.075701
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,bovada,23.5,-145.0,110.0,2025-10-20T14:32:14.075713
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,bovada,24.5,-115.0,-115.0,2025-10-20T14:32:14.075724
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,bovada,25.5,105.0,-135.0,2025-10-20T14:32:14.075735
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,bovada,26.5,125.0,-165.0,2025-10-20T14:32:14.075746
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,bovada,27.5,150.0,-200.0,2025-10-20T14:32:14.075758
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,bovada,28.5,180.0,-245.0,2025-10-20T14:32:14.075771
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,draftkings,24.5,-107.0,-121.0,2025-10-20T14:32:14.075350
+2025-10-22,Atlanta Hawks,Toronto Raptors,Immanuel Quickley,fanduel,24.5,-108.0,-122.0,2025-10-20T14:32:14.075374
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,betonlineag,31.5,-111.0,-116.0,2025-10-20T14:32:14.076342
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,26.5,-245.0,180.0,2025-10-20T14:32:14.075784
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,27.5,-200.0,150.0,2025-10-20T14:32:14.075797
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,28.5,-165.0,125.0,2025-10-20T14:32:14.075810
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,29.5,-135.0,105.0,2025-10-20T14:32:14.075822
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,30.5,-115.0,-115.0,2025-10-20T14:32:14.075834
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,31.5,105.0,-135.0,2025-10-20T14:32:14.075847
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,32.5,125.0,-165.0,2025-10-20T14:32:14.075860
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,33.5,145.0,-190.0,2025-10-20T14:32:14.075877
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,34.5,170.0,-230.0,2025-10-20T14:32:14.075892
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,bovada,35.5,200.0,-275.0,2025-10-20T14:32:14.075904
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,draftkings,31.5,-119.0,-108.0,2025-10-20T14:32:14.075301
+2025-10-22,Atlanta Hawks,Toronto Raptors,Jalen Johnson,fanduel,31.5,-106.0,-125.0,2025-10-20T14:32:14.075443
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,betonlineag,27.5,-111.0,-116.0,2025-10-20T14:32:14.076318
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,23.5,-260.0,190.0,2025-10-20T14:32:14.075917
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,24.5,-210.0,155.0,2025-10-20T14:32:14.075929
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,25.5,-170.0,130.0,2025-10-20T14:32:14.075941
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,26.5,-135.0,105.0,2025-10-20T14:32:14.075955
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,27.5,-115.0,-115.0,2025-10-20T14:32:14.075968
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,28.5,105.0,-135.0,2025-10-20T14:32:14.075982
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,29.5,125.0,-165.0,2025-10-20T14:32:14.075994
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,30.5,150.0,-200.0,2025-10-20T14:32:14.076006
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,31.5,175.0,-240.0,2025-10-20T14:32:14.076017
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,bovada,32.5,210.0,-290.0,2025-10-20T14:32:14.076029
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,draftkings,27.5,-112.0,-115.0,2025-10-20T14:32:14.075338
+2025-10-22,Atlanta Hawks,Toronto Raptors,R.J. Barrett,fanduel,27.5,-112.0,-118.0,2025-10-20T14:32:14.075386
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,betonlineag,30.5,-110.0,-118.0,2025-10-20T14:32:14.076330
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,26.5,-250.0,185.0,2025-10-20T14:32:14.076041
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,27.5,-200.0,150.0,2025-10-20T14:32:14.076053
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,28.5,-165.0,125.0,2025-10-20T14:32:14.076065
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,29.5,-135.0,105.0,2025-10-20T14:32:14.076077
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,30.5,-115.0,-115.0,2025-10-20T14:32:14.076088
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,31.5,105.0,-135.0,2025-10-20T14:32:14.076100
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,32.5,120.0,-160.0,2025-10-20T14:32:14.076123
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,33.5,145.0,-190.0,2025-10-20T14:32:14.076135
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,34.5,170.0,-230.0,2025-10-20T14:32:14.076147
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,bovada,35.5,200.0,-275.0,2025-10-20T14:32:14.076162
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,draftkings,30.5,-111.0,-117.0,2025-10-20T14:32:14.075313
+2025-10-22,Atlanta Hawks,Toronto Raptors,Scottie Barnes,fanduel,30.5,-110.0,-120.0,2025-10-20T14:32:14.075409
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,betonlineag,39.5,-103.0,-125.0,2025-10-20T14:32:14.076378
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,33.5,-260.0,190.0,2025-10-20T14:32:14.076174
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,34.5,-215.0,160.0,2025-10-20T14:32:14.076185
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,35.5,-180.0,135.0,2025-10-20T14:32:14.076197
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,36.5,-150.0,115.0,2025-10-20T14:32:14.076208
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,37.5,-130.0,100.0,2025-10-20T14:32:14.076220
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,38.5,-110.0,-120.0,2025-10-20T14:32:14.076231
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,39.5,105.0,-135.0,2025-10-20T14:32:14.076243
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,40.5,125.0,-165.0,2025-10-20T14:32:14.076255
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,41.5,145.0,-190.0,2025-10-20T14:32:14.076268
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,42.5,165.0,-220.0,2025-10-20T14:32:14.076280
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,bovada,43.5,190.0,-260.0,2025-10-20T14:32:14.076293
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,draftkings,39.5,-107.0,-121.0,2025-10-20T14:32:14.075277
+2025-10-22,Atlanta Hawks,Toronto Raptors,Trae Young,fanduel,38.5,-110.0,-120.0,2025-10-20T14:32:14.075432
+2025-10-22,Boston Celtics,Philadelphia 76ers,Derrick White,betonlineag,31.5,-118.0,-110.0,2025-10-20T14:32:14.980286
+2025-10-22,Boston Celtics,Philadelphia 76ers,Derrick White,fanduel,31.5,-120.0,-110.0,2025-10-20T14:32:14.979593
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,betonlineag,35.5,-114.0,-114.0,2025-10-20T14:32:14.980260
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,32.5,-250.0,185.0,2025-10-20T14:32:14.979653
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,33.5,-210.0,155.0,2025-10-20T14:32:14.979662
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,34.5,-180.0,135.0,2025-10-20T14:32:14.979672
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,35.5,-150.0,115.0,2025-10-20T14:32:14.979682
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,36.5,-125.0,-105.0,2025-10-20T14:32:14.979691
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,37.5,-105.0,-125.0,2025-10-20T14:32:14.979710
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,38.5,110.0,-145.0,2025-10-20T14:32:14.979719
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,39.5,130.0,-170.0,2025-10-20T14:32:14.979729
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,40.5,150.0,-200.0,2025-10-20T14:32:14.979739
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,41.5,170.0,-230.0,2025-10-20T14:32:14.979748
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,bovada,42.5,200.0,-275.0,2025-10-20T14:32:14.979758
+2025-10-22,Boston Celtics,Philadelphia 76ers,Jaylen Brown,fanduel,35.5,-114.0,-114.0,2025-10-20T14:32:14.979643
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,betonlineag,38.5,-109.0,-119.0,2025-10-20T14:32:14.980269
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,33.5,-260.0,190.0,2025-10-20T14:32:14.979768
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,34.5,-215.0,160.0,2025-10-20T14:32:14.979777
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,35.5,-180.0,135.0,2025-10-20T14:32:14.979787
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,36.5,-150.0,115.0,2025-10-20T14:32:14.979796
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,37.5,-130.0,100.0,2025-10-20T14:32:14.979806
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,38.5,-110.0,-120.0,2025-10-20T14:32:14.979815
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,39.5,105.0,-135.0,2025-10-20T14:32:14.979825
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,40.5,125.0,-165.0,2025-10-20T14:32:14.979834
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,41.5,145.0,-190.0,2025-10-20T14:32:14.979844
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,42.5,165.0,-220.0,2025-10-20T14:32:14.979853
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,bovada,43.5,190.0,-260.0,2025-10-20T14:32:14.979863
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,draftkings,38.5,-112.0,-115.0,2025-10-20T14:32:14.979546
+2025-10-22,Boston Celtics,Philadelphia 76ers,Joel Embiid,fanduel,39.5,-112.0,-118.0,2025-10-20T14:32:14.979622
+2025-10-22,Boston Celtics,Philadelphia 76ers,Kelly Oubre Jr,bovada,15.5,-250.0,185.0,2025-10-20T14:32:14.979872
+2025-10-22,Boston Celtics,Philadelphia 76ers,Kelly Oubre Jr,bovada,16.5,-190.0,145.0,2025-10-20T14:32:14.979882
+2025-10-22,Boston Celtics,Philadelphia 76ers,Kelly Oubre Jr,bovada,17.5,-150.0,115.0,2025-10-20T14:32:14.979891
+2025-10-22,Boston Celtics,Philadelphia 76ers,Kelly Oubre Jr,bovada,18.5,-120.0,-110.0,2025-10-20T14:32:14.979947
+2025-10-22,Boston Celtics,Philadelphia 76ers,Kelly Oubre Jr,bovada,19.5,105.0,-135.0,2025-10-20T14:32:14.979975
+2025-10-22,Boston Celtics,Philadelphia 76ers,Kelly Oubre Jr,bovada,20.5,130.0,-170.0,2025-10-20T14:32:14.979985
+2025-10-22,Boston Celtics,Philadelphia 76ers,Kelly Oubre Jr,bovada,21.5,160.0,-215.0,2025-10-20T14:32:14.979994
+2025-10-22,Boston Celtics,Philadelphia 76ers,Kelly Oubre Jr,bovada,22.5,190.0,-260.0,2025-10-20T14:32:14.980003
+2025-10-22,Boston Celtics,Philadelphia 76ers,Neemias Queta,bovada,13.5,-240.0,175.0,2025-10-20T14:32:14.980012
+2025-10-22,Boston Celtics,Philadelphia 76ers,Neemias Queta,bovada,14.5,-180.0,135.0,2025-10-20T14:32:14.980020
+2025-10-22,Boston Celtics,Philadelphia 76ers,Neemias Queta,bovada,15.5,-135.0,105.0,2025-10-20T14:32:14.980030
+2025-10-22,Boston Celtics,Philadelphia 76ers,Neemias Queta,bovada,16.5,-110.0,-120.0,2025-10-20T14:32:14.980039
+2025-10-22,Boston Celtics,Philadelphia 76ers,Neemias Queta,bovada,17.5,115.0,-150.0,2025-10-20T14:32:14.980047
+2025-10-22,Boston Celtics,Philadelphia 76ers,Neemias Queta,bovada,18.5,145.0,-190.0,2025-10-20T14:32:14.980057
+2025-10-22,Boston Celtics,Philadelphia 76ers,Neemias Queta,bovada,19.5,180.0,-245.0,2025-10-20T14:32:14.980066
+2025-10-22,Boston Celtics,Philadelphia 76ers,Payton Pritchard,betonlineag,27.5,-108.0,-120.0,2025-10-20T14:32:14.980251
+2025-10-22,Boston Celtics,Philadelphia 76ers,Payton Pritchard,fanduel,27.5,-110.0,-120.0,2025-10-20T14:32:14.979633
+2025-10-22,Boston Celtics,Philadelphia 76ers,Quentin Grimes,bovada,19.5,-260.0,190.0,2025-10-20T14:32:14.980081
+2025-10-22,Boston Celtics,Philadelphia 76ers,Quentin Grimes,bovada,20.5,-210.0,155.0,2025-10-20T14:32:14.980091
+2025-10-22,Boston Celtics,Philadelphia 76ers,Quentin Grimes,bovada,21.5,-165.0,125.0,2025-10-20T14:32:14.980101
+2025-10-22,Boston Celtics,Philadelphia 76ers,Quentin Grimes,bovada,22.5,-130.0,100.0,2025-10-20T14:32:14.980110
+2025-10-22,Boston Celtics,Philadelphia 76ers,Quentin Grimes,bovada,23.5,-105.0,-125.0,2025-10-20T14:32:14.980119
+2025-10-22,Boston Celtics,Philadelphia 76ers,Quentin Grimes,bovada,24.5,115.0,-150.0,2025-10-20T14:32:14.980128
+2025-10-22,Boston Celtics,Philadelphia 76ers,Quentin Grimes,bovada,25.5,135.0,-180.0,2025-10-20T14:32:14.980137
+2025-10-22,Boston Celtics,Philadelphia 76ers,Quentin Grimes,bovada,26.5,165.0,-220.0,2025-10-20T14:32:14.980155
+2025-10-22,Boston Celtics,Philadelphia 76ers,Quentin Grimes,bovada,27.5,200.0,-275.0,2025-10-20T14:32:14.980168
+2025-10-22,Boston Celtics,Philadelphia 76ers,Tyrese Maxey,betonlineag,34.5,-115.0,-112.0,2025-10-20T14:32:14.980277
+2025-10-22,Boston Celtics,Philadelphia 76ers,Tyrese Maxey,draftkings,34.5,-117.0,-111.0,2025-10-20T14:32:14.979570
+2025-10-22,Boston Celtics,Philadelphia 76ers,Tyrese Maxey,fanduel,34.5,-114.0,-114.0,2025-10-20T14:32:14.979613
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,betonlineag,18.5,-111.0,-116.0,2025-10-20T14:32:14.980295
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,bovada,14.5,-290.0,210.0,2025-10-20T14:32:14.980177
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,bovada,15.5,-220.0,165.0,2025-10-20T14:32:14.980186
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,bovada,16.5,-170.0,130.0,2025-10-20T14:32:14.980195
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,bovada,17.5,-130.0,100.0,2025-10-20T14:32:14.980204
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,bovada,18.5,-105.0,-125.0,2025-10-20T14:32:14.980212
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,bovada,19.5,120.0,-160.0,2025-10-20T14:32:14.980222
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,bovada,20.5,145.0,-190.0,2025-10-20T14:32:14.980231
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,bovada,21.5,180.0,-245.0,2025-10-20T14:32:14.980240
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,draftkings,18.5,-108.0,-120.0,2025-10-20T14:32:14.979581
+2025-10-22,Boston Celtics,Philadelphia 76ers,VJ Edgecombe,fanduel,18.5,-125.0,-106.0,2025-10-20T14:32:14.979603
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,betonlineag,27.5,-106.0,-122.0,2025-10-20T14:32:11.894442
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,bovada,23.5,-245.0,180.0,2025-10-20T14:32:11.894063
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,bovada,24.5,-200.0,150.0,2025-10-20T14:32:11.894075
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,bovada,25.5,-160.0,120.0,2025-10-20T14:32:11.894086
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,bovada,26.5,-130.0,100.0,2025-10-20T14:32:11.894098
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,bovada,27.5,-110.0,-120.0,2025-10-20T14:32:11.894109
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,bovada,28.5,110.0,-145.0,2025-10-20T14:32:11.894121
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,bovada,29.5,130.0,-170.0,2025-10-20T14:32:11.894132
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,bovada,30.5,155.0,-210.0,2025-10-20T14:32:11.894143
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,bovada,31.5,185.0,-250.0,2025-10-20T14:32:11.894155
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,draftkings,27.5,-107.0,-122.0,2025-10-20T14:32:11.893999
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Brandon Miller,fanduel,27.5,-106.0,-125.0,2025-10-20T14:32:11.894023
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Cam Thomas,betonlineag,31.5,-109.0,-119.0,2025-10-20T14:32:11.894454
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Cam Thomas,draftkings,31.5,-107.0,-121.0,2025-10-20T14:32:11.893976
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Cam Thomas,fanduel,31.5,-112.0,-118.0,2025-10-20T14:32:11.894012
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,betonlineag,35.5,-119.0,-109.0,2025-10-20T14:32:11.894430
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,30.5,-300.0,215.0,2025-10-20T14:32:11.894166
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,31.5,-245.0,180.0,2025-10-20T14:32:11.894177
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,32.5,-200.0,150.0,2025-10-20T14:32:11.894190
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,33.5,-165.0,125.0,2025-10-20T14:32:11.894201
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,34.5,-145.0,110.0,2025-10-20T14:32:11.894212
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,35.5,-120.0,-110.0,2025-10-20T14:32:11.894224
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,36.5,100.0,-130.0,2025-10-20T14:32:11.894235
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,37.5,115.0,-150.0,2025-10-20T14:32:11.894246
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,38.5,135.0,-180.0,2025-10-20T14:32:11.894258
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,39.5,155.0,-210.0,2025-10-20T14:32:11.894269
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,40.5,180.0,-245.0,2025-10-20T14:32:11.894280
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,bovada,41.5,210.0,-290.0,2025-10-20T14:32:11.894291
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,draftkings,35.5,-119.0,-109.0,2025-10-20T14:32:11.893955
+2025-10-22,Charlotte Hornets,Brooklyn Nets,LaMelo Ball,fanduel,35.5,-125.0,-106.0,2025-10-20T14:32:11.894052
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,betonlineag,30.5,-105.0,-123.0,2025-10-20T14:32:11.894466
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,27.5,-245.0,180.0,2025-10-20T14:32:11.894303
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,28.5,-200.0,150.0,2025-10-20T14:32:11.894321
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,29.5,-165.0,125.0,2025-10-20T14:32:11.894333
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,30.5,-135.0,105.0,2025-10-20T14:32:11.894344
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,31.5,-115.0,-115.0,2025-10-20T14:32:11.894355
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,32.5,105.0,-135.0,2025-10-20T14:32:11.894367
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,33.5,120.0,-160.0,2025-10-20T14:32:11.894378
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,34.5,145.0,-190.0,2025-10-20T14:32:11.894389
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,35.5,170.0,-230.0,2025-10-20T14:32:11.894406
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,bovada,36.5,200.0,-275.0,2025-10-20T14:32:11.894418
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,draftkings,30.5,-105.0,-124.0,2025-10-20T14:32:11.893988
+2025-10-22,Charlotte Hornets,Brooklyn Nets,Miles Bridges,fanduel,29.5,-125.0,-106.0,2025-10-20T14:32:11.894040
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,betonlineag,16.5,-110.0,-118.0,2025-10-20T14:32:11.245179
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,bovada,13.5,-240.0,175.0,2025-10-20T14:32:11.244061
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,bovada,14.5,-180.0,135.0,2025-10-20T14:32:11.244073
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,bovada,15.5,-135.0,105.0,2025-10-20T14:32:11.244084
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,bovada,16.5,-110.0,-120.0,2025-10-20T14:32:11.244096
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,bovada,17.5,115.0,-150.0,2025-10-20T14:32:11.244106
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,bovada,18.5,145.0,-190.0,2025-10-20T14:32:11.244116
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,bovada,19.5,180.0,-245.0,2025-10-20T14:32:11.244125
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,draftkings,16.5,-114.0,-113.0,2025-10-20T14:32:11.243967
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Al Horford,fanduel,16.5,-114.0,-114.0,2025-10-20T14:32:11.244001
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,betonlineag,32.5,-112.0,-115.0,2025-10-20T14:32:11.245155
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,27.5,-280.0,205.0,2025-10-20T14:32:11.244135
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,28.5,-230.0,170.0,2025-10-20T14:32:11.244144
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,29.5,-185.0,140.0,2025-10-20T14:32:11.244154
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,30.5,-160.0,120.0,2025-10-20T14:32:11.244164
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,31.5,-130.0,100.0,2025-10-20T14:32:11.244173
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,32.5,-110.0,-120.0,2025-10-20T14:32:11.244183
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,33.5,110.0,-145.0,2025-10-20T14:32:11.244193
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,34.5,125.0,-165.0,2025-10-20T14:32:11.244202
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,35.5,150.0,-200.0,2025-10-20T14:32:11.244212
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,36.5,175.0,-240.0,2025-10-20T14:32:11.244224
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,bovada,37.5,205.0,-280.0,2025-10-20T14:32:11.244233
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,draftkings,32.5,-121.0,-107.0,2025-10-20T14:32:11.243895
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Austin Reaves,fanduel,32.5,-114.0,-114.0,2025-10-20T14:32:11.243992
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,betonlineag,21.5,-111.0,-116.0,2025-10-20T14:32:11.245163
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,bovada,17.5,-300.0,215.0,2025-10-20T14:32:11.244243
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,bovada,18.5,-230.0,170.0,2025-10-20T14:32:11.244252
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,bovada,19.5,-180.0,135.0,2025-10-20T14:32:11.244262
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,bovada,20.5,-145.0,110.0,2025-10-20T14:32:11.244272
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,bovada,21.5,-115.0,-115.0,2025-10-20T14:32:11.244282
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,bovada,22.5,105.0,-135.0,2025-10-20T14:32:11.244291
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,bovada,23.5,130.0,-170.0,2025-10-20T14:32:11.244301
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,bovada,24.5,155.0,-210.0,2025-10-20T14:32:11.244310
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,bovada,25.5,190.0,-260.0,2025-10-20T14:32:11.244320
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,draftkings,21.5,-117.0,-111.0,2025-10-20T14:32:11.243925
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Brandin Podziemski,fanduel,21.5,-104.0,-128.0,2025-10-20T14:32:11.244050
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Buddy Hield,bovada,10.5,-250.0,185.0,2025-10-20T14:32:11.244330
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Buddy Hield,bovada,11.5,-185.0,140.0,2025-10-20T14:32:11.244342
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Buddy Hield,bovada,12.5,-135.0,105.0,2025-10-20T14:32:11.244351
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Buddy Hield,bovada,13.5,-105.0,-125.0,2025-10-20T14:32:11.244361
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Buddy Hield,bovada,14.5,125.0,-165.0,2025-10-20T14:32:11.244371
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Buddy Hield,bovada,15.5,155.0,-210.0,2025-10-20T14:32:11.244383
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Buddy Hield,bovada,16.5,200.0,-275.0,2025-10-20T14:32:11.244392
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,betonlineag,25.5,-114.0,-114.0,2025-10-20T14:32:11.245195
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,21.5,-275.0,200.0,2025-10-20T14:32:11.244402
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,22.5,-215.0,160.0,2025-10-20T14:32:11.244411
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,23.5,-170.0,130.0,2025-10-20T14:32:11.244421
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,24.5,-145.0,110.0,2025-10-20T14:32:11.244431
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,25.5,-115.0,-115.0,2025-10-20T14:32:11.244440
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,26.5,105.0,-135.0,2025-10-20T14:32:11.244454
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,27.5,125.0,-165.0,2025-10-20T14:32:11.244464
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,28.5,150.0,-200.0,2025-10-20T14:32:11.244473
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,29.5,180.0,-245.0,2025-10-20T14:32:11.244483
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,bovada,30.5,215.0,-300.0,2025-10-20T14:32:11.244492
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,draftkings,26.5,-109.0,-118.0,2025-10-20T14:32:11.243915
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Deandre Ayton,fanduel,26.5,-108.0,-122.0,2025-10-20T14:32:11.244031
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,betonlineag,19.5,-111.0,-116.0,2025-10-20T14:32:11.245129
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,bovada,16.5,-240.0,175.0,2025-10-20T14:32:11.244502
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,bovada,17.5,-185.0,140.0,2025-10-20T14:32:11.244511
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,bovada,18.5,-145.0,110.0,2025-10-20T14:32:11.244521
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,bovada,19.5,-115.0,-115.0,2025-10-20T14:32:11.244531
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,bovada,20.5,105.0,-135.0,2025-10-20T14:32:11.244540
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,bovada,21.5,130.0,-170.0,2025-10-20T14:32:11.244550
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,bovada,22.5,160.0,-215.0,2025-10-20T14:32:11.244559
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,bovada,23.5,200.0,-275.0,2025-10-20T14:32:11.244569
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,draftkings,19.5,-114.0,-114.0,2025-10-20T14:32:11.243945
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Draymond Green,fanduel,19.5,-108.0,-122.0,2025-10-20T14:32:11.243979
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,betonlineag,29.5,-114.0,-114.0,2025-10-20T14:32:11.245171
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,25.5,-260.0,190.0,2025-10-20T14:32:11.244578
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,26.5,-215.0,160.0,2025-10-20T14:32:11.244587
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,27.5,-180.0,135.0,2025-10-20T14:32:11.244597
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,28.5,-145.0,110.0,2025-10-20T14:32:11.244606
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,29.5,-120.0,-110.0,2025-10-20T14:32:11.244618
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,30.5,100.0,-130.0,2025-10-20T14:32:11.244627
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,31.5,115.0,-150.0,2025-10-20T14:32:11.244637
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,32.5,140.0,-185.0,2025-10-20T14:32:11.244647
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,33.5,165.0,-220.0,2025-10-20T14:32:11.244658
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,bovada,34.5,190.0,-260.0,2025-10-20T14:32:11.244667
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,draftkings,29.5,-116.0,-111.0,2025-10-20T14:32:11.243906
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jimmy Butler,fanduel,29.5,-106.0,-125.0,2025-10-20T14:32:11.244021
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,betonlineag,20.5,-105.0,-123.0,2025-10-20T14:32:11.245203
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,bovada,16.5,-275.0,200.0,2025-10-20T14:32:11.244677
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,bovada,17.5,-210.0,155.0,2025-10-20T14:32:11.244686
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,bovada,18.5,-165.0,125.0,2025-10-20T14:32:11.244696
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,bovada,19.5,-130.0,100.0,2025-10-20T14:32:11.244705
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,bovada,20.5,-105.0,-125.0,2025-10-20T14:32:11.244715
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,bovada,21.5,115.0,-150.0,2025-10-20T14:32:11.244725
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,bovada,22.5,145.0,-190.0,2025-10-20T14:32:11.244734
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,bovada,23.5,175.0,-240.0,2025-10-20T14:32:11.244744
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,bovada,24.5,215.0,-300.0,2025-10-20T14:32:11.244754
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Jonathan Kuminga,draftkings,20.5,-111.0,-117.0,2025-10-20T14:32:11.243936
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,betonlineag,47.5,-115.0,-112.0,2025-10-20T14:32:11.245147
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,42.5,-260.0,190.0,2025-10-20T14:32:11.244766
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,43.5,-215.0,160.0,2025-10-20T14:32:11.244775
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,44.5,-185.0,140.0,2025-10-20T14:32:11.244785
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,45.5,-160.0,120.0,2025-10-20T14:32:11.244794
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,46.5,-135.0,105.0,2025-10-20T14:32:11.244804
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,47.5,-120.0,-110.0,2025-10-20T14:32:11.244813
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,48.5,-105.0,-125.0,2025-10-20T14:32:11.244823
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,49.5,110.0,-145.0,2025-10-20T14:32:11.244832
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,50.5,125.0,-165.0,2025-10-20T14:32:11.244842
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,51.5,145.0,-190.0,2025-10-20T14:32:11.244851
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,52.5,165.0,-220.0,2025-10-20T14:32:11.244861
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,bovada,53.5,190.0,-260.0,2025-10-20T14:32:11.244870
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,draftkings,48.5,-109.0,-118.0,2025-10-20T14:32:11.243857
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Luka Doncic,fanduel,47.5,-110.0,-120.0,2025-10-20T14:32:11.244011
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Marcus Smart,bovada,9.5,-275.0,200.0,2025-10-20T14:32:11.244882
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Marcus Smart,bovada,10.5,-190.0,145.0,2025-10-20T14:32:11.244891
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Marcus Smart,bovada,11.5,-145.0,110.0,2025-10-20T14:32:11.244901
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Marcus Smart,bovada,12.5,-105.0,-125.0,2025-10-20T14:32:11.244910
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Marcus Smart,bovada,13.5,120.0,-160.0,2025-10-20T14:32:11.244920
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Marcus Smart,bovada,14.5,155.0,-210.0,2025-10-20T14:32:11.244929
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,betonlineag,19.5,100.0,-130.0,2025-10-20T14:32:11.245187
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,bovada,15.5,-250.0,185.0,2025-10-20T14:32:11.244939
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,bovada,16.5,-190.0,145.0,2025-10-20T14:32:11.244948
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,bovada,17.5,-150.0,115.0,2025-10-20T14:32:11.244957
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,bovada,18.5,-120.0,-110.0,2025-10-20T14:32:11.244967
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,bovada,19.5,105.0,-135.0,2025-10-20T14:32:11.244976
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,bovada,20.5,130.0,-170.0,2025-10-20T14:32:11.244986
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,bovada,21.5,160.0,-215.0,2025-10-20T14:32:11.244995
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,bovada,22.5,190.0,-260.0,2025-10-20T14:32:11.245007
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Rui Hachimura,draftkings,19.5,-105.0,-123.0,2025-10-20T14:32:11.243955
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,betonlineag,35.5,-114.0,-114.0,2025-10-20T14:32:11.245137
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,30.5,-300.0,215.0,2025-10-20T14:32:11.245016
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,31.5,-245.0,180.0,2025-10-20T14:32:11.245026
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,32.5,-200.0,150.0,2025-10-20T14:32:11.245037
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,33.5,-165.0,125.0,2025-10-20T14:32:11.245051
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,34.5,-145.0,110.0,2025-10-20T14:32:11.245060
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,35.5,-120.0,-110.0,2025-10-20T14:32:11.245070
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,36.5,100.0,-130.0,2025-10-20T14:32:11.245079
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,37.5,115.0,-150.0,2025-10-20T14:32:11.245091
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,38.5,135.0,-180.0,2025-10-20T14:32:11.245101
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,39.5,155.0,-210.0,2025-10-20T14:32:11.245110
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,bovada,40.5,180.0,-245.0,2025-10-20T14:32:11.245120
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,draftkings,35.5,-116.0,-111.0,2025-10-20T14:32:11.243883
+2025-10-22,Los Angeles Lakers,Golden State Warriors,Stephen Curry,fanduel,35.5,-106.0,-125.0,2025-10-20T14:32:11.244040
+2025-10-22,New York Knicks,Cleveland Cavaliers,De'Andre Hunter,betonlineag,20.5,-123.0,-104.0,2025-10-20T14:32:12.769543
+2025-10-22,New York Knicks,Cleveland Cavaliers,De'Andre Hunter,draftkings,20.5,-124.0,-104.0,2025-10-20T14:32:12.768870
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,betonlineag,35.5,-115.0,-112.0,2025-10-20T14:32:12.769485
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,30.5,-300.0,215.0,2025-10-20T14:32:12.768946
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,31.5,-245.0,180.0,2025-10-20T14:32:12.768955
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,32.5,-200.0,150.0,2025-10-20T14:32:12.768963
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,33.5,-165.0,125.0,2025-10-20T14:32:12.768971
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,34.5,-145.0,110.0,2025-10-20T14:32:12.768980
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,35.5,-120.0,-110.0,2025-10-20T14:32:12.768989
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,36.5,100.0,-130.0,2025-10-20T14:32:12.768997
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,37.5,115.0,-150.0,2025-10-20T14:32:12.769005
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,38.5,135.0,-180.0,2025-10-20T14:32:12.769014
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,39.5,155.0,-210.0,2025-10-20T14:32:12.769022
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,bovada,40.5,180.0,-245.0,2025-10-20T14:32:12.769030
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,draftkings,35.5,-112.0,-115.0,2025-10-20T14:32:12.768788
+2025-10-22,New York Knicks,Cleveland Cavaliers,Donovan Mitchell,fanduel,35.5,-118.0,-112.0,2025-10-20T14:32:12.768921
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,betonlineag,29.5,-119.0,-109.0,2025-10-20T14:32:12.769477
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,25.5,-260.0,190.0,2025-10-20T14:32:12.769042
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,26.5,-210.0,155.0,2025-10-20T14:32:12.769051
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,27.5,-170.0,130.0,2025-10-20T14:32:12.769059
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,28.5,-145.0,110.0,2025-10-20T14:32:12.769067
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,29.5,-120.0,-110.0,2025-10-20T14:32:12.769075
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,30.5,100.0,-130.0,2025-10-20T14:32:12.769084
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,31.5,120.0,-160.0,2025-10-20T14:32:12.769092
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,32.5,140.0,-185.0,2025-10-20T14:32:12.769100
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,33.5,165.0,-220.0,2025-10-20T14:32:12.769108
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,bovada,34.5,200.0,-275.0,2025-10-20T14:32:12.769116
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,draftkings,29.5,-111.0,-116.0,2025-10-20T14:32:12.768825
+2025-10-22,New York Knicks,Cleveland Cavaliers,Evan Mobley,fanduel,29.5,-122.0,-108.0,2025-10-20T14:32:12.768896
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,betonlineag,35.5,-105.0,-123.0,2025-10-20T14:32:12.769469
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,29.5,-280.0,205.0,2025-10-20T14:32:12.769124
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,30.5,-230.0,170.0,2025-10-20T14:32:12.769133
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,31.5,-190.0,145.0,2025-10-20T14:32:12.769141
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,32.5,-160.0,120.0,2025-10-20T14:32:12.769150
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,33.5,-135.0,105.0,2025-10-20T14:32:12.769159
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,34.5,-115.0,-115.0,2025-10-20T14:32:12.769168
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,35.5,105.0,-135.0,2025-10-20T14:32:12.769179
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,36.5,120.0,-160.0,2025-10-20T14:32:12.769188
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,37.5,145.0,-190.0,2025-10-20T14:32:12.769197
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,38.5,165.0,-220.0,2025-10-20T14:32:12.769206
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,bovada,39.5,190.0,-260.0,2025-10-20T14:32:12.769219
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,draftkings,35.5,-106.0,-122.0,2025-10-20T14:32:12.768807
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jalen Brunson,fanduel,35.5,-106.0,-125.0,2025-10-20T14:32:12.768913
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jarrett Allen,betonlineag,25.5,-103.0,-125.0,2025-10-20T14:32:12.769535
+2025-10-22,New York Knicks,Cleveland Cavaliers,Jarrett Allen,draftkings,25.5,-104.0,-125.0,2025-10-20T14:32:12.768833
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,betonlineag,22.5,-116.0,-111.0,2025-10-20T14:32:12.769494
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,bovada,19.5,-275.0,200.0,2025-10-20T14:32:12.769227
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,bovada,20.5,-210.0,155.0,2025-10-20T14:32:12.769236
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,bovada,21.5,-170.0,130.0,2025-10-20T14:32:12.769245
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,bovada,22.5,-135.0,105.0,2025-10-20T14:32:12.769253
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,bovada,23.5,-110.0,-120.0,2025-10-20T14:32:12.769262
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,bovada,24.5,110.0,-145.0,2025-10-20T14:32:12.769271
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,bovada,25.5,130.0,-170.0,2025-10-20T14:32:12.769279
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,bovada,26.5,160.0,-215.0,2025-10-20T14:32:12.769288
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,bovada,27.5,190.0,-260.0,2025-10-20T14:32:12.769296
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,draftkings,22.5,-106.0,-123.0,2025-10-20T14:32:12.768853
+2025-10-22,New York Knicks,Cleveland Cavaliers,Josh Hart,fanduel,22.5,-130.0,-102.0,2025-10-20T14:32:12.768887
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,betonlineag,34.5,-111.0,-116.0,2025-10-20T14:32:12.769511
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,29.5,-290.0,210.0,2025-10-20T14:32:12.769304
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,30.5,-240.0,175.0,2025-10-20T14:32:12.769313
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,31.5,-190.0,145.0,2025-10-20T14:32:12.769321
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,32.5,-165.0,125.0,2025-10-20T14:32:12.769330
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,33.5,-135.0,105.0,2025-10-20T14:32:12.769339
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,34.5,-115.0,-115.0,2025-10-20T14:32:12.769347
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,35.5,100.0,-130.0,2025-10-20T14:32:12.769356
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,36.5,120.0,-160.0,2025-10-20T14:32:12.769364
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,37.5,140.0,-185.0,2025-10-20T14:32:12.769373
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,38.5,165.0,-220.0,2025-10-20T14:32:12.769384
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,bovada,39.5,190.0,-260.0,2025-10-20T14:32:12.769393
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,draftkings,34.5,-104.0,-125.0,2025-10-20T14:32:12.768816
+2025-10-22,New York Knicks,Cleveland Cavaliers,Karl-Anthony Towns,fanduel,34.5,-114.0,-114.0,2025-10-20T14:32:12.768905
+2025-10-22,New York Knicks,Cleveland Cavaliers,Lonzo Ball,betonlineag,14.5,-102.0,-127.0,2025-10-20T14:32:12.769527
+2025-10-22,New York Knicks,Cleveland Cavaliers,Lonzo Ball,draftkings,13.5,-128.0,-101.0,2025-10-20T14:32:12.768878
+2025-10-22,New York Knicks,Cleveland Cavaliers,Lonzo Ball,fanduel,14.5,100.0,-132.0,2025-10-20T14:32:12.768937
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,betonlineag,22.5,-115.0,-112.0,2025-10-20T14:32:12.769519
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,bovada,19.5,-220.0,165.0,2025-10-20T14:32:12.769401
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,bovada,20.5,-180.0,135.0,2025-10-20T14:32:12.769409
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,bovada,21.5,-145.0,110.0,2025-10-20T14:32:12.769418
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,bovada,22.5,-115.0,-115.0,2025-10-20T14:32:12.769427
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,bovada,23.5,105.0,-135.0,2025-10-20T14:32:12.769435
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,bovada,24.5,130.0,-170.0,2025-10-20T14:32:12.769443
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,bovada,25.5,155.0,-210.0,2025-10-20T14:32:12.769452
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,bovada,26.5,185.0,-250.0,2025-10-20T14:32:12.769460
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,draftkings,22.5,-117.0,-110.0,2025-10-20T14:32:12.768844
+2025-10-22,New York Knicks,Cleveland Cavaliers,Mikal Bridges,fanduel,22.5,-114.0,-114.0,2025-10-20T14:32:12.768929
+2025-10-22,New York Knicks,Cleveland Cavaliers,OG Anunoby,betonlineag,21.5,-111.0,-116.0,2025-10-20T14:32:12.769502
+2025-10-22,New York Knicks,Cleveland Cavaliers,OG Anunoby,draftkings,21.5,-112.0,-116.0,2025-10-20T14:32:12.768861
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,betonlineag,24.5,-119.0,-109.0,2025-10-20T14:32:13.417609
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,bovada,20.5,-275.0,200.0,2025-10-20T14:32:13.416944
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,bovada,21.5,-220.0,165.0,2025-10-20T14:32:13.416954
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,bovada,22.5,-180.0,135.0,2025-10-20T14:32:13.416963
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,bovada,23.5,-145.0,110.0,2025-10-20T14:32:13.416987
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,bovada,24.5,-115.0,-115.0,2025-10-20T14:32:13.416996
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,bovada,25.5,105.0,-135.0,2025-10-20T14:32:13.417006
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,bovada,26.5,125.0,-165.0,2025-10-20T14:32:13.417015
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,bovada,27.5,150.0,-200.0,2025-10-20T14:32:13.417025
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,bovada,28.5,180.0,-245.0,2025-10-20T14:32:13.417035
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,draftkings,24.5,-118.0,-109.0,2025-10-20T14:32:13.416871
+2025-10-22,Orlando Magic,Miami Heat,Andrew Wiggins,fanduel,25.5,-106.0,-125.0,2025-10-20T14:32:13.416934
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,betonlineag,31.5,-108.0,-120.0,2025-10-20T14:32:13.417526
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,26.5,-280.0,205.0,2025-10-20T14:32:13.417049
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,27.5,-230.0,170.0,2025-10-20T14:32:13.417059
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,28.5,-190.0,145.0,2025-10-20T14:32:13.417069
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,29.5,-160.0,120.0,2025-10-20T14:32:13.417078
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,30.5,-130.0,100.0,2025-10-20T14:32:13.417088
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,31.5,-110.0,-120.0,2025-10-20T14:32:13.417097
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,32.5,110.0,-145.0,2025-10-20T14:32:13.417107
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,33.5,130.0,-170.0,2025-10-20T14:32:13.417117
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,34.5,150.0,-200.0,2025-10-20T14:32:13.417126
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,35.5,175.0,-240.0,2025-10-20T14:32:13.417135
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,bovada,36.5,210.0,-290.0,2025-10-20T14:32:13.417144
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,draftkings,31.5,-111.0,-117.0,2025-10-20T14:32:13.416840
+2025-10-22,Orlando Magic,Miami Heat,Bam Adebayo,fanduel,31.5,-108.0,-122.0,2025-10-20T14:32:13.416882
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,betonlineag,27.5,-110.0,-118.0,2025-10-20T14:32:13.417766
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,23.5,-260.0,190.0,2025-10-20T14:32:13.417154
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,24.5,-210.0,155.0,2025-10-20T14:32:13.417166
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,25.5,-170.0,130.0,2025-10-20T14:32:13.417175
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,26.5,-135.0,105.0,2025-10-20T14:32:13.417184
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,27.5,-115.0,-115.0,2025-10-20T14:32:13.417193
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,28.5,105.0,-135.0,2025-10-20T14:32:13.417205
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,29.5,125.0,-165.0,2025-10-20T14:32:13.417214
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,30.5,150.0,-200.0,2025-10-20T14:32:13.417224
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,31.5,175.0,-240.0,2025-10-20T14:32:13.417233
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,bovada,32.5,210.0,-290.0,2025-10-20T14:32:13.417242
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,draftkings,27.5,-109.0,-119.0,2025-10-20T14:32:13.416861
+2025-10-22,Orlando Magic,Miami Heat,Desmond Bane,fanduel,27.5,-112.0,-118.0,2025-10-20T14:32:13.416901
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,betonlineag,30.5,-115.0,-112.0,2025-10-20T14:32:13.417777
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,25.5,-290.0,210.0,2025-10-20T14:32:13.417251
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,26.5,-230.0,170.0,2025-10-20T14:32:13.417265
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,27.5,-190.0,145.0,2025-10-20T14:32:13.417276
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,28.5,-160.0,120.0,2025-10-20T14:32:13.417285
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,29.5,-130.0,100.0,2025-10-20T14:32:13.417297
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,30.5,-110.0,-120.0,2025-10-20T14:32:13.417306
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,31.5,110.0,-145.0,2025-10-20T14:32:13.417316
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,32.5,130.0,-170.0,2025-10-20T14:32:13.417328
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,33.5,150.0,-200.0,2025-10-20T14:32:13.417341
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,34.5,180.0,-245.0,2025-10-20T14:32:13.417351
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,bovada,35.5,210.0,-290.0,2025-10-20T14:32:13.417360
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,draftkings,30.5,-122.0,-106.0,2025-10-20T14:32:13.416851
+2025-10-22,Orlando Magic,Miami Heat,Franz Wagner,fanduel,30.5,-120.0,-110.0,2025-10-20T14:32:13.416892
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,betonlineag,37.5,-115.0,-112.0,2025-10-20T14:32:13.417751
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,32.5,-280.0,205.0,2025-10-20T14:32:13.417378
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,33.5,-240.0,175.0,2025-10-20T14:32:13.417388
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,34.5,-200.0,150.0,2025-10-20T14:32:13.417398
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,35.5,-165.0,125.0,2025-10-20T14:32:13.417407
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,36.5,-135.0,105.0,2025-10-20T14:32:13.417417
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,37.5,-120.0,-110.0,2025-10-20T14:32:13.417427
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,38.5,100.0,-130.0,2025-10-20T14:32:13.417437
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,39.5,115.0,-150.0,2025-10-20T14:32:13.417473
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,40.5,135.0,-180.0,2025-10-20T14:32:13.417486
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,41.5,155.0,-210.0,2025-10-20T14:32:13.417496
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,42.5,180.0,-245.0,2025-10-20T14:32:13.417506
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,bovada,43.5,205.0,-280.0,2025-10-20T14:32:13.417516
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,draftkings,37.5,-112.0,-116.0,2025-10-20T14:32:13.416815
+2025-10-22,Orlando Magic,Miami Heat,Paolo Banchero,fanduel,37.5,-120.0,-110.0,2025-10-20T14:32:13.416911

@@ -1,0 +1,7 @@
+id,sport_key,sport_title,commence_time,home_team,away_team
+df4b9f35b66ef20724b6b3e81081ddfd,basketball_nba,NBA,2025-10-22T02:00:00Z,Los Angeles Lakers,Golden State Warriors
+2c566908fd21c1179a1affda3f24b101,basketball_nba,NBA,2025-10-22T23:10:00Z,Charlotte Hornets,Brooklyn Nets
+aa92da00abef11a7ee1f773cb708d710,basketball_nba,NBA,2025-10-22T23:10:00Z,New York Knicks,Cleveland Cavaliers
+b6dc11956532645db427ed48107dd05b,basketball_nba,NBA,2025-10-22T23:10:00Z,Orlando Magic,Miami Heat
+cf5a3b9aeb20f4bc8fc824f2e84ce67f,basketball_nba,NBA,2025-10-22T23:40:00Z,Atlanta Hawks,Toronto Raptors
+13917a414157bda81dd6b417d440e1a6,basketball_nba,NBA,2025-10-22T23:40:00Z,Boston Celtics,Philadelphia 76ers

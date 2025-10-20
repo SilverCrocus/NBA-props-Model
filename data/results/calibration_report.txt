@@ -1,0 +1,51 @@
+
+================================================================================
+PHASE 2: MODEL CALIBRATION REPORT
+================================================================================
+
+Date: 2025-10-20 16:23:53
+
+CALIBRATION METHOD
+------------------
+- Isotonic Regression (non-parametric monotonic mapping)
+- Splits: 80% calibration fitting, 20% validation
+- Calibration samples: 20,344
+- Validation samples: 5,087
+
+PERFORMANCE IMPROVEMENT
+-----------------------
+- MAE before calibration: 8.90 pts
+- MAE after calibration: 6.52 pts
+- Improvement: 2.37 pts (26.7%)
+
+CALIBRATION ADJUSTMENTS (Validation Set)
+-----------------------
+- Mean adjustment: 6.83 pts
+- Median adjustment: 6.80 pts
+- Std adjustment: 4.54 pts
+
+RESIDUAL ANALYSIS (Validation Set)
+-----------------
+Before Calibration:
+  - Mean residual: 7.22 pts
+  - Residual std: 9.20 pts
+
+After Calibration:
+  - Mean residual: 0.38 pts
+  - Residual std: 8.40 pts
+
+EXPECTED BETTING IMPACT
+-----------------------
+Based on research literature and backtest analysis:
+- Current Phase 1 win rate: 52.03%
+- Expected Phase 2 win rate: 54-56% (+2-4 pp improvement)
+- Mechanism: Reduced overconfidence → better edge estimation
+
+NEXT STEPS
+----------
+1. Run backtest with calibrated model
+2. Validate 54-56% win rate target
+3. If successful, deploy to production
+4. Monitor real-world performance
+
+================================================================================
