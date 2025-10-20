@@ -58,11 +58,18 @@ class AdvancedStatsFeatures:
             )
 
         # TS% trend (L5 vs season average)
+        # FIXED: Use expanding mean with shift to prevent data leakage
         df['TS_pct_season_avg'] = (
             df.groupby(['PLAYER_ID', 'SEASON'])['TS_pct']
-            .transform('mean')
+            .shift(1)  # Temporal isolation
+            .expanding()
+            .mean()
         )
         df['TS_pct_trend'] = df['TS_pct_L5'] - df['TS_pct_season_avg']
+
+        # Drop base TS_pct column to prevent data leakage
+        # Only keep lagged versions (TS_pct_L3, TS_pct_L5, etc.)
+        df = df.drop('TS_pct', axis=1, errors='ignore')
 
         return df
 
@@ -130,6 +137,10 @@ class AdvancedStatsFeatures:
             .fillna(0)
         )
 
+        # Drop base USG_pct column to prevent data leakage
+        # Only keep lagged versions (USG_pct_L3, USG_pct_L5, etc.)
+        df = df.drop('USG_pct', axis=1, errors='ignore')
+
         return df
 
     def calculate_pace_adjusted_stats(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -177,6 +188,11 @@ class AdvancedStatsFeatures:
                         .rolling(window=window, min_periods=1)
                         .mean()
                     )
+
+        # Drop base per_100 columns to prevent data leakage
+        # Only keep lagged versions (PTS_per_100_L5, PTS_per_100_L10, etc.)
+        base_per_100_cols = ['PTS_per_100', 'REB_per_100', 'AST_per_100', 'PRA_per_100', 'estimated_possessions']
+        df = df.drop(base_per_100_cols, axis=1, errors='ignore')
 
         return df
 

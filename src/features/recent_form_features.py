@@ -127,9 +127,12 @@ class RecentFormFeatures:
         df['momentum_L3_vs_L10'] = df['PRA_L3_mean'] - df['PRA_L10_mean']
 
         # L3 vs season average
+        # FIXED: Use expanding mean with shift to prevent data leakage
         df['PRA_season_avg'] = (
             df.groupby(['PLAYER_ID', 'SEASON'])['PRA']
-            .transform('mean')
+            .shift(1)  # Temporal isolation
+            .expanding()
+            .mean()
         )
 
         df['momentum_L3_vs_season'] = df['PRA_L3_mean'] - df['PRA_season_avg']
