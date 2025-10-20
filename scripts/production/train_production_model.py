@@ -132,7 +132,8 @@ core_stats = [
     "PF",
 ]
 
-feature_cols = [col for col in train_full.columns if col not in [
+# Exclude non-numeric columns and target/ID columns
+exclude_cols = [
     "GAME_ID",
     "PLAYER_ID",
     "PLAYER_NAME",
@@ -144,8 +145,19 @@ feature_cols = [col for col in train_full.columns if col not in [
     "PTS",
     "REB",
     "AST",
-]]
+    "MATCHUP",  # String column
+    "WL",  # String column
+    "CTG_SEASON",  # String column
+    "HOME_AWAY",  # String column (if exists)
+]
 
+# Get numeric columns only
+feature_cols = [
+    col for col in train_full.columns
+    if col not in exclude_cols and train_full[col].dtype in ['int64', 'float64', 'bool']
+]
+
+# Ensure core stats are included first
 feature_cols = core_stats + [col for col in feature_cols if col not in core_stats]
 
 print()
