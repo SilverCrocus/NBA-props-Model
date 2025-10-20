@@ -273,19 +273,29 @@ def make_predictions(players_today, historical_df, model, feature_cols):
             print(f"   ⚠️  No history for {player_name} - skipping")
             continue
 
-        # Create dummy game entry (we only need player ID for feature calc)
+        # Create dummy game entry with required columns
         player_id = player_hist["PLAYER_ID"].iloc[0]
-        last_team = player_hist["TEAM_ABBREVIATION"].iloc[-1]
 
-        today_games.append(
-            {
-                "PLAYER_ID": player_id,
-                "PLAYER_NAME": player_name,
-                "TEAM_ABBREVIATION": last_team,
-                "GAME_DATE": today_date,
-                "PRA": np.nan,  # To be predicted
-            }
-        )
+        # Extract team from MATCHUP column (format: "BOS vs. LAL" or "BOS @ LAL")
+        last_matchup = player_hist["MATCHUP"].iloc[-1] if "MATCHUP" in player_hist.columns else ""
+        last_team = last_matchup.split()[0] if last_matchup else "UNK"
+
+        # Create minimal game row with all required columns from historical data
+        last_game = player_hist.iloc[-1].to_dict()
+        today_game = {
+            "PLAYER_ID": player_id,
+            "PLAYER_NAME": player_name,
+            "GAME_DATE": today_date,
+            "PRA": np.nan,  # To be predicted
+        }
+
+        # Copy over necessary columns from last game (for feature calculation)
+        for col in ["MIN", "FGA", "FG_PCT", "FG3A", "FG3_PCT", "FTA", "FT_PCT",
+                    "OREB", "DREB", "STL", "BLK", "TOV", "PF", "SEASON"]:
+            if col in last_game:
+                today_game[col] = 0  # Dummy values (will be replaced by lag features)
+
+        today_games.append(today_game)
 
     if len(today_games) == 0:
         print("   ❌ No valid players to predict")
