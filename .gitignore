@@ -108,3 +108,21 @@ logs/
 # Temporary files
 *.tmp
 temp/
+# Experimental analysis outputs
+data/results/
+data/analysis/
+data/betting/
+
+# Feature importance exports (regenerated each training)
+models/feature_importance*.csv
+
+# Analysis and utility scripts (work in progress)
+scripts/analysis/
+scripts/maintenance/
+scripts/utils/
+
+# Test files (optional)
+tests/
+
+# Compiled executables
+nba_today
