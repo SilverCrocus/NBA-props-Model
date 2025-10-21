@@ -1,51 +1,40 @@
 #!/usr/bin/env python3
 """
-Simple wrapper for daily betting recommendations.
+Simple NBA Betting Recommendations
+Usage: uv run nba_today.py [date] [bankroll]
 
-Usage:
-    uv run nba_today.py                    # Default: $1,000 bankroll, moderate strategy
-    uv run nba_today.py 2000               # $2,000 bankroll
-    uv run nba_today.py 2000 aggressive    # $2,000 bankroll, aggressive strategy
-    uv run nba_today.py 500 conservative   # $500 bankroll, conservative strategy
+Examples:
+  uv run nba_today.py                    # Today's games, $1000 bankroll
+  uv run nba_today.py 2025-10-21         # Specific date, $1000 bankroll
+  uv run nba_today.py 2025-10-21 5000    # Specific date, $5000 bankroll
 """
 
-import sys
 import subprocess
+import sys
+from datetime import datetime
 
-# Default values
-bankroll = 1000
-strategy = "moderate"
+# Get date and bankroll from arguments
+if len(sys.argv) >= 2:
+    target_date = sys.argv[1]
+else:
+    target_date = datetime.now().strftime("%Y-%m-%d")
 
-# Parse arguments
-if len(sys.argv) > 1:
-    try:
-        bankroll = float(sys.argv[1])
-    except ValueError:
-        print(f"❌ Invalid bankroll: {sys.argv[1]}")
-        print("Usage: uv run nba_today.py [bankroll] [strategy]")
-        sys.exit(1)
+if len(sys.argv) >= 3:
+    bankroll = sys.argv[2]
+else:
+    bankroll = "1000"
 
-if len(sys.argv) > 2:
-    strategy = sys.argv[2].lower()
-    if strategy not in ["conservative", "moderate", "aggressive", "maximum"]:
-        print(f"❌ Invalid strategy: {strategy}")
-        print("Valid strategies: conservative, moderate, aggressive, maximum")
-        sys.exit(1)
-
-# Build command
+# Run the main script
 cmd = [
+    "uv",
+    "run",
     "python",
     "scripts/production/daily_betting_recommendations.py",
-    "--bankroll", str(bankroll),
-    "--strategy", strategy
+    "--date",
+    target_date,
+    "--bankroll",
+    bankroll,
+    "--save-html",
 ]
 
-# Print what we're doing
-print(f"🎯 Getting recommendations for today...")
-print(f"   Bankroll: ${bankroll:,.0f}")
-print(f"   Strategy: {strategy.upper()}")
-print()
-
-# Run the command
-result = subprocess.run(cmd)
-sys.exit(result.returncode)
+subprocess.run(cmd)

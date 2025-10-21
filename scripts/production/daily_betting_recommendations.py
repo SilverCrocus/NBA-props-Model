@@ -147,40 +147,70 @@ def get_prop_odds(target_date=None, api_key=None):
     print(f"\n💰 Fetching prop odds for {target_date}...")
 
     try:
-        params = {
-            "apiKey": api_key,
-            "regions": "us",
-            "markets": "player_points_rebounds_assists",
-            "oddsFormat": "american",
-        }
+        # Step 1: Get events for target date
+        events_url = "https://api.the-odds-api.com/v4/sports/basketball_nba/events"
+        params = {"apiKey": api_key}
 
-        response = requests.get(ODDS_API_URL, params=params, timeout=30)
+        response = requests.get(events_url, params=params, timeout=30)
         response.raise_for_status()
 
-        events = response.json()
+        all_events = response.json()
 
-        if len(events) == 0:
-            print(f"⚠️  No odds available for {target_date}")
+        # Filter for target date (including games that start late and go into next UTC day)
+        from datetime import datetime, timedelta
+
+        target_date_obj = datetime.strptime(target_date, "%Y-%m-%d")
+        next_day = (target_date_obj + timedelta(days=1)).strftime("%Y-%m-%d")
+
+        target_events = [
+            e for e in all_events if e["commence_time"][:10] in [target_date, next_day]
+        ]
+
+        if len(target_events) == 0:
+            print(f"⚠️  No games scheduled for {target_date}")
             return pd.DataFrame()
 
-        # Parse odds into dataframe
+        print(f"✅ Found {len(target_events)} games on {target_date}")
+
+        # Step 2: Fetch player props for each event
         odds_data = []
-        for event in events:
+        for event in target_events:
             event_id = event["id"]
             event_date = event["commence_time"][:10]
             home_team = event["home_team"]
             away_team = event["away_team"]
 
-            for bookmaker in event.get("bookmakers", []):
+            print(f"   Fetching props: {away_team} @ {home_team}...")
+
+            # Use event-specific endpoint for player props
+            event_url = (
+                f"https://api.the-odds-api.com/v4/sports/basketball_nba/events/{event_id}/odds"
+            )
+            params = {
+                "apiKey": api_key,
+                "regions": "us",
+                "markets": "player_points_rebounds_assists",
+                "oddsFormat": "american",
+            }
+
+            response = requests.get(event_url, params=params, timeout=30)
+
+            if response.status_code != 200:
+                print(f"   ⚠️  No props available for this game")
+                continue
+
+            event_data = response.json()
+
+            for bookmaker in event_data.get("bookmakers", []):
                 bookmaker_name = bookmaker["title"]
 
                 for market in bookmaker.get("markets", []):
                     if market["key"] == "player_points_rebounds_assists":
                         for outcome in market["outcomes"]:
-                            player_name = outcome["description"]
-                            line = outcome["point"]
-                            direction = outcome["name"]  # Over or Under
-                            price = outcome["price"]
+                            player_name = outcome.get("description", outcome.get("name"))
+                            line = outcome.get("point")
+                            direction = outcome.get("name")  # Over or Under
+                            price = outcome.get("price")
 
                             odds_data.append(
                                 {
@@ -197,6 +227,14 @@ def get_prop_odds(target_date=None, api_key=None):
                             )
 
         odds_df = pd.DataFrame(odds_data)
+
+        # Filter to preferred bookmakers (DraftKings, FanDuel, BetMGM)
+        preferred_bookmakers = ["DraftKings", "FanDuel", "BetMGM"]
+        odds_df = odds_df[odds_df["bookmaker"].isin(preferred_bookmakers)]
+
+        if len(odds_df) == 0:
+            print("⚠️  No odds from preferred bookmakers (DraftKings, FanDuel, BetMGM)")
+            return pd.DataFrame()
 
         # Pivot to get over/under prices in same row
         odds_pivot = (
@@ -218,7 +256,10 @@ def get_prop_odds(target_date=None, api_key=None):
             .rename(columns={"Over": "over_price", "Under": "under_price"})
         )
 
-        print(f"✅ Found {len(odds_pivot)} prop lines from {odds_pivot['bookmaker'].nunique()} bookmakers")
+        print(
+            f"✅ Found {len(odds_pivot)} prop lines from {odds_pivot['bookmaker'].nunique()} bookmakers"
+        )
+        print(f"   Bookmakers: {', '.join(sorted(odds_pivot['bookmaker'].unique()))}")
         return odds_pivot
 
     except Exception as e:
@@ -236,6 +277,54 @@ def get_prop_odds(target_date=None, api_key=None):
         except Exception as fallback_error:
             print(f"   ❌ Fallback also failed: {fallback_error}")
             return pd.DataFrame()
+
+
+def normalize_name(name):
+    """Normalize player name for fuzzy matching."""
+    import re
+    import unicodedata
+
+    # Convert special characters to ASCII equivalents (č → c, ñ → n, etc.)
+    name = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode("ascii")
+
+    # Remove Jr., Jr, Sr., III, etc.
+    name = re.sub(r"\s+(Jr\.?|Sr\.?|III|II|IV)$", "", name, flags=re.IGNORECASE)
+
+    # Remove extra whitespace
+    name = " ".join(name.split())
+
+    return name.strip()
+
+
+def fuzzy_match_player(api_name, db_names):
+    """
+    Match API player name to database name using fuzzy matching.
+
+    Args:
+        api_name: Player name from odds API
+        db_names: List of player names from database
+
+    Returns:
+        Matched database name or None
+    """
+    # Normalize API name
+    normalized_api = normalize_name(api_name)
+
+    # First try exact match on normalized names
+    normalized_db = {normalize_name(name): name for name in db_names}
+
+    if normalized_api in normalized_db:
+        return normalized_db[normalized_api]
+
+    # If no exact match, try fuzzy matching
+    from difflib import get_close_matches
+
+    matches = get_close_matches(normalized_api, normalized_db.keys(), n=1, cutoff=0.85)
+
+    if matches:
+        return normalized_db[matches[0]]
+
+    return None
 
 
 def american_to_decimal(american_odds):
@@ -261,16 +350,33 @@ def make_predictions(players_today, historical_df, model, feature_cols):
     """
     print(f"\n🤖 Generating predictions for {len(players_today)} players...")
 
+    # Get unique player names from database
+    db_player_names = historical_df["PLAYER_NAME"].unique()
+
+    # Match players using fuzzy matching
+    player_mapping = {}
+    matched_players = []
+
+    for api_player in players_today:
+        matched_db_name = fuzzy_match_player(api_player, db_player_names)
+
+        if matched_db_name:
+            player_mapping[api_player] = matched_db_name
+            matched_players.append(matched_db_name)
+            if api_player != matched_db_name:
+                print(f"   ✓ Matched '{api_player}' → '{matched_db_name}'")
+        else:
+            print(f"   ⚠️  No history for {api_player} - skipping")
+
     # Create dummy "today" games for feature calculation
     today_date = datetime.now().strftime("%Y-%m-%d")
     today_games = []
 
-    for player_name in players_today:
+    for player_name in matched_players:
         # Get player's recent games
         player_hist = historical_df[historical_df["PLAYER_NAME"] == player_name]
 
         if len(player_hist) == 0:
-            print(f"   ⚠️  No history for {player_name} - skipping")
             continue
 
         # Create dummy game entry with required columns
@@ -282,16 +388,38 @@ def make_predictions(players_today, historical_df, model, feature_cols):
 
         # Create minimal game row with all required columns from historical data
         last_game = player_hist.iloc[-1].to_dict()
+
+        # Determine current season (format: "2024-25")
+        today_dt = datetime.strptime(today_date, "%Y-%m-%d")
+        if today_dt.month >= 10:  # Oct-Dec
+            season = f"{today_dt.year}-{str(today_dt.year + 1)[-2:]}"
+        else:  # Jan-Sep
+            season = f"{today_dt.year - 1}-{str(today_dt.year)[-2:]}"
+
         today_game = {
             "PLAYER_ID": player_id,
             "PLAYER_NAME": player_name,
             "GAME_DATE": today_date,
+            "SEASON": season,
             "PRA": np.nan,  # To be predicted
         }
 
         # Copy over necessary columns from last game (for feature calculation)
-        for col in ["MIN", "FGA", "FG_PCT", "FG3A", "FG3_PCT", "FTA", "FT_PCT",
-                    "OREB", "DREB", "STL", "BLK", "TOV", "PF", "SEASON"]:
+        for col in [
+            "MIN",
+            "FGA",
+            "FG_PCT",
+            "FG3A",
+            "FG3_PCT",
+            "FTA",
+            "FT_PCT",
+            "OREB",
+            "DREB",
+            "STL",
+            "BLK",
+            "TOV",
+            "PF",
+        ]:
             if col in last_game:
                 today_game[col] = 0  # Dummy values (will be replaced by lag features)
 
@@ -319,6 +447,12 @@ def make_predictions(players_today, historical_df, model, feature_cols):
 
     predictions_df["predicted_PRA"] = predictions
 
+    # Convert database names back to API names using reverse mapping
+    reverse_mapping = {v: k for k, v in player_mapping.items()}
+    predictions_df["PLAYER_NAME"] = predictions_df["PLAYER_NAME"].map(
+        lambda x: reverse_mapping.get(x, x)
+    )
+
     print(f"   ✅ Generated {len(predictions_df)} predictions")
     return predictions_df[["PLAYER_NAME", "predicted_PRA"]]
 
@@ -338,7 +472,9 @@ def calculate_edges(predictions_df, odds_df, calibrator):
     print(f"\n📊 Calculating edges...")
 
     # Merge predictions with odds
-    merged_df = odds_df.merge(predictions_df, left_on="player_name", right_on="PLAYER_NAME", how="inner")
+    merged_df = odds_df.merge(
+        predictions_df, left_on="player_name", right_on="PLAYER_NAME", how="inner"
+    )
 
     if len(merged_df) == 0:
         print("   ❌ No matches between predictions and odds")
@@ -379,6 +515,8 @@ def calculate_edges(predictions_df, odds_df, calibrator):
                 "implied_prob": over_implied_prob,
                 "calibrated_prob": row["prob_over_calibrated"],
                 "edge": over_edge,
+                "away_team": row["away_team"],
+                "home_team": row["home_team"],
             }
         )
 
@@ -399,6 +537,8 @@ def calculate_edges(predictions_df, odds_df, calibrator):
                 "implied_prob": under_implied_prob,
                 "calibrated_prob": 1 - row["prob_over_calibrated"],
                 "edge": under_edge,
+                "away_team": row["away_team"],
+                "home_team": row["home_team"],
             }
         )
 
@@ -480,10 +620,10 @@ def main():
         choices=["conservative", "moderate", "aggressive", "maximum"],
         help="Betting strategy (default: moderate)",
     )
-    parser.add_argument("--bankroll", type=float, default=1000.0, help="Current bankroll (default: $1,000)")
     parser.add_argument(
-        "--api-key", type=str, default=None, help="Odds API key (overrides config)"
+        "--bankroll", type=float, default=1000.0, help="Current bankroll (default: $1,000)"
     )
+    parser.add_argument("--api-key", type=str, default=None, help="Odds API key (overrides config)")
     parser.add_argument(
         "--save-html", action="store_true", help="Save HTML report in addition to CSV"
     )
@@ -519,7 +659,7 @@ def main():
     print("STEP 1: LOADING MODEL")
     print("=" * 80)
 
-    model_path = "models/production_model_v2.0_PRODUCTION_CALIBRATED_latest.pkl"
+    model_path = "models/production_model.pkl"
 
     try:
         with open(model_path, "rb") as f:
@@ -547,8 +687,16 @@ def main():
     print("=" * 80)
 
     try:
-        historical_df = pd.read_csv("data/game_logs/all_game_logs_through_2025.csv")
-        historical_df["GAME_DATE"] = pd.to_datetime(historical_df["GAME_DATE"])
+        # Load historical data (through 2023-24)
+        df_historical = pd.read_csv("data/game_logs/all_game_logs_through_2025.csv")
+        df_historical["GAME_DATE"] = pd.to_datetime(df_historical["GAME_DATE"])
+
+        # Load 2024-25 season data
+        df_2024_25 = pd.read_csv("data/game_logs/game_logs_2024_25_preprocessed.csv")
+        df_2024_25["GAME_DATE"] = pd.to_datetime(df_2024_25["GAME_DATE"])
+
+        # Combine both datasets
+        historical_df = pd.concat([df_historical, df_2024_25], ignore_index=True)
         historical_df = historical_df.sort_values(["PLAYER_ID", "GAME_DATE"])
 
         # Add PRA if missing
@@ -562,7 +710,9 @@ def main():
         historical_df = historical_df[historical_df["GAME_DATE"] < cutoff_date]
 
         print(f"✅ Loaded {len(historical_df):,} historical games")
-        print(f"   Date range: {historical_df['GAME_DATE'].min().date()} to {historical_df['GAME_DATE'].max().date()}")
+        print(
+            f"   Date range: {historical_df['GAME_DATE'].min().date()} to {historical_df['GAME_DATE'].max().date()}"
+        )
         print(f"   Players: {historical_df['PLAYER_ID'].nunique():,}")
 
     except Exception as e:
@@ -634,6 +784,19 @@ def main():
 
     print(f"✅ {len(bets_df)} bets meet {edge_threshold:.0%} threshold")
 
+    # Deduplicate: Keep only the best odds for each unique bet (player, line, direction)
+    # Sort by edge first to ensure we keep the best opportunity
+    bets_df = bets_df.sort_values("edge", ascending=False)
+
+    # Group by (player, line, direction) and keep the first (best edge/odds)
+    initial_count = len(bets_df)
+    bets_df = bets_df.drop_duplicates(subset=["player_name", "line", "direction"], keep="first")
+    deduped_count = initial_count - len(bets_df)
+
+    if deduped_count > 0:
+        print(f"   Removed {deduped_count} duplicate bets (same player/line at different books)")
+        print(f"   Unique bets remaining: {len(bets_df)}")
+
     # Calculate confidence levels
     bets_df["confidence"] = bets_df.apply(
         lambda row: calculate_confidence_level(row["edge"], row["calibrated_prob"]), axis=1
@@ -644,7 +807,7 @@ def main():
         lambda edge: calculate_bet_size(edge, bankroll, kelly_fraction, max_bet_fraction)
     )
 
-    # Sort by edge (best bets first)
+    # Re-sort by edge (best bets first) after adding new columns
     bets_df = bets_df.sort_values("edge", ascending=False)
 
     # ========================================================================
@@ -658,14 +821,47 @@ def main():
     print(f"\n🎯 TOP 10 BETS:")
     print("-" * 80)
 
-    for idx, row in bets_df.head(10).iterrows():
-        print(f"\n{idx+1}. {row['player_name']} - {row['direction']} {row['line']}")
+    for i, (idx, row) in enumerate(bets_df.head(10).iterrows(), 1):
+        matchup = f"{row['away_team']} @ {row['home_team']}"
+        print(f"\n{i}. {row['player_name']} - {row['direction']} {row['line']}")
+        print(f"   Game: {matchup}")
         print(f"   Bookmaker: {row['bookmaker']}")
         print(f"   Prediction: {row['predicted_PRA']:.1f} PRA")
         print(f"   Edge: {row['edge']:.1%} ({row['confidence']} CONFIDENCE)")
         print(f"   Odds: {row['american_odds']:+.0f} (Decimal: {row['decimal_odds']:.2f})")
         print(f"   Win Probability: {row['calibrated_prob']:.1%}")
         print(f"   💵 Recommended Bet: ${row['bet_size']:.2f}")
+
+    # ========================================================================
+    # 7b. SUGGESTED ACTION SUMMARY
+    # ========================================================================
+
+    print("\n" + "=" * 80)
+    print("💡 SUGGESTED ACTION")
+    print("=" * 80)
+
+    # Determine recommended subset based on edge thresholds
+    top5_df = bets_df.head(5)
+    top5_total = top5_df["bet_size"].sum()
+    top5_avg_edge = top5_df["edge"].mean()
+
+    all_total = bets_df["bet_size"].sum()
+    all_avg_edge = bets_df["edge"].mean()
+
+    print(f"\n🎯 RECOMMENDED: Take Top 5 Bets (Highest Edges)")
+    print(f"   Total Wager: ${top5_total:.2f}")
+    print(f"   Average Edge: {top5_avg_edge:.1%}")
+    print(f"   Risk Level: Lower (concentrated on best opportunities)")
+
+    print(f"\n📊 ALTERNATIVE: Take All {len(bets_df)} Bets (Diversified)")
+    print(f"   Total Wager: ${all_total:.2f}")
+    print(f"   Average Edge: {all_avg_edge:.1%}")
+    print(f"   Risk Level: Higher (more exposure, more variance)")
+
+    print(f"\n⚠️  IMPORTANT:")
+    print(f"   • Check injury reports before placing bets")
+    print(f"   • Verify player starting lineups 1-2 hours before games")
+    print(f"   • Skip any bet if player status is uncertain")
 
     # ========================================================================
     # 8. SAVE RESULTS
