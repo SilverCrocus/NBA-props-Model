@@ -54,7 +54,8 @@ print("\n" + "=" * 80)
 print("STEP 1: Loading Backtest Model")
 print("=" * 80)
 
-with open("models/backtest_model.pkl", "rb") as f:
+# Use BIAS_FIXED model
+with open("models/pra_model.pkl", "rb") as f:
     model_dict = pickle.load(f)
 
 model = model_dict["model"]
@@ -116,12 +117,17 @@ print("\nLoading historical betting odds...")
 odds_df = pd.read_csv("data/historical_odds/2024-25/pra_odds.csv")
 odds_df["event_date"] = pd.to_datetime(odds_df["event_date"])
 
+# CRITICAL FIX: Use only DraftKings to avoid duplicate betting on same props
+print(f"📊 Total odds lines (all bookmakers): {len(odds_df):,}")
+odds_df = odds_df[odds_df["bookmaker"] == "DraftKings"].copy()
+print(f"✅ Filtered to DraftKings only: {len(odds_df):,} lines")
+
 print(f"✅ Odds data: {len(odds_df):,} lines")
 print(
     f"   Date range: {odds_df['event_date'].min().date()} to {odds_df['event_date'].max().date()}"
 )
 print(f"   Unique players: {odds_df['player_name'].nunique()}")
-print(f"   Bookmakers: {', '.join(odds_df['bookmaker'].unique())}")
+print(f"   Bookmaker: DraftKings (single source to avoid duplicates)")
 
 # ============================================================================
 # 3. BUILD FEATURES (Pre-compute once - FAST)
@@ -295,14 +301,17 @@ betting_df["won"] = betting_df.apply(
     axis=1,
 ).astype(int)
 
-# Filter to minimum edge threshold (positive edges only)
-betting_df = betting_df[betting_df["edge"] >= EDGE_THRESHOLD].copy()
+# ANALYSIS MODE: Keep ALL predictions (no edge filter) to analyze optimal strategy
+print(f"\n📊 ANALYSIS MODE: Keeping ALL {len(betting_df):,} predictions (no filters)")
+print(f"   Positive edges: {(betting_df['edge'] > 0).sum():,}")
+print(f"   Negative edges: {(betting_df['edge'] <= 0).sum():,}")
+print(f"   Edge >= {EDGE_THRESHOLD*100:.0f}%: {(betting_df['edge'] >= EDGE_THRESHOLD).sum():,}")
 
-print(f"Bets with edge >= {EDGE_THRESHOLD*100:.0f}%: {len(betting_df):,}")
+# NO FILTERING - keep everything for analysis
+# betting_df = betting_df[betting_df["edge"] >= EDGE_THRESHOLD].copy()
 
 if len(betting_df) == 0:
-    print("\n❌ No bets meet the edge threshold!")
-    print("Try lowering the edge threshold or checking your model.")
+    print("\n❌ No predictions to analyze!")
     sys.exit(1)
 
 # Sort chronologically

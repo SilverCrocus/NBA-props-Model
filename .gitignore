@@ -126,3 +126,5 @@ tests/
 
 # Compiled executables
 nba_today
+backup/
+cleanup_plan.sh
