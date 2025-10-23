@@ -12,12 +12,13 @@ Author: NBA Props Model
 Date: 2024
 """
 
-import pandas as pd
-import numpy as np
-from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 import logging
 from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+
+import numpy as np
+import pandas as pd
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -30,7 +31,7 @@ class GameLogDatasetBuilder:
         self,
         game_logs_path: str = "data/game_logs/all_game_logs_combined.csv",
         ctg_data_dir: str = "data/ctg_data_organized/players",
-        output_dir: str = "data/processed"
+        output_dir: str = "data/processed",
     ):
         """
         Initialize the dataset builder.
@@ -56,14 +57,14 @@ class GameLogDatasetBuilder:
         df = pd.read_csv(self.game_logs_path)
 
         # Convert GAME_DATE to datetime
-        df['GAME_DATE'] = pd.to_datetime(df['GAME_DATE'])
+        df["GAME_DATE"] = pd.to_datetime(df["GAME_DATE"])
 
         # Sort by player and date (critical for temporal features)
-        df = df.sort_values(['PLAYER_ID', 'GAME_DATE']).reset_index(drop=True)
+        df = df.sort_values(["PLAYER_ID", "GAME_DATE"]).reset_index(drop=True)
 
         # Create basic derived features
-        df['IS_HOME'] = df['MATCHUP'].str.contains('vs.').astype(int)
-        df['OPPONENT'] = df['MATCHUP'].str.extract(r'(vs\.|@)\s*([A-Z]{3})')[1]
+        df["IS_HOME"] = df["MATCHUP"].str.contains("vs.").astype(int)
+        df["OPPONENT"] = df["MATCHUP"].str.extract(r"(vs\.|@)\s*([A-Z]{3})")[1]
 
         logger.info(f"Loaded {len(df):,} game logs")
         logger.info(f"Date range: {df['GAME_DATE'].min()} to {df['GAME_DATE'].max()}")
@@ -92,13 +93,13 @@ class GameLogDatasetBuilder:
 
         # Load each category
         categories = [
-            'shooting_frequency',
-            'shooting_efficiency',
-            'defense_and_rebounding',
-            'foul_drawing',
-            'on_off/team_shooting_accuracy',
-            'on_off/team_offense',
-            'on_off/team_defense'
+            "shooting_frequency",
+            "shooting_efficiency",
+            "defense_and_rebounding",
+            "foul_drawing",
+            "on_off/team_shooting_accuracy",
+            "on_off/team_offense",
+            "on_off/team_defense",
         ]
 
         for category in categories:
@@ -107,16 +108,14 @@ class GameLogDatasetBuilder:
             if category_path.exists():
                 df = pd.read_csv(category_path)
                 # Use last part of category as key (e.g., 'team_defense')
-                key = category.split('/')[-1]
+                key = category.split("/")[-1]
                 ctg_stats[key] = df
                 logger.debug(f"Loaded {key}: {len(df)} players")
 
         return ctg_stats
 
     def merge_ctg_stats_to_games(
-        self,
-        game_logs: pd.DataFrame,
-        min_minutes: int = 200
+        self, game_logs: pd.DataFrame, min_minutes: int = 200
     ) -> pd.DataFrame:
         """
         Merge CTG season stats to each game log.
@@ -136,8 +135,8 @@ class GameLogDatasetBuilder:
         result = game_logs.copy()
 
         # Get unique season-type combinations
-        seasons = game_logs['SEASON'].unique()
-        season_types_map = {'Regular Season': 'regular_season', 'Playoffs': 'playoffs'}
+        seasons = game_logs["SEASON"].unique()
+        season_types_map = {"Regular Season": "regular_season", "Playoffs": "playoffs"}
 
         all_ctg_data = []
 
@@ -150,44 +149,50 @@ class GameLogDatasetBuilder:
                     continue
 
                 # Start with shooting_frequency as base (has Player, Team, MIN)
-                if 'shooting_frequency' not in ctg_stats:
+                if "shooting_frequency" not in ctg_stats:
                     continue
 
-                base_df = ctg_stats['shooting_frequency'].copy()
-                base_df = base_df[base_df['MIN'] >= min_minutes]  # Filter low-minute players
+                base_df = ctg_stats["shooting_frequency"].copy()
+                base_df = base_df[base_df["MIN"] >= min_minutes]  # Filter low-minute players
 
                 # Add season identifiers
-                base_df['SEASON'] = season
-                base_df['SEASON_TYPE'] = season_type_label
+                base_df["SEASON"] = season
+                base_df["SEASON_TYPE"] = season_type_label
 
                 # Rename columns to avoid conflicts
-                base_df = base_df.rename(columns={
-                    'MIN': 'CTG_MIN',
-                    'eFG%': 'CTG_eFG_pct',
-                    'Rim': 'CTG_Rim_freq',
-                    'Short Mid': 'CTG_ShortMid_freq',
-                    'Long Mid': 'CTG_LongMid_freq',
-                    'Corner Three': 'CTG_Corner3_freq',
-                    'Non Corner': 'CTG_NonCorner3_freq',
-                    'All Three': 'CTG_All3_freq'
-                })
+                base_df = base_df.rename(
+                    columns={
+                        "MIN": "CTG_MIN",
+                        "eFG%": "CTG_eFG_pct",
+                        "Rim": "CTG_Rim_freq",
+                        "Short Mid": "CTG_ShortMid_freq",
+                        "Long Mid": "CTG_LongMid_freq",
+                        "Corner Three": "CTG_Corner3_freq",
+                        "Non Corner": "CTG_NonCorner3_freq",
+                        "All Three": "CTG_All3_freq",
+                    }
+                )
 
                 # Merge other CTG categories
                 for category, cat_df in ctg_stats.items():
-                    if category == 'shooting_frequency':
+                    if category == "shooting_frequency":
                         continue
 
                     # CRITICAL FIX: Deduplicate players BEFORE merging
                     # If a player appears multiple times (traded, multiple teams), keep first occurrence
-                    cat_df_dedup = cat_df.drop_duplicates(subset=['Player'], keep='first')
+                    cat_df_dedup = cat_df.drop_duplicates(subset=["Player"], keep="first")
 
                     # Merge on Player
-                    merge_cols = [col for col in cat_df_dedup.columns if col not in ['Age', 'Team', 'Pos', 'MIN']]
+                    merge_cols = [
+                        col
+                        for col in cat_df_dedup.columns
+                        if col not in ["Age", "Team", "Pos", "MIN"]
+                    ]
                     base_df = base_df.merge(
                         cat_df_dedup[merge_cols],
-                        on='Player',
-                        how='left',
-                        suffixes=('', f'_{category}')
+                        on="Player",
+                        how="left",
+                        suffixes=("", f"_{category}"),
                     )
 
                 all_ctg_data.append(base_df)
@@ -200,18 +205,19 @@ class GameLogDatasetBuilder:
             # CRITICAL FIX: Deduplicate CTG combined BEFORE merging
             # Ensure one row per player-season-seasontype
             ctg_combined_dedup = ctg_combined.drop_duplicates(
-                subset=['Player', 'SEASON', 'SEASON_TYPE'],
-                keep='first'
+                subset=["Player", "SEASON", "SEASON_TYPE"], keep="first"
             )
 
-            logger.info(f"CTG before dedup: {len(ctg_combined):,}, after dedup: {len(ctg_combined_dedup):,}")
+            logger.info(
+                f"CTG before dedup: {len(ctg_combined):,}, after dedup: {len(ctg_combined_dedup):,}"
+            )
 
             # Merge to game logs
             result = result.merge(
                 ctg_combined_dedup,
-                left_on=['PLAYER_NAME', 'SEASON', 'SEASON_TYPE'],
-                right_on=['Player', 'SEASON', 'SEASON_TYPE'],
-                how='left'
+                left_on=["PLAYER_NAME", "SEASON", "SEASON_TYPE"],
+                right_on=["Player", "SEASON", "SEASON_TYPE"],
+                how="left",
             )
 
             logger.info(f"Merged CTG stats. Shape: {result.shape}")
@@ -223,8 +229,8 @@ class GameLogDatasetBuilder:
     def create_lag_features(
         self,
         df: pd.DataFrame,
-        stats: List[str] = ['PRA', 'PTS', 'REB', 'AST', 'MIN'],
-        lags: List[int] = [1, 3, 5, 7, 10]
+        stats: List[str] = ["PRA", "PTS", "REB", "AST", "MIN"],
+        lags: List[int] = [1, 3, 5, 7, 10],
     ) -> pd.DataFrame:
         """
         Create lag features (previous game values).
@@ -250,8 +256,8 @@ class GameLogDatasetBuilder:
                 continue
 
             for lag in lags:
-                col_name = f'{stat}_lag{lag}'
-                result[col_name] = result.groupby('PLAYER_ID')[stat].shift(lag)
+                col_name = f"{stat}_lag{lag}"
+                result[col_name] = result.groupby("PLAYER_ID")[stat].shift(lag)
 
         logger.info(f"Created {len(stats) * len(lags)} lag features")
         return result
@@ -259,8 +265,8 @@ class GameLogDatasetBuilder:
     def create_rolling_features(
         self,
         df: pd.DataFrame,
-        stats: List[str] = ['PRA', 'PTS', 'REB', 'AST', 'MIN', 'FG_PCT'],
-        windows: List[int] = [5, 10, 20]
+        stats: List[str] = ["PRA", "PTS", "REB", "AST", "MIN", "FG_PCT"],
+        windows: List[int] = [5, 10, 20],
     ) -> pd.DataFrame:
         """
         Create rolling average features.
@@ -286,9 +292,9 @@ class GameLogDatasetBuilder:
 
             for window in windows:
                 # Mean
-                col_mean = f'{stat}_L{window}_mean'
+                col_mean = f"{stat}_L{window}_mean"
                 result[col_mean] = (
-                    result.groupby('PLAYER_ID')[stat]
+                    result.groupby("PLAYER_ID")[stat]
                     .shift(1)  # Shift to exclude current game
                     .rolling(window=window, min_periods=1)
                     .mean()
@@ -296,23 +302,33 @@ class GameLogDatasetBuilder:
                 )
 
                 # Std (volatility)
-                col_std = f'{stat}_L{window}_std'
+                col_std = f"{stat}_L{window}_std"
                 result[col_std] = (
-                    result.groupby('PLAYER_ID')[stat]
+                    result.groupby("PLAYER_ID")[stat]
                     .shift(1)
                     .rolling(window=window, min_periods=2)
                     .std()
                     .reset_index(level=0, drop=True)
                 )
 
-        logger.info(f"Created {len(stats) * len(windows) * 2} rolling features")
+                # Max (ceiling/upside potential)
+                col_max = f"{stat}_L{window}_max"
+                result[col_max] = (
+                    result.groupby("PLAYER_ID")[stat]
+                    .shift(1)  # Shift to exclude current game
+                    .rolling(window=window, min_periods=1)
+                    .max()
+                    .reset_index(level=0, drop=True)
+                )
+
+        logger.info(f"Created {len(stats) * len(windows) * 3} rolling features (mean, std, max)")
         return result
 
     def create_ewma_features(
         self,
         df: pd.DataFrame,
-        stats: List[str] = ['PRA', 'PTS', 'REB', 'AST', 'MIN'],
-        spans: List[int] = [5, 10, 15]
+        stats: List[str] = ["PRA", "PTS", "REB", "AST", "MIN"],
+        spans: List[int] = [5, 10, 15],
     ) -> pd.DataFrame:
         """
         Create Exponentially Weighted Moving Average features.
@@ -337,9 +353,9 @@ class GameLogDatasetBuilder:
                 continue
 
             for span in spans:
-                col_name = f'{stat}_ewma{span}'
+                col_name = f"{stat}_ewma{span}"
                 result[col_name] = (
-                    result.groupby('PLAYER_ID')[stat]
+                    result.groupby("PLAYER_ID")[stat]
                     .shift(1)  # Prevent leakage
                     .ewm(span=span, min_periods=1)
                     .mean()
@@ -368,15 +384,14 @@ class GameLogDatasetBuilder:
         result = df.copy()
 
         # Days since last game
-        result['days_rest'] = (
-            result.groupby('PLAYER_ID')['GAME_DATE']
+        result["days_rest"] = (
+            result.groupby("PLAYER_ID")["GAME_DATE"]
             .diff()
-            .dt.days
-            .fillna(7)  # First game of tracking, assume rested
+            .dt.days.fillna(7)  # First game of tracking, assume rested
         )
 
         # Back-to-back game indicator
-        result['is_b2b'] = (result['days_rest'] <= 1).astype(int)
+        result["is_b2b"] = (result["days_rest"] <= 1).astype(int)
 
         # Games in last 7 days (fatigue indicator)
         # Count games in rolling 7-day window for each player
@@ -388,7 +403,9 @@ class GameLogDatasetBuilder:
                 games_count.append(count)
             return pd.Series(games_count, index=group.index)
 
-        result['games_last_7d'] = result.groupby('PLAYER_ID')['GAME_DATE'].transform(count_games_last_7d)
+        result["games_last_7d"] = result.groupby("PLAYER_ID")["GAME_DATE"].transform(
+            count_games_last_7d
+        )
 
         logger.info("Created rest/schedule features")
         return result
@@ -412,19 +429,18 @@ class GameLogDatasetBuilder:
 
         # Opponent's recent defensive performance (simple version)
         # Calculate average PRA allowed by opponent in last 10 games
-        opp_stats = result.groupby(['OPPONENT', 'GAME_DATE']).agg({
-            'PRA': 'mean',
-            'PTS': 'mean',
-            'REB': 'mean',
-            'AST': 'mean'
-        }).reset_index()
+        opp_stats = (
+            result.groupby(["OPPONENT", "GAME_DATE"])
+            .agg({"PRA": "mean", "PTS": "mean", "REB": "mean", "AST": "mean"})
+            .reset_index()
+        )
 
-        opp_stats = opp_stats.sort_values('GAME_DATE')
+        opp_stats = opp_stats.sort_values("GAME_DATE")
 
-        for stat in ['PRA', 'PTS', 'REB', 'AST']:
-            col_name = f'opp_allowed_{stat}_L10'
+        for stat in ["PRA", "PTS", "REB", "AST"]:
+            col_name = f"opp_allowed_{stat}_L10"
             opp_stats[col_name] = (
-                opp_stats.groupby('OPPONENT')[stat]
+                opp_stats.groupby("OPPONENT")[stat]
                 .shift(1)
                 .rolling(window=10, min_periods=1)
                 .mean()
@@ -433,9 +449,12 @@ class GameLogDatasetBuilder:
 
         # Merge back
         result = result.merge(
-            opp_stats[['OPPONENT', 'GAME_DATE'] + [f'opp_allowed_{s}_L10' for s in ['PRA', 'PTS', 'REB', 'AST']]],
-            on=['OPPONENT', 'GAME_DATE'],
-            how='left'
+            opp_stats[
+                ["OPPONENT", "GAME_DATE"]
+                + [f"opp_allowed_{s}_L10" for s in ["PRA", "PTS", "REB", "AST"]]
+            ],
+            on=["OPPONENT", "GAME_DATE"],
+            how="left",
         )
 
         logger.info("Created opponent features")
@@ -457,7 +476,7 @@ class GameLogDatasetBuilder:
 
         result = df.copy()
 
-        stats = ['PRA', 'PTS', 'REB', 'AST', 'MIN']
+        stats = ["PRA", "PTS", "REB", "AST", "MIN"]
 
         for stat in stats:
             if stat not in df.columns:
@@ -465,7 +484,7 @@ class GameLogDatasetBuilder:
 
             # L5 average
             l5 = (
-                result.groupby('PLAYER_ID')[stat]
+                result.groupby("PLAYER_ID")[stat]
                 .shift(1)
                 .rolling(window=5, min_periods=3)
                 .mean()
@@ -474,7 +493,7 @@ class GameLogDatasetBuilder:
 
             # L20 average
             l20 = (
-                result.groupby('PLAYER_ID')[stat]
+                result.groupby("PLAYER_ID")[stat]
                 .shift(1)
                 .rolling(window=20, min_periods=10)
                 .mean()
@@ -482,16 +501,75 @@ class GameLogDatasetBuilder:
             )
 
             # Trend = (L5 - L20) / L20
-            result[f'{stat}_trend'] = ((l5 - l20) / l20).fillna(0)
+            result[f"{stat}_trend"] = ((l5 - l20) / l20).fillna(0)
 
         logger.info("Created trend features")
         return result
 
+    def create_hot_streak_features(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Create hot streak indicator features.
+
+        Identifies when a player is on a hot streak based on recent performance
+        exceeding their baseline.
+
+        Args:
+            df: Game logs DataFrame
+
+        Returns:
+            DataFrame with hot streak features
+        """
+        logger.info("Creating hot streak features...")
+
+        result = df.copy()
+
+        stats = ["PRA", "PTS", "REB", "AST", "MIN"]
+
+        for stat in stats:
+            if stat not in df.columns:
+                continue
+
+            # L3 average (very recent form)
+            l3 = (
+                result.groupby("PLAYER_ID")[stat]
+                .shift(1)
+                .rolling(window=3, min_periods=2)
+                .mean()
+                .reset_index(level=0, drop=True)
+            )
+
+            # L10 average (baseline)
+            l10 = (
+                result.groupby("PLAYER_ID")[stat]
+                .shift(1)
+                .rolling(window=10, min_periods=5)
+                .mean()
+                .reset_index(level=0, drop=True)
+            )
+
+            # Hot streak: L3 > L10 by at least 10%
+            result[f"{stat}_hot_streak"] = ((l3 - l10) / l10 > 0.10).astype(int).fillna(0)
+
+            # Hot streak magnitude (how much hotter)
+            result[f"{stat}_hot_streak_magnitude"] = ((l3 - l10) / l10).fillna(0)
+
+            # Count consecutive games above L10 average
+            # Simplified approach: count how many of last 5 games were above L10 avg
+            shifted_stat = result.groupby("PLAYER_ID")[stat].shift(1)
+            above_avg = (shifted_stat > l10).astype(int).fillna(0)
+
+            result[f"{stat}_consecutive_above_avg"] = (
+                above_avg.groupby(result["PLAYER_ID"])
+                .rolling(window=5, min_periods=1)
+                .sum()
+                .reset_index(level=0, drop=True)
+            )
+
+        logger.info("Created hot streak features")
+        return result
+
     def build_complete_dataset(
-        self,
-        merge_ctg: bool = True,
-        min_minutes_per_game: float = 10.0,
-        min_games_played: int = 5
+        self, merge_ctg: bool = True, min_minutes_per_game: float = 10.0, min_games_played: int = 5
     ) -> pd.DataFrame:
         """
         Build the complete game-level training dataset.
@@ -539,31 +617,38 @@ class GameLogDatasetBuilder:
         # Step 6: Create trend features
         df = self.create_trend_features(df)
 
-        # Step 7: Filter to relevant games
+        # Step 7: Create hot streak features
+        df = self.create_hot_streak_features(df)
+
+        # Step 8: Filter to relevant games
         logger.info("Filtering dataset...")
 
         # Filter by minutes
-        df = df[df['MIN'] >= min_minutes_per_game].copy()
+        df = df[df["MIN"] >= min_minutes_per_game].copy()
 
         # Filter players with minimum games
-        player_game_counts = df.groupby('PLAYER_ID').size()
+        player_game_counts = df.groupby("PLAYER_ID").size()
         valid_players = player_game_counts[player_game_counts >= min_games_played].index
-        df = df[df['PLAYER_ID'].isin(valid_players)].copy()
+        df = df[df["PLAYER_ID"].isin(valid_players)].copy()
 
         # Drop rows with missing PRA target
-        df = df.dropna(subset=['PRA'])
+        df = df.dropna(subset=["PRA"])
 
         # CRITICAL FIX: Final deduplication safety check
         # Remove any duplicate (PLAYER_ID, GAME_DATE) combinations
         before_dedup = len(df)
-        df = df.drop_duplicates(subset=['PLAYER_ID', 'GAME_DATE'], keep='first')
+        df = df.drop_duplicates(subset=["PLAYER_ID", "GAME_DATE"], keep="first")
         after_dedup = len(df)
 
         if before_dedup != after_dedup:
-            logger.warning(f"⚠️  Removed {before_dedup - after_dedup:,} duplicate player-game combinations!")
+            logger.warning(
+                f"⚠️  Removed {before_dedup - after_dedup:,} duplicate player-game combinations!"
+            )
 
         final_count = len(df)
-        logger.info(f"Filtered: {initial_count:,} -> {final_count:,} games ({final_count/initial_count*100:.1f}%)")
+        logger.info(
+            f"Filtered: {initial_count:,} -> {final_count:,} games ({final_count/initial_count*100:.1f}%)"
+        )
 
         # Summary stats
         logger.info("=" * 80)
@@ -580,9 +665,7 @@ class GameLogDatasetBuilder:
         return df
 
     def save_dataset(
-        self,
-        df: pd.DataFrame,
-        filename: str = "game_level_training_data.parquet"
+        self, df: pd.DataFrame, filename: str = "game_level_training_data.parquet"
     ) -> Path:
         """
         Save the dataset to parquet format.
@@ -605,10 +688,7 @@ class GameLogDatasetBuilder:
         return output_path
 
     def create_train_test_split(
-        self,
-        df: pd.DataFrame,
-        train_end_date: str = "2023-06-30",
-        val_end_date: str = "2024-06-30"
+        self, df: pd.DataFrame, train_end_date: str = "2023-06-30", val_end_date: str = "2024-06-30"
     ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         """
         Create time-based train/validation/test split.
@@ -629,13 +709,19 @@ class GameLogDatasetBuilder:
         train_end = pd.to_datetime(train_end_date)
         val_end = pd.to_datetime(val_end_date)
 
-        train = df[df['GAME_DATE'] <= train_end].copy()
-        val = df[(df['GAME_DATE'] > train_end) & (df['GAME_DATE'] <= val_end)].copy()
-        test = df[df['GAME_DATE'] > val_end].copy()
+        train = df[df["GAME_DATE"] <= train_end].copy()
+        val = df[(df["GAME_DATE"] > train_end) & (df["GAME_DATE"] <= val_end)].copy()
+        test = df[df["GAME_DATE"] > val_end].copy()
 
-        logger.info(f"Train: {len(train):,} games ({train['GAME_DATE'].min()} to {train['GAME_DATE'].max()})")
-        logger.info(f"Val:   {len(val):,} games ({val['GAME_DATE'].min()} to {val['GAME_DATE'].max()})")
-        logger.info(f"Test:  {len(test):,} games ({test['GAME_DATE'].min()} to {test['GAME_DATE'].max()})")
+        logger.info(
+            f"Train: {len(train):,} games ({train['GAME_DATE'].min()} to {train['GAME_DATE'].max()})"
+        )
+        logger.info(
+            f"Val:   {len(val):,} games ({val['GAME_DATE'].min()} to {val['GAME_DATE'].max()})"
+        )
+        logger.info(
+            f"Test:  {len(test):,} games ({test['GAME_DATE'].min()} to {test['GAME_DATE'].max()})"
+        )
 
         return train, val, test
 
@@ -648,7 +734,7 @@ if __name__ == "__main__":
     dataset = builder.build_complete_dataset(
         merge_ctg=True,
         min_minutes_per_game=15.0,  # Only games with 15+ minutes
-        min_games_played=10  # Only players with 10+ games
+        min_games_played=10,  # Only players with 10+ games
     )
 
     # Save full dataset
