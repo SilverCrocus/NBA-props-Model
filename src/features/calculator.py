@@ -15,7 +15,7 @@ from typing import Dict
 import pandas as pd
 
 from config import feature_config
-from src.exceptions import FeatureCalculationError, InsufficientDataError
+from src.exceptions import FeatureCalculationError
 
 logger = logging.getLogger(__name__)
 
@@ -23,8 +23,8 @@ logger = logging.getLogger(__name__)
 class FeatureCalculator:
     """
     Centralized feature calculator for NBA player prop predictions.
-    
-    Consolidates all temporal, efficiency, normalization, and contextual features.
+
+    Consolidates all temporal, efficiency, normalization, and contextual features.  # noqa: E501
     """
 
     def __init__(self):
@@ -36,11 +36,11 @@ class FeatureCalculator:
     ) -> Dict[str, float]:
         """
         Calculate lag features using ONLY historical games.
-        
+
         Args:
-            player_history: Player's games before current date (sorted by date desc)
+            player_history: Player's games before current date (sorted by date desc)  # noqa: E501
             lags: List of lag values (default from config)
-            
+
         Returns:
             Dictionary of lag features
         """
@@ -72,11 +72,11 @@ class FeatureCalculator:
     ) -> Dict[str, float]:
         """
         Calculate rolling average features.
-        
+
         Args:
             player_history: Player's games before current date
             windows: List of window sizes (default from config)
-            
+
         Returns:
             Dictionary of rolling features
         """
@@ -116,11 +116,11 @@ class FeatureCalculator:
     ) -> Dict[str, float]:
         """
         Calculate EWMA (Exponentially Weighted Moving Average) features.
-        
+
         Args:
             player_history: Player's games before current date
             spans: List of span values (default from config)
-            
+
         Returns:
             Dictionary of EWMA features
         """
@@ -147,11 +147,11 @@ class FeatureCalculator:
     ) -> Dict[str, float]:
         """
         Calculate rest and schedule fatigue features.
-        
+
         Args:
             player_history: Player's games before current date
             current_date: Current game date
-            
+
         Returns:
             Dictionary of rest features
         """
@@ -178,11 +178,11 @@ class FeatureCalculator:
 
     def calculate_trend_features(self, player_history: pd.DataFrame) -> Dict[str, float]:
         """
-        Calculate trend features (L5 vs L10-15).
-        
+        Calculate trend features (L5 vs L10 - 15).
+
         Args:
             player_history: Player's games before current date
-            
+
         Returns:
             Dictionary of trend features
         """
@@ -203,15 +203,13 @@ class FeatureCalculator:
 
         return features
 
-    def calculate_efficiency_features(
-        self, player_history: pd.DataFrame
-    ) -> Dict[str, float]:
+    def calculate_efficiency_features(self, player_history: pd.DataFrame) -> Dict[str, float]:
         """
         Calculate efficiency features: TS%, PER, usage per 36, points per shot.
-        
+
         Args:
             player_history: Player's games before current date
-            
+
         Returns:
             Dictionary of efficiency features
         """
@@ -270,15 +268,13 @@ class FeatureCalculator:
 
         return features
 
-    def calculate_normalization_features(
-        self, player_history: pd.DataFrame
-    ) -> Dict[str, float]:
+    def calculate_normalization_features(self, player_history: pd.DataFrame) -> Dict[str, float]:
         """
         Calculate per-36 and per-100 possession stats.
-        
+
         Args:
             player_history: Player's games before current date
-            
+
         Returns:
             Dictionary of normalized features
         """
@@ -321,16 +317,16 @@ class FeatureCalculator:
         return features
 
     def calculate_opponent_features(
-        self, opponent_team: str, all_games: pd.DataFrame, current_date: pd.Timestamp
+        self, opponent_team: str, all_games: pd.DataFrame, current_date: pd.Timestamp  # noqa: E501
     ) -> Dict[str, float]:
         """
         Calculate opponent DEFENSIVE features.
-        
+
         Args:
             opponent_team: Name of opponent team
             all_games: All games data (for calculating opponent stats)
             current_date: Current game date
-            
+
         Returns:
             Dictionary of opponent features
         """
@@ -379,9 +375,9 @@ class FeatureCalculator:
     ) -> Dict[str, float]:
         """
         Calculate ALL features for a single prediction.
-        
+
         This is the master method that consolidates all feature types.
-        
+
         Args:
             player_history: Player's games before current date
             current_date: Current game date
@@ -390,10 +386,10 @@ class FeatureCalculator:
             season: Current season
             ctg_builder: CTG feature builder instance
             all_games: All games data (for opponent features)
-            
+
         Returns:
             Dictionary of all features
-            
+
         Raises:
             FeatureCalculationError: If feature calculation fails
             InsufficientDataError: If insufficient data for prediction

@@ -11,16 +11,16 @@ import pandas as pd
 from nba_api.stats.endpoints import leaguegamelog
 
 # Fetch all games from Oct 22, 2025
-print("Fetching all games from 2025-10-22...\n")
+print("Fetching all games from 2025 - 10 - 22...\n")
 gamelog = leaguegamelog.LeagueGameLog(
-    season="2025-26", season_type_all_star="Regular Season", player_or_team_abbreviation="P"
+    season="2025 - 26", season_type_all_star="Regular Season", player_or_team_abbreviation="P"
 )
 
 df = gamelog.get_data_frames()[0]
 df["GAME_DATE"] = pd.to_datetime(df["GAME_DATE"])
 
 # Filter to Oct 22
-oct22_games = df[df["GAME_DATE"] == "2025-10-22"].copy()
+oct22_games = df[df["GAME_DATE"] == "2025 - 10 - 22"].copy()
 oct22_games["PRA"] = oct22_games["PTS"] + oct22_games["REB"] + oct22_games["AST"]
 
 # Load bet ledger
@@ -123,7 +123,9 @@ if mismatches:
         ledger.loc[idx, "result"] = result
         ledger.loc[idx, "profit_loss"] = profit_loss
 
-        print(f'✓ Updated {m["player"]}: {actual_pra} PRA → {result} (P/L: ${profit_loss:+.2f})')
+        print(
+            f'✓ Updated {m["player"]}: {actual_pra} PRA → {result} (P/L: ${profit_loss:+.2f})'
+        )  # noqa: E501
 
     # Save corrected ledger
     ledger.to_csv(ledger_file, index=False)
@@ -140,7 +142,7 @@ if mismatches:
     win_rate = wins / (wins + losses) * 100 if (wins + losses) > 0 else 0
 
     print("\n" + "=" * 80)
-    print("CORRECTED RESULTS FOR 2025-10-22")
+    print("CORRECTED RESULTS FOR 2025 - 10 - 22")
     print("=" * 80)
     print(f"📊 Record: {wins}W - {losses}L - {pushes}P")
     print(f"🎯 Win Rate: {win_rate:.1f}%")

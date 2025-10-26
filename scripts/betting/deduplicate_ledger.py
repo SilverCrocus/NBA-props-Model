@@ -75,7 +75,14 @@ def deduplicate_ledger(dry_run=False):
 
     # Confirm
     print("\n" + "=" * 100)
-    response = input(f"Remove {len(duplicates)} duplicates? (yes/no): ").strip().lower()
+    response = (
+        input(
+            f"Remove {
+            len(duplicates)} duplicates? (yes/no): "
+        )
+        .strip()
+        .lower()
+    )
 
     if response != "yes":
         print("❌ Cancelled")

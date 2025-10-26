@@ -42,7 +42,10 @@ print(f"Dates properly ordered: {date_sorted}")
 # Check date range
 print(f"First bet date: {bets_df['date'].min().date()}")
 print(f"Last bet date: {bets_df['date'].max().date()}")
-print(f"Date range: {(bets_df['date'].max() - bets_df['date'].min()).days} days")
+print(
+    f"Date range: {(bets_df['date'].max() -
+                      bets_df['date'].min()).days} days"
+)
 print()
 
 # ======================================================================
@@ -64,11 +67,24 @@ print(f"Mean Absolute Error: {mae:.2f} pts")
 
 # Check for suspiciously perfect predictions
 perfect_preds = (bets_df["prediction"] == bets_df["actual"]).sum()
-print(f"Perfect predictions: {perfect_preds} ({perfect_preds/len(bets_df)*100:.2f}%)")
+print(
+    f"Perfect predictions: {perfect_preds} ({
+        perfect_preds /
+        len(bets_df) *
+        100:.2f}%)"
+)
 
 # Check prediction distribution
-print(f"\nPrediction range: {bets_df['prediction'].min():.1f} to {bets_df['prediction'].max():.1f}")
-print(f"Actual range: {bets_df['actual'].min():.1f} to {bets_df['actual'].max():.1f}")
+print(
+    f"\nPrediction range: {
+        bets_df['prediction'].min():.1f} to {
+            bets_df['prediction'].max():.1f}"
+)
+print(
+    f"Actual range: {
+        bets_df['actual'].min():.1f} to {
+            bets_df['actual'].max():.1f}"
+)
 print()
 
 # ======================================================================
@@ -89,7 +105,12 @@ print()
 
 # Check if edges are suspiciously large
 large_edges = (bets_df["edge_abs"] > 10).sum()
-print(f"Bets with edge > 10 pts: {large_edges} ({large_edges/len(bets_df)*100:.1f}%)")
+print(
+    f"Bets with edge > 10 pts: {large_edges} ({
+        large_edges /
+        len(bets_df) *
+        100:.1f}%)"
+)
 
 # Verify edge calculation
 bets_df["edge_check"] = bets_df["prediction"] - bets_df["line"]
@@ -112,7 +133,7 @@ over_correct_logic = ((over_bets["actual"] > over_bets["line"]) == over_bets["is
 print(f"OVER bet logic correct: {over_correct_logic}")
 print(f"  OVER bets: {len(over_bets):,}")
 print(f"  OVER wins: {over_bets['is_correct'].sum():,}")
-print(f"  OVER win rate: {over_bets['is_correct'].mean()*100:.1f}%")
+print(f"  OVER win rate: {over_bets['is_correct'].mean() * 100:.1f}%")
 
 # For UNDER bets: should win when actual < line
 under_bets = bets_df[bets_df["bet_side"] == "under"]
@@ -122,7 +143,7 @@ under_correct_logic = (
 print(f"\nUNDER bet logic correct: {under_correct_logic}")
 print(f"  UNDER bets: {len(under_bets):,}")
 print(f"  UNDER wins: {under_bets['is_correct'].sum():,}")
-print(f"  UNDER win rate: {under_bets['is_correct'].mean()*100:.1f}%")
+print(f"  UNDER win rate: {under_bets['is_correct'].mean() * 100:.1f}%")
 print()
 
 # ======================================================================
@@ -138,7 +159,7 @@ print()
 sample_idx = bets_df.index[0]
 sample = bets_df.loc[sample_idx]
 
-print(f"Sample bet verification:")
+print("Sample bet verification:")
 print(f"  Bet side: {sample['bet_side']}")
 print(f"  Prediction: {sample['prediction']:.1f}")
 print(f"  Line: {sample['line']:.1f}")
@@ -195,7 +216,7 @@ print("7. RANDOM BASELINE COMPARISON")
 print("=" * 80)
 print()
 
-# Simulate random betting (50/50 coin flip)
+# Simulate random betting (50 / 50 coin flip)
 np.random.seed(42)
 n_simulations = 1000
 random_win_rates = []
@@ -210,16 +231,21 @@ random_wr_std = np.std(random_win_rates)
 actual_wr = bets_df["is_correct"].mean()
 z_score = (actual_wr - random_wr_mean) / random_wr_std
 
-print(f"Random betting win rate (expected): {random_wr_mean*100:.1f}% ± {random_wr_std*100:.1f}%")
-print(f"Our win rate: {actual_wr*100:.1f}%")
+print(
+    f"Random betting win rate (expected): {
+        random_wr_mean * 100:.1f}% ± {
+            random_wr_std * 100:.1f}%"
+)
+print(f"Our win rate: {actual_wr * 100:.1f}%")
 print(f"Z-score: {z_score:.2f} (standard deviations above random)")
 
 if z_score > 3:
     print(
-        f"✅ Win rate is {z_score:.1f} standard deviations above random (statistically significant)"
-    )
+        f"✅ Win rate is {
+            z_score:.1f} standard deviations above random (statistically significant)"
+    )  # noqa: E501
 else:
-    print(f"⚠️  Win rate may not be statistically significant")
+    print("⚠️  Win rate may not be statistically significant")
 print()
 
 # ======================================================================
@@ -231,22 +257,26 @@ print("8. MARKET EFFICIENCY CHECK")
 print("=" * 80)
 print()
 
-# In an efficient market, betting randomly on either side should yield ~52.4% breakeven
+# In an efficient market, betting randomly on either side should yield ~52.4% breakeven  # noqa: E501
 # (accounting for -110 odds)
 breakeven_wr = 0.524
 
-print(f"Efficient market breakeven (typical -110 odds): {breakeven_wr*100:.1f}%")
-print(f"Our win rate: {actual_wr*100:.1f}%")
-print(f"Edge over breakeven: {(actual_wr - breakeven_wr)*100:.1f} percentage points")
+print(f"Efficient market breakeven (typical -110 odds): {breakeven_wr * 100:.1f}%")  # noqa: E501
+print(f"Our win rate: {actual_wr * 100:.1f}%")
+print(
+    f"Edge over breakeven: {(actual_wr -
+                               breakeven_wr) *
+                              100:.1f} percentage points"
+)
 
 if actual_wr > 0.70:
     print("\n⚠️  WARNING: Win rate > 70% is extremely rare in sports betting")
-    print("   Professional sports bettors typically achieve 55-58% long-term")
+    print("   Professional sports bettors typically achieve 55 - 58% long-term")  # noqa: E501
     print("   This suggests potential data leakage or overfitting")
 elif actual_wr > 0.60:
-    print("\n✅ Win rate 60-70% is strong but achievable for sharp models")
+    print("\n✅ Win rate 60 - 70% is strong but achievable for sharp models")
 elif actual_wr > 0.55:
-    print("\n✅ Win rate 55-60% is realistic for a good model")
+    print("\n✅ Win rate 55 - 60% is realistic for a good model")
 else:
     print("\n⚠️  Win rate below 55% may not be profitable after vig")
 print()
@@ -271,11 +301,15 @@ for threshold in [0, 2, 3, 4, 5, 6]:
 
         print(f"Edge >= {threshold} pts:")
         print(f"  Sample size: {n:,}")
-        print(f"  Win rate: {win_rate*100:.1f}% ± {ci*100:.1f}% (95% CI)")
-        print(f"  CI range: [{(win_rate-ci)*100:.1f}%, {(win_rate+ci)*100:.1f}%]")
+        print(f"  Win rate: {win_rate * 100:.1f}% ± {ci * 100:.1f}% (95% CI)")
+        print(
+            f"  CI range: [{(win_rate - ci) * 100:.1f}%, {(win_rate + ci) * 100:.1f}%]"
+        )  # noqa: E501
 
         if n < 100:
-            print(f"  ⚠️  WARNING: Small sample size (n={n}), results may not be reliable")
+            print(
+                f"  ⚠️  WARNING: Small sample size (n={n}), results may not be reliable"
+            )  # noqa: E501
         print()
 
 # ======================================================================
@@ -314,14 +348,14 @@ if len(issues_found) > 0:
     for i, issue in enumerate(issues_found, 1):
         print(f"  {i}. {issue}")
     print()
-    print("RECOMMENDATION: Investigate these issues before deploying to production")
+    print("RECOMMENDATION: Investigate these issues before deploying to production")  # noqa: E501
 else:
     print("✅ No major issues found in backtest")
     print()
-    print("However, a 62-65% win rate is still very strong.")
+    print("However, a 62 - 65% win rate is still very strong.")
     print("Recommended next steps:")
-    print("  1. Paper trade for 1-2 months to verify live performance")
-    print("  2. Start with small stakes ($10-50 per bet)")
+    print("  1. Paper trade for 1 - 2 months to verify live performance")
+    print("  2. Start with small stakes ($10 - 50 per bet)")
     print("  3. Track actual results vs predictions")
     print("  4. Re-calibrate if live performance differs significantly")
 

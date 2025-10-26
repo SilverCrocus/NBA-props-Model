@@ -25,7 +25,7 @@ class DataConfig:
 
     # Data paths
     GAME_LOGS_PATH: Path = PROJECT_ROOT / "data" / "game_logs" / "all_game_logs_with_opponent.csv"
-    CTG_DATA_PATH: Path = PROJECT_ROOT / "data" / "ctg_data_organized" / "players"
+    CTG_DATA_PATH: Path = PROJECT_ROOT / "data" / "ctg_data_organized" / "players"  # noqa: E501
     CTG_TEAM_DATA_PATH: Path = PROJECT_ROOT / "data" / "ctg_team_data"
     PROCESSED_DIR: Path = PROJECT_ROOT / "data" / "processed"
     RESULTS_DIR: Path = PROJECT_ROOT / "data" / "results"
@@ -36,7 +36,7 @@ class DataConfig:
     MIN_GAMES_PLAYED: int = 10
 
     # CTG data parameters
-    CTG_SEASONS: List[str] = field(default_factory=lambda: ["2023-24", "2024-25"])
+    CTG_SEASONS: List[str] = field(default_factory=lambda: ["2023 - 24", "2024 - 25"])
     CTG_SEASON_TYPE: str = "regular_season"
 
 
@@ -87,7 +87,7 @@ class ModelConfig:
             "learning_rate": 0.05,
             "subsample": 0.8,
             "colsample_bylevel": 0.8,
-            "min_data_in_leaf": 20,
+            "min_data_in_lea": 20,
             "loss_function": "RMSE",
             "eval_metric": "MAE",
             "random_state": 42,
@@ -103,7 +103,7 @@ class ModelConfig:
             "learning_rate": 0.05,
             "subsample": 0.8,
             "colsample_bylevel": 0.8,
-            "min_data_in_leaf": 20,
+            "min_data_in_lea": 20,
             "loss_function": "RMSE",
             "eval_metric": "MAE",
             "random_state": 42,
@@ -154,18 +154,19 @@ class ValidationConfig:
     WALK_FORWARD_MIN_HISTORY: int = 5
 
     # Train/validation split
-    TRAIN_SEASON: str = "2023-24"
-    VAL_SEASON: str = "2024-25"
-    TRAIN_START_DATE: str = "2023-10-01"
-    TRAIN_END_DATE: str = "2024-06-30"
-    VAL_START_DATE: str = "2024-10-01"
-    VAL_END_DATE: str = "2025-06-30"
+    TRAIN_SEASON: str = "2023 - 24"
+    VAL_SEASON: str = "2024 - 25"
+    TRAIN_START_DATE: str = "2023 - 10 - 01"
+    TRAIN_END_DATE: str = "2024 - 06 - 30"
+    VAL_START_DATE: str = "2024 - 10 - 01"
+    VAL_END_DATE: str = "2025 - 06 - 30"
 
     # Betting simulation
-    BETTING_ODDS: int = -110  # American odds (standard -110 means 52.38% breakeven)
+    # American odds (standard -110 means 52.38% breakeven)
+    BETTING_ODDS: int = -110
     CONFIDENCE_THRESHOLDS: List[float] = field(default_factory=lambda: [0.55, 0.60, 0.65])
     STARTING_BANKROLL: float = 1000.0
-    KELLY_FRACTION: float = 0.25  # 1/4 Kelly
+    KELLY_FRACTION: float = 0.25  # 1 / 4 Kelly
     MIN_BET: float = 10.0
     MAX_BET_PCT: float = 0.05  # Max 5% of bankroll per bet
 
@@ -198,7 +199,7 @@ class BettingConfig:
     """
     Optimal betting strategy configuration.
 
-    Based on comprehensive backtesting (October 2025), this configuration defines
+    Based on comprehensive backtesting (October 2025), this configuration defines  # noqa: E501
     the OPTIMAL betting filters that achieve 54.78% win rate and +5.95% ROI.
 
     See: OPTIMAL_BETTING_STRATEGY.md for full research findings.
@@ -287,11 +288,12 @@ class BettingConfig:
     EDGE_LARGE_MAX: float = 10.0  # Large edge max
 
     # Betting strategy flags
-    USE_OPTIMAL_STRATEGY: bool = True  # Use optimal filters (non-stars + edge filters)
+    # Use optimal filters (non-stars + edge filters)
+    USE_OPTIMAL_STRATEGY: bool = True
     USE_STAR_FILTER: bool = True  # Exclude star players
     USE_EDGE_FILTER: bool = True  # Only bet on medium/huge edges
 
-    # Expected performance (based on 2024-25 backtest)
+    # Expected performance (based on 2024 - 25 backtest)
     EXPECTED_WIN_RATE: float = 0.5478  # 54.78%
     EXPECTED_ROI: float = 0.0595  # 5.95%
     EXPECTED_BETS_PER_SEASON: int = 230
@@ -312,7 +314,7 @@ def get_model_params(model_type: str) -> Dict[str, Any]:
     Get hyperparameters for a specific model type.
 
     Args:
-        model_type: Model type ('xgboost', 'lightgbm', 'catboost_minutes', 'catboost_pra')
+        model_type: Model type ('xgboost', 'lightgbm', 'catboost_minutes', 'catboost_pra')  # noqa: E501
 
     Returns:
         Dictionary of hyperparameters
@@ -329,7 +331,10 @@ def get_model_params(model_type: str) -> Dict[str, Any]:
 
     if model_type not in model_params_map:
         raise ValueError(
-            f"Unknown model type: {model_type}. " f"Valid types: {list(model_params_map.keys())}"
+            f"Unknown model type: {model_type}. "
+            f"Valid types: {
+                list(
+                    model_params_map.keys())}"
         )
 
     return model_params_map[model_type].copy()
@@ -365,9 +370,7 @@ def validate_data_paths():
             missing_paths.append(f"{name}: {path}")
 
     if missing_paths:
-        raise FileNotFoundError(
-            f"Critical data paths missing:\n  - " + "\n  - ".join(missing_paths)
-        )
+        raise FileNotFoundError("Critical data paths missing:\n  - " + "\n  - ".join(missing_paths))
 
 
 if __name__ == "__main__":
@@ -382,15 +385,24 @@ if __name__ == "__main__":
     print(f"  Exists: {data_config.GAME_LOGS_PATH.exists()}")
 
     print("\n🤖 Model Hyperparameters:")
-    print(f"  XGBoost n_estimators: {model_config.XGBOOST_PARAMS['n_estimators']}")
-    print(f"  XGBoost learning_rate: {model_config.XGBOOST_PARAMS['learning_rate']}")
+    print(
+        f"  XGBoost n_estimators: {
+            model_config.XGBOOST_PARAMS['n_estimators']}"
+    )
+    print(
+        f"  XGBoost learning_rate: {
+            model_config.XGBOOST_PARAMS['learning_rate']}"
+    )
 
     print("\n🔍 Feature Config:")
     print(f"  Lag values: {feature_config.LAG_VALUES}")
     print(f"  Rolling windows: {feature_config.ROLLING_WINDOWS}")
 
     print("\n✅ Validation Config:")
-    print(f"  Min train games: {validation_config.WALK_FORWARD_MIN_TRAIN_GAMES}")
+    print(
+        f"  Min train games: {
+            validation_config.WALK_FORWARD_MIN_TRAIN_GAMES}"
+    )
     print(f"  Betting odds: {validation_config.BETTING_ODDS}")
 
     print("\n📊 MLflow Config:")

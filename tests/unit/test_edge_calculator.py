@@ -8,7 +8,6 @@ IMPORTANCE: Second most critical tests after temporal leakage.
 """
 
 import pytest
-import numpy as np
 
 
 class TestEdgeCalculation:
@@ -29,7 +28,7 @@ class TestEdgeCalculation:
         implied_prob = 1 / odds  # 0.50
         edge = prediction - implied_prob  # 0.05
 
-        assert edge > 0, "Edge should be positive when prediction > implied prob"
+        assert edge > 0, "Edge should be positive when prediction > implied prob"  # noqa: E501
         assert abs(edge - 0.05) < 0.001, f"Expected edge=0.05, got {edge}"
 
     def test_edge_negative_when_prediction_lt_implied_prob(self):
@@ -44,7 +43,7 @@ class TestEdgeCalculation:
         implied_prob = 1 / odds
         edge = prediction - implied_prob  # -0.05
 
-        assert edge < 0, "Edge should be negative when prediction < implied prob"
+        assert edge < 0, "Edge should be negative when prediction < implied prob"  # noqa: E501
         assert abs(edge + 0.05) < 0.001, f"Expected edge=-0.05, got {edge}"
 
     def test_edge_accounts_for_vig(self):
@@ -91,9 +90,9 @@ class TestEdgeCalculation:
         """Test edge calculation with realistic odds examples."""
         test_cases = [
             # (prediction, american_odds, expected_edge_sign)
-            (0.55, 100, "positive"),   # Good bet
+            (0.55, 100, "positive"),  # Good bet
             (0.45, -110, "negative"),  # Bad bet
-            (0.60, 110, "positive"),   # Strong edge
+            (0.60, 110, "positive"),  # Strong edge
             (0.50, -110, "negative"),  # Vig eats edge
         ]
 
@@ -108,11 +107,13 @@ class TestEdgeCalculation:
             edge = prediction - implied_prob
 
             if expected_sign == "positive":
-                assert edge > 0, \
-                    f"Expected positive edge for prediction={prediction}, odds={american_odds}"
+                assert (
+                    edge > 0
+                ), f"Expected positive edge for prediction={prediction}, odds={american_odds}"  # noqa: E501
             else:
-                assert edge < 0, \
-                    f"Expected negative edge for prediction={prediction}, odds={american_odds}"
+                assert (
+                    edge < 0
+                ), f"Expected negative edge for prediction={prediction}, odds={american_odds}"  # noqa: E501
 
 
 class TestKellyCriterion:
@@ -125,17 +126,16 @@ class TestKellyCriterion:
         Kelly = (edge * odds - 1) / (odds - 1)
         """
         edge = 0.05  # 5% edge
-        odds = 2.0   # +100
+        odds = 2.0  # +100
 
         kelly_full = (edge * odds) / (odds - 1)
         # kelly_full = (0.05 * 2) / 1 = 0.10 (bet 10% of bankroll)
 
-        assert abs(kelly_full - 0.10) < 0.001, \
-            f"Expected kelly=0.10, got {kelly_full}"
+        assert abs(kelly_full - 0.10) < 0.001, f"Expected kelly=0.10, got {kelly_full}"
 
     def test_fractional_kelly_reduces_risk(self):
         """
-        Fractional Kelly (e.g., 1/4 Kelly) reduces variance.
+        Fractional Kelly (e.g., 1 / 4 Kelly) reduces variance.
 
         Full Kelly is optimal for long run but has high variance.
         """
@@ -146,7 +146,9 @@ class TestKellyCriterion:
         kelly_quarter = kelly_full * 0.25  # 0.05 (5% of bankroll)
 
         assert kelly_quarter < kelly_full, "Fractional Kelly should be smaller"
-        assert kelly_quarter == 0.05, f"Expected 1/4 Kelly = 0.05, got {kelly_quarter}"
+        assert (
+            kelly_quarter == 0.05
+        ), f"Expected 1 / 4 Kelly = 0.05, got {kelly_quarter}"  # noqa: E501
 
     def test_kelly_never_exceeds_max_bet_size(self):
         """
@@ -164,8 +166,7 @@ class TestKellyCriterion:
 
         bet_size = min(kelly_quarter, MAX_BET_SIZE)
 
-        assert bet_size == MAX_BET_SIZE, \
-            "Bet size should be capped at MAX_BET_SIZE"
+        assert bet_size == MAX_BET_SIZE, "Bet size should be capped at MAX_BET_SIZE"
 
     def test_kelly_zero_when_no_edge(self):
         """
@@ -181,13 +182,13 @@ class TestKellyCriterion:
     def test_kelly_with_real_world_scenarios(self):
         """Test Kelly sizing with realistic betting scenarios."""
         bankroll = 1000
-        kelly_fraction = 0.25  # Use 1/4 Kelly
+        kelly_fraction = 0.25  # Use 1 / 4 Kelly
 
         scenarios = [
             # (edge, odds, expected_bet_range)
-            (0.05, 2.0, (10, 15)),   # 5% edge, +100 odds
-            (0.10, 2.0, (20, 30)),   # 10% edge, +100 odds
-            (0.03, 1.91, (5, 10)),   # 3% edge, -110 odds
+            (0.05, 2.0, (10, 15)),  # 5% edge, +100 odds
+            (0.10, 2.0, (20, 30)),  # 10% edge, +100 odds
+            (0.03, 1.91, (5, 10)),  # 3% edge, -110 odds
         ]
 
         for edge, odds, (min_bet, max_bet) in scenarios:
@@ -195,8 +196,10 @@ class TestKellyCriterion:
             kelly_frac = kelly_full * kelly_fraction
             bet_amount = bankroll * kelly_frac
 
-            assert min_bet <= bet_amount <= max_bet, \
-                f"Bet amount ${bet_amount:.2f} outside expected range ${min_bet}-${max_bet}"
+            assert (
+                min_bet <= bet_amount <= max_bet
+            ), f"Bet amount ${
+                bet_amount:.2f} outside expected range ${min_bet}-${max_bet}"
 
 
 class TestBettingRiskManagement:
@@ -215,8 +218,7 @@ class TestBettingRiskManagement:
 
         total_exposure = sum(bets) / bankroll
 
-        assert total_exposure > MAX_DAILY_EXPOSURE, \
-            "Example should exceed max exposure"
+        assert total_exposure > MAX_DAILY_EXPOSURE, "Example should exceed max exposure"
 
         # Should reject the last bet
         accepted_bets = []
@@ -230,8 +232,9 @@ class TestBettingRiskManagement:
             else:
                 break  # Reject this and remaining bets
 
-        assert len(accepted_bets) < len(bets), \
-            "Should reject some bets to stay under exposure limit"
+        assert len(accepted_bets) < len(
+            bets
+        ), "Should reject some bets to stay under exposure limit"
 
     def test_single_bet_max_size(self):
         """
@@ -253,8 +256,7 @@ class TestBettingRiskManagement:
 
         # Adjust to max size
         adjusted_bet = min(bet_size, MAX_BET_SIZE)
-        assert adjusted_bet == MAX_BET_SIZE, \
-            "Bet should be capped at max size"
+        assert adjusted_bet == MAX_BET_SIZE, "Bet should be capped at max size"
 
     def test_correlated_props_reduce_exposure(self):
         """
@@ -279,17 +281,18 @@ class TestBettingRiskManagement:
         correlation_factor = 1 + correlation
         effective_exposure = independent_exposure * correlation_factor
 
-        assert effective_exposure > independent_exposure, \
-            "Correlated bets increase effective exposure"
+        assert (
+            effective_exposure > independent_exposure
+        ), "Correlated bets increase effective exposure"
 
         # Should reduce bet sizes to maintain target exposure
         TARGET_EXPOSURE = 0.10
         reduction_factor = TARGET_EXPOSURE / effective_exposure
 
         adjusted_bet1 = bet1 * reduction_factor
-        adjusted_bet2 = bet2 * reduction_factor
+        __adjusted_bet2 = bet2 * reduction_factor  # noqa: F841
 
-        assert adjusted_bet1 < bet1, "Should reduce bet size for correlated props"
+        assert adjusted_bet1 < bet1, "Should reduce bet size for correlated props"  # noqa: E501
 
 
 class TestOddsConversion:
@@ -299,11 +302,11 @@ class TestOddsConversion:
         """Test conversion from American to decimal odds."""
         test_cases = [
             # (american, expected_decimal)
-            (100, 2.0),     # +100 = 2.0
+            (100, 2.0),  # +100 = 2.0
             (-110, 1.909),  # -110 ≈ 1.909
-            (150, 2.5),     # +150 = 2.5
+            (150, 2.5),  # +150 = 2.5
             (-150, 1.667),  # -150 ≈ 1.667
-            (200, 3.0),     # +200 = 3.0
+            (200, 3.0),  # +200 = 3.0
         ]
 
         for american, expected_decimal in test_cases:
@@ -312,14 +315,15 @@ class TestOddsConversion:
             else:
                 decimal = 1 + (american / 100)
 
-            assert abs(decimal - expected_decimal) < 0.01, \
-                f"American {american} should convert to decimal {expected_decimal}, got {decimal}"
+            assert (
+                abs(decimal - expected_decimal) < 0.01
+            ), f"American {american} should convert to decimal {expected_decimal}, got {decimal}"  # noqa: E501
 
     def test_decimal_to_implied_probability(self):
         """Test conversion from decimal odds to implied probability."""
         test_cases = [
             # (decimal_odds, expected_prob)
-            (2.0, 0.50),   # 50%
+            (2.0, 0.50),  # 50%
             (1.909, 0.524),  # 52.4%
             (3.0, 0.333),  # 33.3%
             (1.5, 0.667),  # 66.7%
@@ -328,8 +332,9 @@ class TestOddsConversion:
         for decimal_odds, expected_prob in test_cases:
             implied_prob = 1 / decimal_odds
 
-            assert abs(implied_prob - expected_prob) < 0.01, \
-                f"Odds {decimal_odds} should imply prob {expected_prob}, got {implied_prob}"
+            assert (
+                abs(implied_prob - expected_prob) < 0.01
+            ), f"Odds {decimal_odds} should imply prob {expected_prob}, got {implied_prob}"  # noqa: E501
 
     def test_implied_prob_includes_vig(self):
         """
@@ -338,7 +343,7 @@ class TestOddsConversion:
         Example: Both sides of +100/-120 line should sum to > 100%.
         """
         # Two-sided market
-        over_odds = 2.0   # +100 (50% implied)
+        over_odds = 2.0  # +100 (50% implied)
         under_odds = 1.833  # -120 (54.5% implied)
 
         over_prob = 1 / over_odds
@@ -346,12 +351,12 @@ class TestOddsConversion:
 
         total_prob = over_prob + under_prob
 
-        assert total_prob > 1.0, \
-            f"Total implied prob should exceed 100% (vig), got {total_prob*100:.1f}%"
+        assert (
+            total_prob > 1.0
+        ), f"Total implied prob should exceed 100% (vig), got {total_prob * 100:.1f}%"  # noqa: E501
 
         vig = total_prob - 1.0
-        assert vig > 0.03, \
-            f"Vig should be > 3%, got {vig*100:.1f}%"
+        assert vig > 0.03, f"Vig should be > 3%, got {vig * 100:.1f}%"
 
 
 class TestEdgeThresholds:
@@ -365,15 +370,16 @@ class TestEdgeThresholds:
         - Underdogs (+200): can accept lower edge
         """
         # Heavy favorite
-        favorite_odds = 1.33  # -300
+        __favorite_odds = 1.33  # -300  # noqa: F841
         favorite_min_edge = 0.05  # Need 5% edge
 
         # Underdog
-        underdog_odds = 3.0  # +200
+        __underdog_odds = 3.0  # +200  # noqa: F841
         underdog_min_edge = 0.03  # Only need 3% edge
 
-        assert favorite_min_edge > underdog_min_edge, \
-            "Should require higher edge for favorites (more vig)"
+        assert (
+            favorite_min_edge > underdog_min_edge
+        ), "Should require higher edge for favorites (more vig)"
 
     def test_edge_threshold_by_bet_size(self):
         """
@@ -382,15 +388,14 @@ class TestEdgeThresholds:
         Risk management: be more selective with large bets.
         """
         # Small bet
-        small_bet_size = 0.02  # 2% of bankroll
+        __small_bet_size = 0.02  # 2% of bankroll  # noqa: F841
         small_min_edge = 0.03  # 3% edge OK
 
         # Large bet
-        large_bet_size = 0.08  # 8% of bankroll
+        __large_bet_size = 0.08  # 8% of bankroll  # noqa: F841
         large_min_edge = 0.05  # Need 5% edge
 
-        assert large_min_edge > small_min_edge, \
-            "Should require higher edge for larger bets"
+        assert large_min_edge > small_min_edge, "Should require higher edge for larger bets"
 
 
 # Pytest configuration

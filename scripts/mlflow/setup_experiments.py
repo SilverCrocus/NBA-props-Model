@@ -3,14 +3,15 @@ Setup MLflow experiment structure for NBA props model
 Run this once at the start of the project
 """
 
+import logging
 import sys
 from pathlib import Path
 
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / 'src'))
-
 from mlflow_integration.utils import setup_mlflow_experiments
-import logging
+
+# Add src to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

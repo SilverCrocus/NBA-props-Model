@@ -3,11 +3,11 @@ Exploratory Data Analysis on Walk-Forward Validation Results
 Identifies data quality issues and performance patterns
 """
 
+from scipy import stats
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -16,13 +16,13 @@ sns.set_style("whitegrid")
 plt.rcParams['figure.figsize'] = (14, 8)
 
 # Load the data
-print("="*80)
+print("=" * 80)
 print("LOADING DATASETS")
-print("="*80)
+print("=" * 80)
 
-predictions_path = '/Users/diyagamah/Documents/nba_props_model/data/results/walkforward_predictions_2024-25.csv'
-backtest_path = '/Users/diyagamah/Documents/nba_props_model/data/results/backtest_walkforward_2024_25.csv'
-features_path = '/Users/diyagamah/Documents/nba_props_model/data/processed/full_2024_25.parquet'
+predictions_path = '/Users/diyagamah/Documents/nba_props_model/data/results/walkforward_predictions_2024 - 25.csv'  # noqa: E501
+backtest_path = '/Users/diyagamah/Documents/nba_props_model/data/results/backtest_walkforward_2024_25.csv'  # noqa: E501
+features_path = '/Users/diyagamah/Documents/nba_props_model/data/processed/full_2024_25.parquet'  # noqa: E501
 
 predictions_df = pd.read_csv(predictions_path)
 backtest_df = pd.read_csv(backtest_path)
@@ -35,9 +35,9 @@ print(f"Features shape: {features_df.shape}")
 # ============================================================================
 # 1. BASIC DATA STRUCTURE INSPECTION
 # ============================================================================
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("1. PREDICTIONS DATASET STRUCTURE")
-print("="*80)
+print("=" * 80)
 print("\nColumns:")
 print(predictions_df.columns.tolist())
 print("\nFirst few rows:")
@@ -47,9 +47,9 @@ print(predictions_df.dtypes)
 print("\nBasic statistics:")
 print(predictions_df.describe())
 
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("2. BACKTEST DATASET STRUCTURE")
-print("="*80)
+print("=" * 80)
 print("\nColumns:")
 print(backtest_df.columns.tolist())
 print("\nFirst few rows:")
@@ -62,9 +62,9 @@ print(backtest_df.describe())
 # ============================================================================
 # 3. PREDICTION QUALITY ANALYSIS
 # ============================================================================
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("3. PREDICTION DISTRIBUTION ANALYSIS")
-print("="*80)
+print("=" * 80)
 
 if 'prediction' in predictions_df.columns:
     pred_col = 'prediction'
@@ -73,7 +73,8 @@ elif 'predicted_pra' in predictions_df.columns:
 elif 'predicted_PRA' in predictions_df.columns:
     pred_col = 'predicted_PRA'
 else:
-    pred_cols = [col for col in predictions_df.columns if 'pred' in col.lower()]
+    pred_cols = [
+        col for col in predictions_df.columns if 'pred' in col.lower()]
     pred_col = pred_cols[0] if pred_cols else None
 
 if 'actual' in predictions_df.columns:
@@ -83,7 +84,8 @@ elif 'actual_pra' in predictions_df.columns:
 elif 'PRA' in predictions_df.columns:
     actual_col = 'PRA'
 else:
-    actual_cols = [col for col in predictions_df.columns if 'actual' in col.lower() or col == 'PRA']
+    actual_cols = [
+        col for col in predictions_df.columns if 'actual' in col.lower() or col == 'PRA']  # noqa: E501
     actual_col = actual_cols[0] if actual_cols else None
 
 print(f"\nPrediction column: {pred_col}")
@@ -92,7 +94,7 @@ print(f"Actual column: {actual_col}")
 predictions = predictions_df[pred_col]
 actuals = predictions_df[actual_col]
 
-print(f"\nPrediction Statistics:")
+print("\nPrediction Statistics:")
 print(f"  Count: {predictions.count()}")
 print(f"  Mean: {predictions.mean():.2f}")
 print(f"  Median: {predictions.median():.2f}")
@@ -102,7 +104,7 @@ print(f"  Max: {predictions.max():.2f}")
 print(f"  25th percentile: {predictions.quantile(0.25):.2f}")
 print(f"  75th percentile: {predictions.quantile(0.75):.2f}")
 
-print(f"\nActual Statistics:")
+print("\nActual Statistics:")
 print(f"  Count: {actuals.count()}")
 print(f"  Mean: {actuals.mean():.2f}")
 print(f"  Median: {actuals.median():.2f}")
@@ -111,7 +113,7 @@ print(f"  Min: {actuals.min():.2f}")
 print(f"  Max: {actuals.max():.2f}")
 
 # Check for impossible values
-print(f"\n⚠️  DATA QUALITY CHECKS:")
+print("\n⚠️  DATA QUALITY CHECKS:")
 print(f"  Negative predictions: {(predictions < 0).sum()}")
 print(f"  Predictions > 100: {(predictions > 100).sum()}")
 print(f"  Missing predictions: {predictions.isna().sum()}")
@@ -124,48 +126,57 @@ IQR = Q3 - Q1
 lower_bound = Q1 - 3 * IQR
 upper_bound = Q3 + 3 * IQR
 outliers = ((predictions < lower_bound) | (predictions > upper_bound)).sum()
-print(f"  Prediction outliers (3*IQR): {outliers} ({outliers/len(predictions)*100:.2f}%)")
+print(
+    f"  Prediction outliers (3*IQR): {outliers} ({outliers / len(predictions) * 100:.2f}%)")  # noqa: E501
 
 # Check distribution normality
-from scipy import stats
 _, p_value = stats.shapiro(predictions.sample(min(5000, len(predictions))))
 print(f"  Shapiro-Wilk normality test p-value: {p_value:.4f}")
-print(f"    → Predictions are {'NOT ' if p_value < 0.05 else ''}normally distributed")
+print(
+    f"    → Predictions are {
+        'NOT ' if p_value < 0.05 else ''}normally distributed")
 
 # ============================================================================
 # 4. ERROR ANALYSIS
 # ============================================================================
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("4. PREDICTION ERROR ANALYSIS")
-print("="*80)
+print("=" * 80)
 
 predictions_df['error'] = predictions_df[pred_col] - predictions_df[actual_col]
 predictions_df['abs_error'] = np.abs(predictions_df['error'])
-predictions_df['pct_error'] = (predictions_df['error'] / predictions_df[actual_col]) * 100
+predictions_df['pct_error'] = (
+    predictions_df['error'] / predictions_df[actual_col]) * 100
 
 mae = predictions_df['abs_error'].mean()
 rmse = np.sqrt((predictions_df['error']**2).mean())
 mape = predictions_df['pct_error'].abs().mean()
 bias = predictions_df['error'].mean()
 
-print(f"\nOverall Error Metrics:")
+print("\nOverall Error Metrics:")
 print(f"  MAE (Mean Absolute Error): {mae:.3f}")
 print(f"  RMSE (Root Mean Squared Error): {rmse:.3f}")
 print(f"  MAPE (Mean Absolute Percentage Error): {mape:.2f}%")
 print(f"  Bias (Mean Error): {bias:.3f}")
-print(f"    → Model {'OVER' if bias > 0 else 'UNDER'}-predicts by {abs(bias):.3f} points on average")
+print(
+    f"    → Model {
+        'OVER' if bias > 0 else 'UNDER'}-predicts by {
+            abs(bias):.3f} points on average")
 
 # Check for systematic bias
 overpredict = (predictions_df['error'] > 0).sum()
 underpredict = (predictions_df['error'] < 0).sum()
-print(f"\n  Over-predictions: {overpredict} ({overpredict/len(predictions_df)*100:.1f}%)")
-print(f"  Under-predictions: {underpredict} ({underpredict/len(predictions_df)*100:.1f}%)")
+print(
+    f"\n  Over-predictions: {overpredict} ({overpredict / len(predictions_df) * 100:.1f}%)")  # noqa: E501
+print(
+    f"  Under-predictions: {underpredict} ({underpredict / len(predictions_df) * 100:.1f}%)")  # noqa: E501
 
 # Error by prediction range
-print(f"\nError by Prediction Range:")
-predictions_df['pred_range'] = pd.cut(predictions_df[pred_col],
-                                      bins=[0, 10, 20, 30, 40, 50, 100],
-                                      labels=['0-10', '10-20', '20-30', '30-40', '40-50', '50+'])
+print("\nError by Prediction Range:")
+predictions_df['pred_range'] = pd.cut(
+    predictions_df[pred_col], bins=[
+        0, 10, 20, 30, 40, 50, 100], labels=[
+            '0 - 10', '10 - 20', '20 - 30', '30 - 40', '40 - 50', '50+'])
 error_by_range = predictions_df.groupby('pred_range').agg({
     'abs_error': ['mean', 'std', 'count'],
     'error': 'mean'
@@ -175,11 +186,12 @@ print(error_by_range)
 # ============================================================================
 # 5. PLAYER-LEVEL ANALYSIS
 # ============================================================================
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("5. PLAYER-LEVEL ERROR PATTERNS")
-print("="*80)
+print("=" * 80)
 
-player_cols = [col for col in predictions_df.columns if 'player' in col.lower() and 'id' not in col.lower()]
+player_cols = [col for col in predictions_df.columns if 'player' in col.lower(
+) and 'id' not in col.lower()]
 if player_cols:
     player_col = player_cols[0]
 
@@ -191,26 +203,27 @@ if player_cols:
     }).round(3)
 
     player_errors.columns = ['MAE', 'Count', 'Bias', 'Avg_Pred', 'Avg_Actual']
-    player_errors = player_errors[player_errors['Count'] >= 5]  # At least 5 predictions
+    # At least 5 predictions
+    player_errors = player_errors[player_errors['Count'] >= 5]
 
-    print(f"\nPlayers with HIGHEST MAE (min 5 predictions):")
+    print("\nPlayers with HIGHEST MAE (min 5 predictions):")
     print(player_errors.nlargest(10, 'MAE'))
 
-    print(f"\nPlayers with LOWEST MAE (min 5 predictions):")
+    print("\nPlayers with LOWEST MAE (min 5 predictions):")
     print(player_errors.nsmallest(10, 'MAE'))
 
-    print(f"\nPlayers with HIGHEST POSITIVE BIAS (over-predicted):")
+    print("\nPlayers with HIGHEST POSITIVE BIAS (over-predicted):")
     print(player_errors.nlargest(10, 'Bias')[['Bias', 'MAE', 'Count']])
 
-    print(f"\nPlayers with HIGHEST NEGATIVE BIAS (under-predicted):")
+    print("\nPlayers with HIGHEST NEGATIVE BIAS (under-predicted):")
     print(player_errors.nsmallest(10, 'Bias')[['Bias', 'MAE', 'Count']])
 
 # ============================================================================
 # 6. TEAM-LEVEL ANALYSIS
 # ============================================================================
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("6. TEAM-LEVEL ERROR PATTERNS")
-print("="*80)
+print("=" * 80)
 
 team_cols = [col for col in predictions_df.columns if 'team' in col.lower()]
 if team_cols:
@@ -224,18 +237,18 @@ if team_cols:
 
     team_errors.columns = ['MAE', 'Count', 'Bias', 'Avg_Pred']
 
-    print(f"\nTeams with HIGHEST MAE:")
+    print("\nTeams with HIGHEST MAE:")
     print(team_errors.nlargest(10, 'MAE'))
 
-    print(f"\nTeams with LOWEST MAE:")
+    print("\nTeams with LOWEST MAE:")
     print(team_errors.nsmallest(10, 'MAE'))
 
 # ============================================================================
 # 7. EDGE CALIBRATION ANALYSIS
 # ============================================================================
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("7. EDGE CALIBRATION ANALYSIS")
-print("="*80)
+print("=" * 80)
 
 if 'edge' in backtest_df.columns:
     print(f"\nBacktest Records: {len(backtest_df)}")
@@ -262,12 +275,12 @@ if 'edge' in backtest_df.columns:
 
     win_rate = wins / total_bets * 100 if total_bets > 0 else 0
 
-    print(f"\nOverall Betting Performance:")
+    print("\nOverall Betting Performance:")
     print(f"  Total bets: {total_bets}")
     print(f"  Wins: {wins} ({win_rate:.2f}%)")
-    print(f"  Losses: {losses} ({(losses/total_bets)*100:.2f}%)")
+    print(f"  Losses: {losses} ({(losses / total_bets) * 100:.2f}%)")
     if pushes > 0:
-        print(f"  Pushes: {pushes} ({(pushes/total_bets)*100:.2f}%)")
+        print(f"  Pushes: {pushes} ({(pushes / total_bets) * 100:.2f}%)")
 
     if 'profit' in backtest_df.columns:
         total_profit = backtest_df['profit'].sum()
@@ -276,11 +289,11 @@ if 'edge' in backtest_df.columns:
         print(f"  ROI: {roi:.2f}%")
 
     # Edge calibration by buckets
-    print(f"\nPerformance by Edge Bucket:")
+    print("\nPerformance by Edge Bucket:")
     backtest_df['edge_bucket'] = pd.cut(backtest_df['edge'],
                                         bins=[-100, -10, -5, 0, 5, 10, 100],
-                                        labels=['< -10%', '-10 to -5%', '-5 to 0%',
-                                               '0 to 5%', '5 to 10%', '> 10%'])
+                                        labels=['< -10%', '-10 to -5%', '-5 to 0%',  # noqa: E501
+                                                '0 to 5%', '5 to 10%', '> 10%'])  # noqa: E501
 
     # Build aggregation dict dynamically
     agg_dict = {
@@ -310,24 +323,31 @@ if 'edge' in backtest_df.columns:
         edge_comparison = None
 
     if edge_comparison is not None:
-        edge_comparison['Expected_Win_Rate_%'] = edge_comparison['Predicted_Edge_%'] + 50
-        edge_comparison['Calibration_Error'] = edge_comparison['Actual_Win_Rate_%'] - edge_comparison['Expected_Win_Rate_%']
+        edge_comparison['Expected_Win_Rate_%'] = (
+            edge_comparison['Predicted_Edge_%'] + 50)  # noqa: E501
+        edge_comparison['Calibration_Error'] = (
+            edge_comparison['Actual_Win_Rate_%'] -
+            edge_comparison['Expected_Win_Rate_%'])
 
-        print(f"\nEdge Calibration Analysis:")
+        print("\nEdge Calibration Analysis:")
         print(edge_comparison)
 
 # ============================================================================
 # 8. FEATURE QUALITY ANALYSIS
 # ============================================================================
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("8. FEATURE QUALITY ANALYSIS")
-print("="*80)
+print("=" * 80)
 
 print(f"\nFeature dataset shape: {features_df.shape}")
 print(f"Number of features: {len(features_df.columns)}")
 
 # Missing value analysis
-missing_rates = (features_df.isna().sum() / len(features_df) * 100).sort_values(ascending=False)
+missing_rates = (
+    features_df.isna().sum() /
+    len(features_df) *
+    100).sort_values(
+        ascending=False)
 high_missing = missing_rates[missing_rates > 5]
 
 print(f"\nFeatures with >5% missing values: {len(high_missing)}")
@@ -355,7 +375,9 @@ for col in features_df.select_dtypes(include=[np.number]).columns:
 print(f"\nFeatures with infinite values: {len(inf_features)}")
 if inf_features:
     print("Top features with infinite values:")
-    for feat, count in sorted(inf_features, key=lambda x: x[1], reverse=True)[:10]:
+    for feat, count in sorted(
+            inf_features, key=lambda x: x[1], reverse=True)[
+            :10]:
         print(f"  {feat}: {count} infinite values")
 
 # Feature correlation with target
@@ -370,19 +392,19 @@ if 'pra' in features_df.columns or 'target' in features_df.columns:
             corr = features_df[[feat, target_col]].corr().iloc[0, 1]
             if not np.isnan(corr):
                 correlations.append((feat, corr))
-        except:
+        except BaseException:
             pass
 
     correlations = sorted(correlations, key=lambda x: abs(x[1]), reverse=True)
 
-    print(f"\nTop 10 features correlated with target:")
+    print("\nTop 10 features correlated with target:")
     for feat, corr in correlations[:10]:
         print(f"  {feat}: {corr:.3f}")
 
-    print(f"\nBottom 10 features correlated with target (weakest):")
+    print("\nBottom 10 features correlated with target (weakest):")
     for feat, corr in correlations[-10:]:
         print(f"  {feat}: {corr:.3f}")
 
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("ANALYSIS COMPLETE")
-print("="*80)
+print("=" * 80)

@@ -1,0 +1,157 @@
+================================================================================
+STATISTICAL DEEP DIVE: DIAGNOSTIC FAILURES
+================================================================================
+
+Total bets: 132
+Win rate: 54.00%
+Total profit: -11.86 units
+Total staked: 639.01 units
+ROI: -1.86%
+
+Breakeven WR: 53.43%
+Actual WR: 54.00%
+WR Edge: 0.57%
+
+================================================================================
+ROOT CAUSE #1: ODDS IMBALANCE (Winning on Favorites, Losing on Dogs)
+================================================================================
+
+Average odds on WINS: 1.873
+Average odds on LOSSES: 1.877
+Odds imbalance: -0.0039
+  → If negative: Winning on shorter odds (favorites), losing on longer odds (dogs)
+  → This DESTROYS ROI even with 54% WR
+
+================================================================================
+ROOT CAUSE #2: KELLY OVERCONFIDENCE (Heavy Stakes on Losses)
+================================================================================
+
+Average stake on WINS: 4.49 units
+Average stake on LOSSES: 4.84 units
+Stake imbalance: 0.35 units
+  → If positive: We're betting HEAVIER on losses (Kelly overconfidence)
+
+Odds-weighted WR: 37.94%
+Traditional WR: 54.00%
+OWWR Gap: -16.06%
+  → If gap < 0: Heavy staking on losses
+
+================================================================================
+ROOT CAUSE #3: PROFIT/LOSS ASYMMETRY
+================================================================================
+
+Total profit from 54 wins: +210.94 units
+Total loss from 46 losses: -222.81 units
+Net: -11.86 units
+
+Average profit per WIN: +3.91 units
+Average loss per LOSS: -4.84 units
+Win/Loss ratio: 0.806
+  → Need ratio > 0.85 at 54% WR to be profitable
+  → Required at 54% WR: 0.46/0.54 = 0.852
+  → Actual: 0.806
+
+================================================================================
+ROOT CAUSE #4: SIDE BIAS (OVER vs UNDER)
+================================================================================
+
+OVER:
+  Bets: 30 (22.7%)
+  WR: 64.00%
+  ROI: 14.69%
+  Avg edge: 3.38 pts
+  Avg model prob: 0.638
+  Avg stake: 2.80 units
+  Total profit: 12.34 units
+  Avg odds (wins): 1.874
+  Avg odds (losses): 1.871
+
+UNDER:
+  Bets: 102 (77.3%)
+  WR: 50.67%
+  ROI: -4.36%
+  Avg edge: 4.96 pts
+  Avg model prob: 0.666
+  Avg stake: 5.44 units
+  Total profit: -24.20 units
+  Avg odds (wins): 1.872
+  Avg odds (losses): 1.878
+
+================================================================================
+ROOT CAUSE #5: MODEL EDGE CORRELATION FAILURE
+================================================================================
+
+Model edge vs win correlation: nan
+Statistical significance: NO (threshold: 0.15)
+Spearman correlation: nan (p=nan)
+
+Win rate by edge bucket (should be monotonically increasing):
+  0-2 pts: WR=65.00%, ROI=11.74%, n=27
+  2-4 pts: WR=46.88%, ROI=-16.81%, n=42
+  4-6 pts: WR=57.14%, ROI=10.21%, n=27
+  6-8 pts: WR=66.67%, ROI=12.29%, n=15
+  8+ pts: WR=40.00%, ROI=-8.76%, n=21
+
+================================================================================
+ROOT CAUSE #6: CALIBRATION FAILURE
+================================================================================
+
+Predicted probability vs actual win rate:
+  50-55%: Predicted=54.1%, Actual=0.0%, n=4, Error=0.541
+  55-60%: Predicted=57.6%, Actual=67.7%, n=38, Error=0.101
+  60-65%: Predicted=62.5%, Actual=31.8%, n=28, Error=0.307
+  65-70%: Predicted=66.9%, Actual=73.3%, n=22, Error=0.064
+  70%+: Predicted=77.1%, Actual=48.4%, n=40, Error=0.287
+
+Expected Calibration Error (ECE): 0.2083
+  ✓ GOOD if < 0.05    ✗ BAD if > 0.10
+Brier Score: 0.2757
+  ✓ GOOD if < 0.20    ✗ BAD if > 0.25
+
+================================================================================
+SIDE-SPECIFIC CALIBRATION ANALYSIS
+================================================================================
+
+OVER Calibration:
+  50-55%: Predicted=54.7%, Actual=0.0%, Error=0.547, n=2
+  55-60%: Predicted=56.3%, Actual=81.8%, Error=0.255, n=13
+  60-65%: Predicted=63.2%, Actual=25.0%, Error=0.382, n=4
+  65-70%: Predicted=67.5%, Actual=100.0%, Error=0.325, n=4
+  70%+: Predicted=78.6%, Actual=57.1%, Error=0.215, n=7
+  ECE: 0.2913
+
+UNDER Calibration:
+  50-55%: Predicted=53.5%, Actual=nan%, Error=nan, n=2
+  55-60%: Predicted=58.3%, Actual=60.0%, Error=0.017, n=25
+  60-65%: Predicted=62.4%, Actual=33.3%, Error=0.291, n=24
+  65-70%: Predicted=66.8%, Actual=69.2%, Error=0.025, n=18
+  70%+: Predicted=76.7%, Actual=45.8%, Error=0.309, n=33
+  ECE: nan
+
+================================================================================
+SUMMARY: KEY FINDINGS
+================================================================================
+
+1. Odds Imbalance:
+   Winning at 1.873 odds, losing at 1.877 odds
+   Gap: -0.0039
+
+2. Kelly Overconfidence:
+   Betting 4.84 units on losses vs 4.49 on wins
+   Imbalance: +0.35 units heavier on losses
+
+3. Side Bias:
+   OVER: 64.00% WR, UNDER: 50.67% WR
+   Gap: 13.33%
+
+4. Edge Correlation:
+   Correlation: nan (threshold: 0.15)
+   Status: FAIL
+
+5. Calibration:
+   ECE: 0.2083 (threshold: 0.05)
+   Status: FAIL
+   Brier: 0.2757 (threshold: 0.20)
+   Status: FAIL
+
+================================================================================

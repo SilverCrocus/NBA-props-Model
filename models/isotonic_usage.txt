@@ -1,0 +1,14 @@
+
+# Usage in Production:
+
+import pickle
+
+# Load calibrator
+with open('models/isotonic_calibrator.pkl', 'rb') as f:
+    calibrator = pickle.load(f)
+
+# Calibrate predictions
+predictions_df['calibrated_PRA'] = calibrator.predict(predictions_df['predicted_PRA'])
+
+# Use calibrated values for edge calculation
+edge = calibrated_PRA - line

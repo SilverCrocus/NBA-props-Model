@@ -2,12 +2,12 @@
 Two-Stage Predictor for NBA Props
 
 This is the KEY INNOVATION identified by all 4 specialized agents:
-Minutes variance accounts for 40-50% of current MAE 6.10.
+Minutes variance accounts for 40 - 50% of current MAE 6.10.
 
 Stage 1: Predict minutes played
 Stage 2: Predict PRA given predicted minutes
 
-Expected Impact: MAE 6.10 → 5.60-5.80 (7-8% improvement)
+Expected Impact: MAE 6.10 → 5.60 - 5.80 (7 - 8% improvement)
 
 Why this works:
 - Player plays 40 min → 50 PRA
@@ -15,7 +15,7 @@ Why this works:
 - Current model predicts 37.5 PRA (wrong by 12.5 either way)
 - Two-stage model predicts minutes first, then adjusts PRA accordingly
 
-Author: NBA Props Model - Phase 1 Weeks 2-3
+Author: NBA Props Model - Phase 1 Weeks 2 - 3
 Date: October 14, 2025
 """
 
@@ -25,7 +25,7 @@ from typing import Dict, Tuple
 import catboost as cat
 import numpy as np
 import pandas as pd
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.metrics import mean_absolute_error, r2_score
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -62,7 +62,8 @@ class TwoStagePredictor:
             minutes_model_params: Hyperparameters for Stage 1 (minutes) model
             pra_model_params: Hyperparameters for Stage 2 (PRA) model
         """
-        # Default hyperparameters for minutes model (CatBoost - best from Phase 2)
+        # Default hyperparameters for minutes model (CatBoost - best from Phase
+        # 2)
         if minutes_model_params is None:
             minutes_model_params = {
                 "iterations": 300,
@@ -70,7 +71,7 @@ class TwoStagePredictor:
                 "learning_rate": 0.05,
                 "subsample": 0.8,
                 "colsample_bylevel": 0.8,
-                "min_data_in_leaf": 20,
+                "min_data_in_lea": 20,
                 "loss_function": "RMSE",
                 "eval_metric": "MAE",
                 "random_state": 42,
@@ -86,7 +87,7 @@ class TwoStagePredictor:
                 "learning_rate": 0.05,
                 "subsample": 0.8,
                 "colsample_bylevel": 0.8,
-                "min_data_in_leaf": 20,
+                "min_data_in_lea": 20,
                 "loss_function": "RMSE",
                 "eval_metric": "MAE",
                 "random_state": 42,
@@ -125,18 +126,23 @@ class TwoStagePredictor:
                 minutes_features.append(feat)
 
         # Pace features (if available)
-        pace_features = ["opp_pace", "CTG_USG"]  # Usage rate correlates with minutes
+        # Usage rate correlates with minutes
+        pace_features = ["opp_pace", "CTG_USG"]
         for feat in pace_features:
             if feat in X.columns:
                 minutes_features.append(feat)
 
         # Age-related (older players get load managed)
-        # Note: We don't have age in current features, but would add if available
+        # Note: We don't have age in current features, but would add if
+        # available
 
         if len(minutes_features) == 0:
             raise ValueError("No suitable features found for minutes prediction!")
 
-        logger.info(f"   Selected {len(minutes_features)} features for minutes model")
+        logger.info(
+            f"   Selected {
+                len(minutes_features)} features for minutes model"
+        )
         logger.info(f"   Key features: {minutes_features[:10]}")
 
         return minutes_features
@@ -239,7 +245,7 @@ class TwoStagePredictor:
         minutes_mae = mean_absolute_error(y_minutes, predicted_minutes_train)
         minutes_r2 = r2_score(y_minutes, predicted_minutes_train)
 
-        logger.info(f"   ✅ Minutes Model Trained")
+        logger.info("   ✅ Minutes Model Trained")
         logger.info(f"      MAE: {minutes_mae:.2f} minutes")
         logger.info(f"      R²: {minutes_r2:.3f}")
 
@@ -260,7 +266,7 @@ class TwoStagePredictor:
         pra_mae = mean_absolute_error(y_pra, predicted_pra_train)
         pra_r2 = r2_score(y_pra, predicted_pra_train)
 
-        logger.info(f"   ✅ PRA Model Trained")
+        logger.info("   ✅ PRA Model Trained")
         logger.info(f"      MAE: {pra_mae:.2f} points")
         logger.info(f"      R²: {pra_r2:.3f}")
 
@@ -274,7 +280,8 @@ class TwoStagePredictor:
             "pra_r2": pra_r2,
             "n_samples": len(X),
             "n_minutes_features": len(self.minutes_features),
-            "n_pra_features": len(self.pra_features) + 1,  # +1 for predicted_MIN
+            # +1 for predicted_MIN
+            "n_pra_features": len(self.pra_features) + 1,
         }
 
         logger.info("\n" + "=" * 80)
@@ -356,7 +363,10 @@ class TwoStagePredictor:
         # PRA model importance (including predicted_MIN)
         pra_feature_names = self.pra_features + ["predicted_MIN"]
         pra_importance = pd.DataFrame(
-            {"feature": pra_feature_names, "importance": self.pra_model.feature_importances_}
+            {
+                "feature": pra_feature_names,
+                "importance": self.pra_model.feature_importances_,
+            }  # noqa: E501
         ).sort_values("importance", ascending=False)
 
         return {"minutes": minutes_importance, "pra": pra_importance}

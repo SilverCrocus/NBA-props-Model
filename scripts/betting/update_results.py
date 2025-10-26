@@ -6,28 +6,27 @@ Fetches actual game results and updates bet outcomes in the ledger.
 
 Usage:
   # Update results for a specific date
-  uv run python scripts/betting/update_results.py 2025-10-21
+  uv run python scripts/betting/update_results.py 2025 - 10 - 21
 
   # Update all pending bets
   uv run python scripts/betting/update_results.py --all-pending
 
   # Force refresh even if results already recorded
-  uv run python scripts/betting/update_results.py 2025-10-21 --force
+  uv run python scripts/betting/update_results.py 2025 - 10 - 21 --force
 """
 
 import argparse
 import sys
-from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
+from nba_api.stats.endpoints import leaguegamefinder
+from nba_api.stats.static import players
 
 # Add project root to path
 ROOT_DIR = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
-from nba_api.stats.endpoints import leaguegamefinder
-from nba_api.stats.static import players
 
 BETTING_DIR = ROOT_DIR / "data" / "betting"
 LEDGER_FILE = BETTING_DIR / "bet_ledger.csv"
@@ -144,7 +143,7 @@ def update_results_for_date(date: str, force: bool = False):
         stats = get_player_game_stats(bet["player_name"], bet["game_date"])
 
         if stats is None:
-            print(f"   ⏳ Skipping - no data available yet")
+            print("   ⏳ Skipping - no data available yet")
             continue
 
         actual_pra = stats["PRA"]
@@ -200,7 +199,7 @@ def print_summary(ledger: pd.DataFrame, date: str = None):
     settled = df[df["result"].isin(["WIN", "LOSS", "PUSH"])]
 
     if settled.empty:
-        print(f"\n📊 No settled bets yet")
+        print("\n📊 No settled bets yet")
         return
 
     wins = len(settled[settled["result"] == "WIN"])
@@ -232,7 +231,7 @@ def print_summary(ledger: pd.DataFrame, date: str = None):
         conf_profit = conf_bets["profit_loss"].sum()
 
         print(
-            f"   {conf}: {conf_wins}/{conf_total} ({conf_win_rate:.1f}%) | P/L: ${conf_profit:+.2f}"
+            f"   {conf}: {conf_wins}/{conf_total} ({conf_win_rate:.1f}%) | P/L: ${conf_profit:+.2f}"  # noqa: E501
         )
 
 

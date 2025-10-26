@@ -15,18 +15,17 @@ Usage: uv run python scripts/production/train_model.py
 
 import pickle
 import sys
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import xgboost as xgb
+from fast_feature_builder import FastFeatureBuilder
 from sklearn.feature_selection import SelectKBest, f_regression
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import TimeSeriesSplit
 
 # Add scripts/utils to path
 sys.path.append("scripts/utils")
-from fast_feature_builder import FastFeatureBuilder
 
 print("=" * 80)
 print("TRAIN NBA PROPS MODEL")
@@ -41,7 +40,7 @@ print("STEP 1: Loading data...")
 print()
 
 # Load all historical game logs
-print("Loading historical game logs (2003-2024)...")
+print("Loading historical game logs (2003 - 2024)...")
 historical_df = pd.read_csv("data/game_logs/all_game_logs_through_2025.csv")
 historical_df["GAME_DATE"] = pd.to_datetime(historical_df["GAME_DATE"])
 
@@ -50,7 +49,9 @@ historical_df = historical_df.sort_values(["PLAYER_ID", "GAME_DATE"])
 
 print(f"✅ Historical: {len(historical_df):,} games")
 print(
-    f"   Date range: {historical_df['GAME_DATE'].min().date()} to {historical_df['GAME_DATE'].max().date()}"
+    f"   Date range: {
+        historical_df['GAME_DATE'].min().date()} to {
+            historical_df['GAME_DATE'].max().date()}"
 )
 print()
 
@@ -60,11 +61,15 @@ if "PRA" not in historical_df.columns:
 
 # Filter to MIN >= 25 (match betting population)
 print(
-    f"Before MIN filter: {len(historical_df):,} games, PRA avg = {historical_df['PRA'].mean():.2f}"
+    f"Before MIN filter: {
+        len(historical_df):,    } games, PRA avg = {
+            historical_df['PRA'].mean():.2f}"
 )
 historical_df = historical_df[historical_df["MIN"] >= 25].copy()
 print(
-    f"After MIN >= 25:   {len(historical_df):,} games, PRA avg = {historical_df['PRA'].mean():.2f}"
+    f"After MIN >= 25:   {
+        len(historical_df):,    } games, PRA avg = {
+            historical_df['PRA'].mean():.2f}"
 )
 print()
 
@@ -76,21 +81,31 @@ print("STEP 2: Building features...")
 print()
 
 # Split into train/val/test (strict temporal order)
-# Use 2022-2024 for validation (need recent data)
-train_df = historical_df[historical_df["GAME_DATE"] < "2022-07-01"].copy()
+# Use 2022 - 2024 for validation (need recent data)
+train_df = historical_df[historical_df["GAME_DATE"] < "2022 - 07 - 01"].copy()
 val_df = historical_df[
-    (historical_df["GAME_DATE"] >= "2022-07-01") & (historical_df["GAME_DATE"] < "2023-07-01")
-].copy()
-test_df = historical_df[historical_df["GAME_DATE"] >= "2023-07-01"].copy()
+    (historical_df["GAME_DATE"] >= "2022 - 07 - 01")
+    & (historical_df["GAME_DATE"] < "2023 - 07 - 01")
+].copy()  # noqa: E501
+test_df = historical_df[historical_df["GAME_DATE"] >= "2023 - 07 - 01"].copy()
 
 print(
-    f"Train: {len(train_df):,} games ({train_df['GAME_DATE'].min().date()} to {train_df['GAME_DATE'].max().date()})"
+    f"Train: {
+        len(train_df):,    } games ({
+            train_df['GAME_DATE'].min().date()} to {
+                train_df['GAME_DATE'].max().date()})"
 )
 print(
-    f"Val:   {len(val_df):,} games ({val_df['GAME_DATE'].min().date()} to {val_df['GAME_DATE'].max().date()})"
+    f"Val:   {
+        len(val_df):,    } games ({
+            val_df['GAME_DATE'].min().date()} to {
+                val_df['GAME_DATE'].max().date()})"
 )
 print(
-    f"Test:  {len(test_df):,} games ({test_df['GAME_DATE'].min().date()} to {test_df['GAME_DATE'].max().date()})"
+    f"Test:  {
+        len(test_df):,    } games ({
+            test_df['GAME_DATE'].min().date()} to {
+                test_df['GAME_DATE'].max().date()})"
 )
 print()
 
@@ -104,13 +119,13 @@ all_data_for_features = all_data_for_features.sort_values(["PLAYER_ID", "GAME_DA
 full_df = builder.build_features(all_data_for_features, pd.DataFrame(), verbose=True)
 
 # Split back
-train_with_features = full_df[full_df["GAME_DATE"] < "2022-07-01"].copy()
+train_with_features = full_df[full_df["GAME_DATE"] < "2022 - 07 - 01"].copy()
 val_with_features = full_df[
-    (full_df["GAME_DATE"] >= "2022-07-01") & (full_df["GAME_DATE"] < "2023-07-01")
+    (full_df["GAME_DATE"] >= "2022 - 07 - 01") & (full_df["GAME_DATE"] < "2023 - 07 - 01")
 ].copy()
-test_with_features = full_df[full_df["GAME_DATE"] >= "2023-07-01"].copy()
+test_with_features = full_df[full_df["GAME_DATE"] >= "2023 - 07 - 01"].copy()
 
-print(f"\n✅ Features built")
+print("\n✅ Features built")
 print(f"   Train: {len(train_with_features):,} games")
 print(f"   Val:   {len(val_with_features):,} games")
 print(f"   Test:  {len(test_with_features):,} games")
@@ -180,7 +195,11 @@ selector.fit(X_train_all, y_train)
 feature_mask = selector.get_support()
 feature_cols = [col for col, selected in zip(all_feature_cols, feature_mask) if selected]
 
-print(f"✅ Selected {len(feature_cols)} best features (reduced from {len(all_feature_cols)})")
+print(
+    f"✅ Selected {
+        len(feature_cols)} best features (reduced from {
+            len(all_feature_cols)})"
+)
 print(f"   Top 10: {feature_cols[:10]}")
 print()
 
@@ -229,9 +248,11 @@ for fold, (train_idx, val_idx) in enumerate(tscv.split(X_train)):
 
     fold_mae = mean_absolute_error(y_fold_val, cv_model.predict(X_fold_val))
     cv_scores.append(fold_mae)
-    print(f"  Fold {fold+1} MAE: {fold_mae:.2f}")
+    print(f"  Fold {fold + 1} MAE: {fold_mae:.2f}")
 
-print(f"\n✅ Cross-validation MAE: {np.mean(cv_scores):.2f} ± {np.std(cv_scores):.2f}")
+print(
+    f"\n✅ Cross-validation MAE: {np.mean(cv_scores):.2f} ± {np.std(cv_scores):.2f}"
+)  # noqa: E501
 print()
 
 # ======================================================================
@@ -243,7 +264,7 @@ print()
 
 print("⚠️  ANTI-OVERFITTING MEASURES:")
 print("   • max_depth: 3 (was 6) - shallower trees")
-print("   • min_child_weight: 10 (was 3) - require more samples per leaf")
+print("   • min_child_weight: 10 (was 3) - require more samples per lea")
 print("   • gamma: 1.0 (was 0.1) - higher pruning threshold")
 print("   • subsample: 0.7 (was 0.8) - more bootstrap randomness")
 print("   • colsample_bytree: 0.7 (was 0.8) - more feature randomness")
@@ -316,7 +337,7 @@ print(f"Train-Val Gap: {train_val_gap:.2f} points")
 if train_val_gap > 2.0:
     print("⚠️  WARNING: Still showing overfitting (gap > 2 points)")
 elif train_val_gap > 1.0:
-    print("✅ Acceptable generalization (gap 1-2 points)")
+    print("✅ Acceptable generalization (gap 1 - 2 points)")
 else:
     print("✅ Excellent generalization (gap < 1 point)")
 print()
@@ -327,10 +348,10 @@ print("REALITY CHECK")
 print("=" * 80)
 print()
 print("Expected backtest performance:")
-print("  • Win rate: 52-55% (NOT 64%)")
-print("  • ROI: 2-5% (NOT 30%)")
-print("  • MAE: 6-8 points (matches test MAE)")
-print("  • Profit on $1000: $20-50 (NOT billions)")
+print("  • Win rate: 52 - 55% (NOT 64%)")
+print("  • ROI: 2 - 5% (NOT 30%)")
+print("  • MAE: 6 - 8 points (matches test MAE)")
+print("  • Profit on $1000: $20 - 50 (NOT billions)")
 print()
 
 # ======================================================================
@@ -411,8 +432,10 @@ for measure in model_dict["anti_overfit_measures"]:
 print()
 
 print("Next Steps:")
-print("  1. Run backtest: uv run python scripts/validation/calibrated_backtest_2024_25.py")
-print("  2. Expected win rate: 52-55% (realistic)")
-print("  3. Expected ROI: 2-5% (achievable)")
+print(
+    "  1. Run backtest: uv run python scripts/validation/calibrated_backtest_2024_25.py"
+)  # noqa: E501
+print("  2. Expected win rate: 52 - 55% (realistic)")
+print("  3. Expected ROI: 2 - 5% (achievable)")
 print("  4. If still >60% win rate → investigate data leakage")
 print()

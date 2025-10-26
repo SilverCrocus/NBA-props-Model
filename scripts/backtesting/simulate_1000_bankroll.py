@@ -2,7 +2,7 @@
 Real $1000 Starting Bankroll Simulation
 
 Simulates starting with $1000 and using Kelly Criterion bet sizing
-to show actual bankroll growth over the 2024-25 season.
+to show actual bankroll growth over the 2024 - 25 season.
 """
 
 import pandas as pd
@@ -18,12 +18,17 @@ df = df.sort_values("game_date").reset_index(drop=True)
 
 # Filter to only bets (edge >= 3)
 bets = df[df["bet_placed"]].copy()
-print(f"\n1. Loaded {len(bets):,} bets from {bets['game_date'].min()} to {bets['game_date'].max()}")
+print(
+    f"\n1. Loaded {
+        len(bets):,    } bets from {
+            bets['game_date'].min()} to {
+                bets['game_date'].max()}"
+)
 
 # Simulation parameters
 starting_bankroll = 1000
 bankroll = starting_bankroll
-kelly_fraction = 0.25  # Use 1/4 Kelly for safety
+kelly_fraction = 0.25  # Use 1 / 4 Kelly for safety
 min_bet = 10  # Minimum bet size
 max_bet_pct = 0.05  # Max 5% of bankroll per bet
 
@@ -33,7 +38,7 @@ bet_history = []
 
 print("\n2. Simulation parameters:")
 print(f"   Starting bankroll: ${starting_bankroll:,.0f}")
-print(f"   Kelly fraction: {kelly_fraction} (1/4 Kelly)")
+print(f"   Kelly fraction: {kelly_fraction} (1 / 4 Kelly)")
 print(f"   Min bet: ${min_bet}")
 print(f"   Max bet %: {max_bet_pct * 100:.0f}% of bankroll")
 
@@ -124,7 +129,7 @@ total_return = (final_bankroll / starting_bankroll - 1) * 100
 total_bets_placed = len(history_df)
 winning_bets = (history_df["bet_result"] == "WIN").sum()
 losing_bets = (history_df["bet_result"] == "LOSS").sum()
-win_rate = winning_bets / total_bets_placed * 100 if total_bets_placed > 0 else 0
+win_rate = winning_bets / total_bets_placed * 100 if total_bets_placed > 0 else 0  # noqa: E501
 
 print("\n" + "=" * 80)
 print("SIMULATION RESULTS")
@@ -187,13 +192,13 @@ print(f"  After {total_bets_placed:,} bets: ${final_bankroll:,.2f}")
 print(f"  {verdict}")
 
 print("\nThis simulation uses:")
-print("  • 1/4 Kelly bet sizing (conservative)")
+print("  • 1 / 4 Kelly bet sizing (conservative)")
 print(f"  • Min bet: ${min_bet}")
 print(f"  • Max bet: {max_bet_pct * 100:.0f}% of bankroll")
-print("  • Actual chronological bet sequence from 2024-25")
+print("  • Actual chronological bet sequence from 2024 - 25")
 
 # Save history
 history_df.to_csv("data/results/bankroll_simulation_1000.csv", index=False)
-print("\n✅ Bankroll history saved to data/results/bankroll_simulation_1000.csv")
+print("\n✅ Bankroll history saved to data/results/bankroll_simulation_1000.csv")  # noqa: E501
 
 print("\n" + "=" * 80)

@@ -10,12 +10,11 @@ Author: NBA Props Model - Phase 4 Week 1
 Date: October 15, 2025
 """
 
-import json
 import logging
 import os
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -45,7 +44,7 @@ class TheOddsAPIFetcher:
         self.api_key = api_key or os.getenv("ODDS_API_KEY") or os.getenv("THEODDSAPI_KEY")
         if not self.api_key:
             raise ValueError(
-                "No API key found. Set ODDS_API_KEY or THEODDSAPI_KEY environment variable.\n"
+                "No API key found. Set ODDS_API_KEY or THEODDSAPI_KEY environment variable.\n"  # noqa: E501
                 "Get your API key from: https://the-odds-api.com"
             )
 
@@ -78,7 +77,7 @@ class TheOddsAPIFetcher:
 
         Args:
             date: ISO date string (YYYY-MM-DD)
-            markets: List of markets (default: ['player_points_rebounds_assists'])
+            markets: List of markets (default: ['player_points_rebounds_assists'])  # noqa: E501
             bookmakers: List of bookmakers to include
 
         Returns:
@@ -116,10 +115,16 @@ class TheOddsAPIFetcher:
                 logger.error("Invalid API key")
                 return None
             elif response.status_code == 422:
-                logger.warning(f"  {date}: No data available (game may not have odds yet)")
+                logger.warning(
+                    f"  {date}: No data available (game may not have odds yet)"
+                )  # noqa: E501
                 return None
             else:
-                logger.error(f"  {date}: Error {response.status_code}: {response.text}")
+                logger.error(
+                    f"  {date}: Error {
+                        response.status_code}: {
+                        response.text}"
+                )
                 return None
 
         except requests.exceptions.Timeout:
@@ -245,8 +250,8 @@ class TheOddsAPIFetcher:
                                     "bookmaker": bookmaker_name,
                                     "player_name": player_name,
                                     "betting_line": betting_line,
-                                    "over_odds": lines.get("Over", {}).get("odds"),
-                                    "under_odds": lines.get("Under", {}).get("odds"),
+                                    "over_odds": lines.get("Over", {}).get("odds"),  # noqa: E501
+                                    "under_odds": lines.get("Under", {}).get("odds"),  # noqa: E501
                                 }
                             )
 
@@ -273,7 +278,10 @@ def main():
     # Check quota
     logger.info("\n2. Checking API quota...")
     if api.check_quota():
-        logger.info(f"   API accessible, {api.requests_remaining} requests remaining")
+        logger.info(
+            f"   API accessible, {
+                api.requests_remaining} requests remaining"
+        )
     else:
         logger.error("   Cannot access API")
         return
@@ -293,9 +301,11 @@ def main():
 
     if api.requests_remaining and api.requests_remaining < len(unique_dates):
         logger.warning(
-            f"   Insufficient quota! Need {len(unique_dates)}, have {api.requests_remaining}"
+            f"   Insufficient quota! Need {
+                len(unique_dates)}, have {
+                api.requests_remaining}"
         )
-        logger.info(f"   Consider: Fetching subset of dates or upgrading plan")
+        logger.info("   Consider: Fetching subset of dates or upgrading plan")
 
         # Ask to proceed with available quota
         max_dates = min(api.requests_remaining - 10, len(unique_dates))  # Leave 10 buffer
@@ -303,8 +313,11 @@ def main():
         unique_dates = unique_dates[:max_dates]
 
     # Fetch historical odds
-    logger.info(f"\n4. Fetching historical odds for {len(unique_dates)} dates...")
-    logger.info(f"   This may take a while (rate limiting applied)...")
+    logger.info(
+        f"\n4. Fetching historical odds for {
+            len(unique_dates)} dates..."
+    )
+    logger.info("   This may take a while (rate limiting applied)...")
 
     all_lines = []
 
@@ -328,8 +341,14 @@ def main():
         logger.info("\n5. Combining betting lines...")
         all_lines_df = pd.concat(all_lines, ignore_index=True)
         logger.info(f"   Total lines fetched: {len(all_lines_df):,}")
-        logger.info(f"   Unique players: {all_lines_df['player_name'].nunique()}")
-        logger.info(f"   Unique bookmakers: {all_lines_df['bookmaker'].nunique()}")
+        logger.info(
+            f"   Unique players: {
+                all_lines_df['player_name'].nunique()}"
+        )
+        logger.info(
+            f"   Unique bookmakers: {
+                all_lines_df['bookmaker'].nunique()}"
+        )
 
         # Save raw data
         raw_output = "data/results/theoddsapi_raw_lines.csv"
@@ -346,7 +365,7 @@ def main():
         logger.info("   1. Historical data requires specific API plan")
         logger.info("   2. Dates are too far in past")
         logger.info("   3. Player props not available for these dates")
-        logger.info("\n   Check: https://the-odds-api.com/historical-odds-data")
+        logger.info("\n   Check: https://the-odds-api.com/historical-odds-data")  # noqa: E501
 
     logger.info("\n" + "=" * 70)
     logger.info("COMPLETE")

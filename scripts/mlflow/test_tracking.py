@@ -3,19 +3,20 @@ Test MLflow integration with a simple training run
 Run this to verify MLflow is working correctly
 """
 
+import logging
 import sys
 from pathlib import Path
-import pandas as pd
+
 import numpy as np
 from sklearn.datasets import make_regression
 from xgboost import XGBRegressor
 
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / 'src'))
-
-from mlflow_integration.tracker import NBAPropsTracker, enable_autologging
 from mlflow_integration.registry import ModelRegistry
-import logging
+from mlflow_integration.tracker import NBAPropsTracker, enable_autologging
+
+# Add src to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -38,16 +39,11 @@ def test_basic_tracking():
 
     # Start run
     tracker.start_run(
-        run_name="test_basic_tracking",
-        tags={"test": "true", "model_type": "xgboost"}
+        run_name="test_basic_tracking", tags={"test": "true", "model_type": "xgboost"}
     )
 
     # Log parameters
-    params = {
-        'n_estimators': 100,
-        'max_depth': 5,
-        'learning_rate': 0.1
-    }
+    params = {"n_estimators": 100, "max_depth": 5, "learning_rate": 0.1}
     tracker.log_params(params)
 
     # Train model
@@ -59,18 +55,18 @@ def test_basic_tracking():
     y_pred_test = model.predict(X_test)
 
     # Calculate metrics
-    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score  # noqa: E501
 
     train_metrics = {
-        'mae': mean_absolute_error(y_train, y_pred_train),
-        'rmse': np.sqrt(mean_squared_error(y_train, y_pred_train)),
-        'r2': r2_score(y_train, y_pred_train)
+        "mae": mean_absolute_error(y_train, y_pred_train),
+        "rmse": np.sqrt(mean_squared_error(y_train, y_pred_train)),
+        "r2": r2_score(y_train, y_pred_train),
     }
 
     test_metrics = {
-        'mae': mean_absolute_error(y_test, y_pred_test),
-        'rmse': np.sqrt(mean_squared_error(y_test, y_pred_test)),
-        'r2': r2_score(y_test, y_pred_test)
+        "mae": mean_absolute_error(y_test, y_pred_test),
+        "rmse": np.sqrt(mean_squared_error(y_test, y_pred_test)),
+        "r2": r2_score(y_test, y_pred_test),
     }
 
     # Log metrics
@@ -79,15 +75,15 @@ def test_basic_tracking():
 
     # Log feature importance
     tracker.log_feature_importance(
-        feature_names=[f'feature_{i}' for i in range(20)],
-        importance_values=model.feature_importances_
+        feature_names=[f"feature_{i}" for i in range(20)],
+        importance_values=model.feature_importances_,
     )
 
     # Log residuals
     tracker.log_residuals_plot(y_test, y_pred_test)
 
     # Log model
-    tracker.log_model(model, model_type='xgboost')
+    tracker.log_model(model, model_type="xgboost")
 
     # End run
     tracker.end_run()
@@ -110,13 +106,10 @@ def test_autologging():
     tracker = NBAPropsTracker(experiment_name="Phase1_Foundation")
 
     # Enable autologging
-    enable_autologging('xgboost')
+    enable_autologging("xgboost")
 
     # Start run
-    tracker.start_run(
-        run_name="test_autologging",
-        tags={"test": "true", "autolog": "true"}
-    )
+    tracker.start_run(run_name="test_autologging", tags={"test": "true", "autolog": "true"})
 
     # Train model (autologging handles everything)
     model = XGBRegressor(n_estimators=50, max_depth=3, learning_rate=0.1)
@@ -141,23 +134,16 @@ def test_model_registry():
     X, y = make_regression(n_samples=1000, n_features=20, noise=0.1, random_state=42)
 
     tracker = NBAPropsTracker(experiment_name="Phase1_Foundation")
-    tracker.start_run(
-        run_name="test_registry",
-        tags={"test": "true"}
-    )
+    tracker.start_run(run_name="test_registry", tags={"test": "true"})
 
     # Train model
     model = XGBRegressor(n_estimators=50, max_depth=3)
     model.fit(X, y)
 
     # Log model
-    tracker.log_model(
-        model,
-        model_type='xgboost',
-        registered_model_name="NBAPropsModelTest"
-    )
+    tracker.log_model(model, model_type="xgboost", registered_model_name="NBAPropsModelTest")
 
-    run_id = tracker.run_id
+    __run_id = tracker.run_id  # noqa: F841
     tracker.end_run()
 
     # Test registry operations
@@ -166,7 +152,7 @@ def test_model_registry():
     # Get model info
     try:
         model_info = registry.get_model_info("NBAPropsModelTest")
-        print(f"✓ Model registered successfully!")
+        print("✓ Model registered successfully!")
         print(f"  Model: {model_info['model_name']}")
         print(f"  Version: {model_info['version']}")
         print(f"  Stage: {model_info['stage']}")
@@ -183,14 +169,11 @@ def test_comparison():
     print("=" * 80)
     print()
 
-    from mlflow_integration.utils import get_best_model, generate_experiment_report
+    from mlflow_integration.utils import get_best_model
 
     # Get best model
     best_models = get_best_model(
-        experiment_name="Phase1_Foundation",
-        metric="val_mae",
-        ascending=True,
-        top_n=3
+        experiment_name="Phase1_Foundation", metric="val_mae", ascending=True, top_n=3
     )
 
     if best_models:
@@ -224,12 +207,13 @@ def run_all_tests():
         print("Next steps:")
         print("  1. Start MLflow UI: uv run mlflow ui")
         print("  2. Navigate to http://localhost:5000")
-        print("  3. Explore your test runs in the Phase1_Foundation experiment")
+        print("  3. Explore your test runs in the Phase1_Foundation experiment")  # noqa: E501
         print()
 
     except Exception as e:
         logger.error(f"Test failed: {e}")
         import traceback
+
         traceback.print_exc()
 
 

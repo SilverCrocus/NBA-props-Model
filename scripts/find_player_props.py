@@ -2,34 +2,35 @@
 Find available player prop markets for NBA
 """
 
-import requests
-from dotenv import load_dotenv
 import os
 
+import requests
+from dotenv import load_dotenv
+
 load_dotenv()
-API_KEY = os.getenv('ODDS_API_KEY')
+API_KEY = os.getenv("ODDS_API_KEY")
 BASE_URL = "https://api.the-odds-api.com/v4"
 
-print("="*80)
+print("=" * 80)
 print("FINDING AVAILABLE PLAYER PROP MARKETS")
-print("="*80)
+print("=" * 80)
 
 # Common player prop market names to try
 markets_to_test = [
-    'player_points',
-    'player_rebounds',
-    'player_assists',
-    'player_threes',
-    'player_blocks',
-    'player_steals',
-    'player_turnovers',
-    'player_points_rebounds_assists',  # PRA combined
-    'player_points_rebounds',
-    'player_points_assists',
-    'player_rebounds_assists',
-    'h2h',  # Head to head (game winner)
-    'spreads',
-    'totals'
+    "player_points",
+    "player_rebounds",
+    "player_assists",
+    "player_threes",
+    "player_blocks",
+    "player_steals",
+    "player_turnovers",
+    "player_points_rebounds_assists",  # PRA combined
+    "player_points_rebounds",
+    "player_points_assists",
+    "player_rebounds_assists",
+    "h2h",  # Head to head (game winner)
+    "spreads",
+    "totals",
 ]
 
 print(f"\nTesting {len(markets_to_test)} market types...\n")
@@ -39,12 +40,7 @@ failed_markets = []
 
 for market in markets_to_test:
     url = f"{BASE_URL}/sports/basketball_nba/odds"
-    params = {
-        'apiKey': API_KEY,
-        'regions': 'us',
-        'markets': market,
-        'oddsFormat': 'american'
-    }
+    params = {"apiKey": API_KEY, "regions": "us", "markets": market, "oddsFormat": "american"}
 
     try:
         response = requests.get(url, params=params)
@@ -64,15 +60,15 @@ for market in markets_to_test:
         print(f"❌ {market:<40} - Error: {str(e)[:50]}")
 
     # Check rate limit
-    remaining = response.headers.get('x-requests-remaining', 'N/A')
-    if isinstance(remaining, str) and remaining != 'N/A':
+    remaining = response.headers.get("x-requests-remaining", "N/A")
+    if isinstance(remaining, str) and remaining != "N/A":
         if float(remaining) < 10:
             print(f"\n⚠️  Low on requests: {remaining} remaining")
             break
 
-print("\n" + "="*80)
+print("\n" + "=" * 80)
 print("RESULTS")
-print("="*80)
+print("=" * 80)
 
 print(f"\n✅ Working Markets ({len(working_markets)}):")
 for market in working_markets:
@@ -84,16 +80,16 @@ for market in failed_markets[:5]:
 
 if working_markets:
     # Get detailed info for first working market
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print(f"SAMPLE DATA - {working_markets[0]}")
-    print("="*80)
+    print("=" * 80)
 
     url = f"{BASE_URL}/sports/basketball_nba/odds"
     params = {
-        'apiKey': API_KEY,
-        'regions': 'us',
-        'markets': working_markets[0],
-        'oddsFormat': 'american'
+        "apiKey": API_KEY,
+        "regions": "us",
+        "markets": working_markets[0],
+        "oddsFormat": "american",
     }
 
     response = requests.get(url, params=params)
@@ -102,6 +98,13 @@ if working_markets:
 
         if len(data) > 0:
             import json
-            print(json.dumps(data[0], indent=2)[:2000])  # First game, truncated
 
-print(f"\nRequests remaining: {response.headers.get('x-requests-remaining', 'N/A')}")
+            # First game, truncated
+            print(json.dumps(data[0], indent=2)[:2000])
+
+print(
+    f"\nRequests remaining: {
+        response.headers.get(
+            'x-requests-remaining',
+            'N/A')}"
+)

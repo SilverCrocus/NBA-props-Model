@@ -2,54 +2,44 @@
 Train Two-Stage Predictor (Minutes → PRA)
 
 This script implements the KEY INNOVATION identified by all agents:
-Minutes variance accounts for 40-50% of current MAE 6.10.
+Minutes variance accounts for 40 - 50% of current MAE 6.10.
 
 Architecture:
 - Stage 1: Predict minutes played (using recent minutes, rest, pace)
-- Stage 2: Predict PRA given predicted minutes (using efficiency + predicted_MIN)
+- Stage 2: Predict PRA given predicted minutes (using efficiency + predicted_MIN)  # noqa: E501
 
-Expected Impact: MAE 6.10 → 5.60-5.80 (7-8% improvement)
+Expected Impact: MAE 6.10 → 5.60 - 5.80 (7 - 8% improvement)
 
-This is Phase 1 Weeks 2-3 of the strategic roadmap.
+This is Phase 1 Weeks 2 - 3 of the strategic roadmap.
 
-Author: NBA Props Model - Phase 1 Weeks 2-3
+Author: NBA Props Model - Phase 1 Weeks 2 - 3
 Date: October 14, 2025
 """
 
 import logging
 import sys
-from datetime import timedelta
 from pathlib import Path
 
 import mlflow
 import numpy as np
 import pandas as pd
+from ctg_feature_builder import CTGFeatureBuilder
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from tqdm import tqdm
+from walk_forward_training_advanced_features import calculate_all_features
+
+from config import data_config
+from src.models.two_stage_predictor import TwoStagePredictor
 
 # Add project root to path
 sys.path.append(str(Path(__file__).parent.parent.parent))
 
-from config import data_config, model_config
-from src.models.two_stage_predictor import TwoStagePredictor
 
 # Add utils for CTG features
 sys.path.append(str(Path(__file__).parent.parent.parent / "utils"))
-from ctg_feature_builder import CTGFeatureBuilder
 
 # Import feature calculation functions from Day 4 script
 sys.path.append(str(Path(__file__).parent))
-from walk_forward_training_advanced_features import (
-    calculate_all_features,
-    calculate_efficiency_features,
-    calculate_ewma_features,
-    calculate_lag_features,
-    calculate_normalization_features,
-    calculate_opponent_features,
-    calculate_rest_features,
-    calculate_rolling_features,
-    calculate_trend_features,
-)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -82,7 +72,11 @@ def load_training_data() -> pd.DataFrame:
 
     logger.info(f"   Loaded {game_logs_path}")
     logger.info(f"   Games: {len(df):,}")
-    logger.info(f"   Date range: {df['GAME_DATE'].min()} to {df['GAME_DATE'].max()}")
+    logger.info(
+        f"   Date range: {
+            df['GAME_DATE'].min()} to {
+            df['GAME_DATE'].max()}"
+    )
     logger.info(f"   Players: {df['PLAYER_ID'].nunique():,}")
 
     return df
@@ -90,10 +84,10 @@ def load_training_data() -> pd.DataFrame:
 
 def walk_forward_validation(
     all_games_df: pd.DataFrame,
-    start_date: str = "2024-10-01",  # 2024-25 season start
+    start_date: str = "2024 - 10 - 01",  # 2024 - 25 season start
     n_predictions: int = 100,  # Limit for Phase 1 testing
     min_history_for_prediction: int = 5,
-    season: str = "2024-25",
+    season: str = "2024 - 25",
 ) -> pd.DataFrame:
     """
     Walk-forward validation for two-stage predictor.
@@ -103,7 +97,7 @@ def walk_forward_validation(
 
     Args:
         all_games_df: Full game logs (all historical data)
-        start_date: Start of prediction period (2024-25 season)
+        start_date: Start of prediction period (2024 - 25 season)
         n_predictions: Number of prediction dates to test
         min_history_for_prediction: Minimum games needed to make prediction
         season: Current season
@@ -119,9 +113,9 @@ def walk_forward_validation(
     logger.info("   Initializing CTG feature builder...")
     ctg_builder = CTGFeatureBuilder()
 
-    # Get prediction dates (2024-25 season)
+    # Get prediction dates (2024 - 25 season)
     prediction_dates = sorted(
-        all_games_df[all_games_df["GAME_DATE"] >= start_date]["GAME_DATE"].unique()
+        all_games_df[all_games_df["GAME_DATE"] >= start_date]["GAME_DATE"].unique()  # noqa: E501
     )
 
     if len(prediction_dates) > n_predictions:
@@ -168,7 +162,10 @@ def walk_forward_validation(
             # (In production, would retrain periodically)
             if i == 1:
                 logger.info("\n   Training two-stage model on historical data...")
-                logger.info(f"   Using training data: {len(past_games):,} games")
+                logger.info(
+                    f"   Using training data: {
+                        len(past_games):,} games"
+                )
 
                 # Build training dataset from recent historical data
                 # Use last 30K games for efficiency (still covers ~2 seasons)
@@ -200,7 +197,7 @@ def walk_forward_validation(
                         game_date,
                         player_name,
                         opponent_team,
-                        "2023-24",  # Use 2023-24 season for training
+                        "2023 - 24",  # Use 2023 - 24 season for training
                         ctg_builder,
                         all_games_df,
                     )
@@ -225,7 +222,7 @@ def walk_forward_validation(
 
                 # Initialize and train two-stage predictor
                 predictor = TwoStagePredictor()
-                train_metrics = predictor.fit(X_train, y_train_pra, y_train_minutes)
+                __train_metrics = predictor.fit(X_train, y_train_pra, y_train_minutes)  # noqa: F841
 
                 logger.info("   ✅ Two-stage model trained!\n")
 
@@ -261,7 +258,9 @@ def walk_forward_validation(
                     X_test = pd.DataFrame([dict(zip(feature_cols, feature_vector))])
 
                     # Predict (returns PRA and minutes)
-                    predicted_pra, predicted_minutes = predictor.predict_with_minutes(X_test)
+                    predicted_pra, predicted_minutes = predictor.predict_with_minutes(  # noqa: E501
+                        X_test
+                    )
 
                     # Store prediction
                     all_predictions.append(
@@ -293,7 +292,7 @@ def walk_forward_validation(
                         logger.info(
                             f"   [{i}/{len(prediction_dates)}] {pred_date}: "
                             f"MAE {mae:.2f}, Minutes R² {minutes_r2:.3f}, "
-                            f"Games {len(date_predictions)}, Train {len(train_df):,}"
+                            f"Games {len(date_predictions)}, Train {len(train_df):,}"  # noqa: E501
                         )
 
             except Exception as e:
@@ -316,18 +315,25 @@ def walk_forward_validation(
         logger.info("=" * 80)
         logger.info(f"   Total Predictions: {len(predictions_df):,}")
         logger.info(f"   Prediction Dates: {len(prediction_dates)}")
-        logger.info(f"\n   PRA Prediction:")
+        logger.info("\n   PRA Prediction:")
         logger.info(f"      MAE: {overall_mae:.2f} points")
         logger.info(
-            f"      RMSE: {np.sqrt(mean_squared_error(predictions_df['actual_PRA'], predictions_df['predicted_PRA'])):.2f}"
+            f"      RMSE: {
+                np.sqrt(
+                    mean_squared_error(
+                        predictions_df['actual_PRA'],
+                        predictions_df['predicted_PRA'])):.2f}"
         )
         logger.info(
-            f"      R²: {r2_score(predictions_df['actual_PRA'], predictions_df['predicted_PRA']):.3f}"
+            f"      R²: {
+                r2_score(
+                    predictions_df['actual_PRA'],
+                    predictions_df['predicted_PRA']):.3f}"
         )
-        logger.info(f"\n   Minutes Prediction (Stage 1):")
+        logger.info("\n   Minutes Prediction (Stage 1):")
         logger.info(f"      MAE: {overall_minutes_mae:.2f} minutes")
         logger.info(f"      R²: {overall_minutes_r2:.3f}")
-        logger.info(f"      (Target: R² > 0.85)")
+        logger.info("      (Target: R² > 0.85)")
 
         # Log to MLflow
         mlflow.log_metric("mae_pra", overall_mae)
@@ -343,15 +349,17 @@ def walk_forward_validation(
         improvement = baseline_mae - overall_mae
         improvement_pct = (improvement / baseline_mae) * 100
 
-        logger.info(f"\n   IMPROVEMENT vs Baseline (Day 4):")
+        logger.info("\n   IMPROVEMENT vs Baseline (Day 4):")
         logger.info(f"      Baseline MAE: {baseline_mae:.2f}")
         logger.info(f"      Two-Stage MAE: {overall_mae:.2f}")
-        logger.info(f"      Improvement: {improvement:+.2f} points ({improvement_pct:+.1f}%)")
+        logger.info(
+            f"      Improvement: {improvement:+.2f} points ({improvement_pct:+.1f}%)"
+        )  # noqa: E501
 
         if improvement > 0:
-            logger.info(f"      ✅ BETTER than baseline!")
+            logger.info("      ✅ BETTER than baseline!")
         else:
-            logger.info(f"      ⚠️ WORSE than baseline (need to investigate)")
+            logger.info("      ⚠️ WORSE than baseline (need to investigate)")
 
         mlflow.log_metric("baseline_mae", baseline_mae)
         mlflow.log_metric("improvement_mae", improvement)
@@ -372,32 +380,48 @@ def analyze_predictions(predictions_df: pd.DataFrame):
     logger.info("\n   PRA Error Distribution:")
     logger.info(f"      Mean: {predictions_df['error'].mean():.2f}")
     logger.info(f"      Median: {predictions_df['error'].median():.2f}")
-    logger.info(f"      95th percentile: {predictions_df['error'].quantile(0.95):.2f}")
+    logger.info(
+        f"      95th percentile: {
+            predictions_df['error'].quantile(0.95):.2f}"
+    )
     logger.info(f"      Max: {predictions_df['error'].max():.2f}")
 
     # Minutes error distribution
     logger.info("\n   Minutes Error Distribution:")
     logger.info(f"      Mean: {predictions_df['minutes_error'].mean():.2f}")
-    logger.info(f"      Median: {predictions_df['minutes_error'].median():.2f}")
-    logger.info(f"      95th percentile: {predictions_df['minutes_error'].quantile(0.95):.2f}")
+    logger.info(
+        f"      Median: {
+            predictions_df['minutes_error'].median():.2f}"
+    )
+    logger.info(
+        f"      95th percentile: {
+            predictions_df['minutes_error'].quantile(0.95):.2f}"
+    )
 
     # Error by actual minutes played (key insight)
     logger.info("\n   Error by Minutes Played:")
     predictions_df["minutes_bin"] = pd.cut(
         predictions_df["actual_MIN"],
         bins=[0, 10, 20, 30, 40, 50],
-        labels=["0-10", "10-20", "20-30", "30-40", "40+"],
+        labels=["0 - 10", "10 - 20", "20 - 30", "30 - 40", "40+"],
     )
 
     for minutes_bin, group in predictions_df.groupby("minutes_bin"):
         mae = group["error"].mean()
         count = len(group)
-        logger.info(f"      {minutes_bin} min: MAE {mae:.2f} ({count:,} games)")
+        logger.info(
+            f"      {minutes_bin} min: MAE {
+                mae:.2f} ({
+                count:,} games)"
+        )
 
     # Correlation between minutes error and PRA error
     minutes_pra_corr = predictions_df["minutes_error"].corr(predictions_df["error"])
-    logger.info(f"\n   Correlation (Minutes Error ↔ PRA Error): {minutes_pra_corr:.3f}")
-    logger.info(f"      (High correlation = minutes prediction drives PRA accuracy)")
+    logger.info(
+        f"\n   Correlation (Minutes Error ↔ PRA Error): {
+            minutes_pra_corr:.3f}"
+    )
+    logger.info("      (High correlation = minutes prediction drives PRA accuracy)")
 
 
 def save_results(predictions_df: pd.DataFrame, predictor: TwoStagePredictor):
@@ -414,20 +438,22 @@ def save_results(predictions_df: pd.DataFrame, predictor: TwoStagePredictor):
     logger.info(f"   ✅ Predictions saved to {output_path}")
 
     # Save model
-    model_path = data_config.MODELS_DIR / "two_stage_predictor"
-    # Note: Can't save the last predictor from loop, need to retrain on full data
+    __model_path = data_config.MODELS_DIR / "two_stage_predictor"  # noqa: F841
+    # Note: Can't save the last predictor from loop, need to retrain on full data  # noqa: E501
     # This is just a placeholder for now
-    logger.info(f"   ⚠️ Model saving requires full dataset training (TODO)")
+    logger.info("   ⚠️ Model saving requires full dataset training (TODO)")
 
     # Feature importance (would need to retrain on full dataset)
-    logger.info(f"\n   Feature importance available after full training")
+    logger.info("\n   Feature importance available after full training")
 
 
 def main():
     logger.info("=" * 80)
-    logger.info("PHASE 1 WEEKS 2-3: TWO-STAGE PREDICTOR TRAINING")
+    logger.info("PHASE 1 WEEKS 2 - 3: TWO-STAGE PREDICTOR TRAINING")
     logger.info("=" * 80)
-    logger.info("\n🎯 OBJECTIVE: Reduce MAE from 6.10 → 5.60-5.80 (7-8% improvement)")
+    logger.info(
+        "\n🎯 OBJECTIVE: Reduce MAE from 6.10 → 5.60 - 5.80 (7 - 8% improvement)"
+    )  # noqa: E501
     logger.info("   via two-stage prediction: Minutes → PRA\n")
 
     # Load data
@@ -436,10 +462,10 @@ def main():
     # Run walk-forward validation
     predictions_df = walk_forward_validation(
         all_games_df,
-        start_date="2024-10-01",
+        start_date="2024 - 10 - 01",
         n_predictions=50,  # Test on first 50 dates (faster)
         min_history_for_prediction=5,
-        season="2024-25",
+        season="2024 - 25",
     )
 
     # Analyze predictions
@@ -450,34 +476,38 @@ def main():
 
     # Summary
     logger.info("\n" + "=" * 80)
-    logger.info("PHASE 1 WEEKS 2-3 COMPLETE")
+    logger.info("PHASE 1 WEEKS 2 - 3 COMPLETE")
     logger.info("=" * 80)
 
     final_mae = mean_absolute_error(predictions_df["actual_PRA"], predictions_df["predicted_PRA"])
     baseline_mae = 6.10
 
-    logger.info(f"\n📊 FINAL RESULTS:")
+    logger.info("\n📊 FINAL RESULTS:")
     logger.info(f"   Baseline (Day 4): {baseline_mae:.2f} MAE")
     logger.info(f"   Two-Stage: {final_mae:.2f} MAE")
     logger.info(f"   Improvement: {baseline_mae - final_mae:+.2f} points")
 
     if final_mae < 5.80:
-        logger.info(f"\n🎉 TARGET ACHIEVED! MAE < 5.80")
-        logger.info("   Expected win rate: 54-56% (barely profitable)")
-        logger.info("   ✅ Ready for Phase 2: Tree Ensemble + Position-Specific Defense")
+        logger.info("\n🎉 TARGET ACHIEVED! MAE < 5.80")
+        logger.info("   Expected win rate: 54 - 56% (barely profitable)")
+        logger.info(
+            "   ✅ Ready for Phase 2: Tree Ensemble + Position-Specific Defense"
+        )  # noqa: E501
     elif final_mae < baseline_mae:
-        logger.info(f"\n✅ IMPROVEMENT but target not reached")
+        logger.info("\n✅ IMPROVEMENT but target not reached")
         logger.info("   Need to investigate feature selection or hyperparameters")
     else:
-        logger.info(f"\n⚠️ NO IMPROVEMENT")
-        logger.info("   Need to diagnose: Minutes prediction quality, feature selection")
+        logger.info("\n⚠️ NO IMPROVEMENT")
+        logger.info(
+            "   Need to diagnose: Minutes prediction quality, feature selection"
+        )  # noqa: E501
 
-    logger.info(f"\n📁 Files Created:")
-    logger.info(f"   data/results/two_stage_predictions_2024_25.csv")
-    logger.info(f"\n🚀 Next Steps:")
-    logger.info(f"   1. Combine calibration + two-stage for full Phase 1")
-    logger.info(f"   2. Validate on full 2024-25 season (all 204 dates)")
-    logger.info(f"   3. Proceed to Phase 2 if MAE < 5.80")
+    logger.info("\n📁 Files Created:")
+    logger.info("   data/results/two_stage_predictions_2024_25.csv")
+    logger.info("\n🚀 Next Steps:")
+    logger.info("   1. Combine calibration + two-stage for full Phase 1")
+    logger.info("   2. Validate on full 2024 - 25 season (all 204 dates)")
+    logger.info("   3. Proceed to Phase 2 if MAE < 5.80")
 
 
 if __name__ == "__main__":

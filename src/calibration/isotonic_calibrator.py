@@ -17,7 +17,6 @@ from typing import Dict, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import brier_score_loss, log_loss
 
@@ -76,7 +75,8 @@ class IsotonicCalibrator:
         # Use simple heuristic: P(over) = 1 / (1 + exp(-(pred - line)))
         # This creates a sigmoid centered at the line
         differences = predictions - lines
-        predicted_probs = 1 / (1 + np.exp(-differences / 3.0))  # 3.0 is scale parameter
+        # 3.0 is scale parameter
+        predicted_probs = 1 / (1 + np.exp(-differences / 3.0))
 
         # Binary outcomes: 1 if actual > line, 0 otherwise
         binary_outcomes = (actuals > lines).astype(int)
@@ -158,8 +158,11 @@ class IsotonicCalibrator:
 
         logger.info(f"✅ Calibrator fitted on {n_train:,} samples")
         logger.info(
-            f"   Train Brier: {train_brier_before:.4f} → {train_brier_after:.4f} "
-            f"(Δ {self.training_metrics['train_brier_improvement']:+.4f})"
+            f"   Train Brier: {
+                train_brier_before:.4f} → {
+                train_brier_after:.4f} "
+            f"(Δ {
+                self.training_metrics['train_brier_improvement']:+.4f})"
         )
         logger.info(
             f"   Val Brier: {val_brier_before:.4f} → {val_brier_after:.4f} "
@@ -180,7 +183,9 @@ class IsotonicCalibrator:
             Calibrated probabilities P(Over)
         """
         if not self.is_fitted:
-            raise ValueError("Calibrator must be fitted before transform. Call fit() first.")
+            raise ValueError(
+                "Calibrator must be fitted before transform. Call fit() first."
+            )  # noqa: E501
 
         predictions = np.asarray(predictions)
         lines = np.asarray(lines)
@@ -226,7 +231,7 @@ class IsotonicCalibrator:
         metrics = {
             "brier_before": brier_score_loss(binary_outcomes, raw_probs),
             "brier_after": brier_score_loss(binary_outcomes, calibrated_probs),
-            "log_loss_before": log_loss(binary_outcomes, raw_probs, labels=[0, 1]),
+            "log_loss_before": log_loss(binary_outcomes, raw_probs, labels=[0, 1]),  # noqa: E501
             "log_loss_after": log_loss(binary_outcomes, calibrated_probs, labels=[0, 1]),
         }
 

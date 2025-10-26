@@ -1,0 +1,48 @@
+{
+  "proxy_clv": {
+    "edge_correlation": -0.04414199617739015,
+    "edge_corr_pval": 0.6627765943164396,
+    "sharp_ratio": 0.54,
+    "edge_realization": 0.5288446722391688,
+    "ilm_positive_wr": 0.54,
+    "ilm_negative_wr": 0,
+    "ilm_count_pos": 100,
+    "ilm_count_neg": 0,
+    "assessment": "BAD: No statistical edge detected"
+  },
+  "stake_diagnostics": {
+    "stake_win_corr": -0.03963482496329324,
+    "stake_corr_pval": 0.6954135921015426,
+    "wr_by_quartile": {
+      "1": 0.64,
+      "2": 0.52,
+      "3": 0.4444444444444444,
+      "4": 0.5652173913043478
+    },
+    "roi_by_quartile": {
+      "1": 9.796981049697314,
+      "2": -0.4066295500526539,
+      "3": -3.3720102338144167,
+      "4": 0.6369090210433515
+    },
+    "loss_win_imbalance": -0.0422550057855382,
+    "is_monotonic": false,
+    "assessment": "BAD: Kelly overconfident - reduce to 1/4 or 1/2 Kelly"
+  },
+  "side_bias": {
+    "over_wr": 0.64,
+    "under_wr": 0.5066666666666667,
+    "wr_gap": 0.1333333333333333,
+    "over_mean_edge": 3.6282499677749263,
+    "under_mean_edge": 4.875209869004471,
+    "edge_diff_pval": 0.06312920643125368,
+    "over_win_odds": 1.8735057571702423,
+    "under_win_odds": 1.8724724001153288,
+    "over_roi": 7.134029590345782,
+    "under_roi": -0.9723975098871293,
+    "sample_ratio": 0.3333333333333333,
+    "assessment": "BAD: Large side bias - apply side-specific isotonic regression"
+  },
+  "edge_monotonicity": {
+    "bucket_stats": {
+      

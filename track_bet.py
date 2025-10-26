@@ -6,11 +6,11 @@ Simplified interface for bet tracking workflow.
 
 Usage:
   # Record bets
-  uv run track_bet.py record 2025-10-21 --top 5
-  uv run track_bet.py record 2025-10-21 --all
+  uv run track_bet.py record 2025 - 10 - 21 --top 5
+  uv run track_bet.py record 2025 - 10 - 21 --all
 
   # Update results
-  uv run track_bet.py update 2025-10-21
+  uv run track_bet.py update 2025 - 10 - 21
   uv run track_bet.py update --all
 
   # View dashboard
@@ -39,7 +39,7 @@ def update_results(args):
 
 def show_status(args):
     """Show betting dashboard."""
-    cmd = ["uv", "run", "python", "scripts/betting/betting_dashboard.py"] + args
+    cmd = ["uv", "run", "python", "scripts/betting/betting_dashboard.py"] + args  # noqa: E501
     subprocess.run(cmd)
 
 

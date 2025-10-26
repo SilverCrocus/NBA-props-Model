@@ -15,7 +15,7 @@ This script is designed to be run daily via cron or Task Scheduler.
 
 Usage:
   Manual: uv run python scripts/production/daily_update_pipeline.py
-  Cron:   0 10 * * * cd /path/to/project && uv run python scripts/production/daily_update_pipeline.py
+  Cron:   0 10 * * * cd /path/to/project && uv run python scripts/production/daily_update_pipeline.py  # noqa: E501
 """
 
 import subprocess
@@ -26,7 +26,7 @@ from pathlib import Path
 import pandas as pd
 
 print("=" * 80)
-print(f"NBA PROPS DAILY UPDATE PIPELINE")
+print("NBA PROPS DAILY UPDATE PIPELINE")
 print(f"Run time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 print("=" * 80)
 print()
@@ -41,10 +41,13 @@ MODEL_DIR = PROJECT_ROOT / "models"
 RETRAIN_DAYS = [0, 3, 6]  # Monday, Thursday, Sunday
 SHOULD_RETRAIN = datetime.now().weekday() in RETRAIN_DAYS
 
-print(f"Configuration:")
+print("Configuration:")
 print(f"  Project root: {PROJECT_ROOT}")
 print(f"  Master file: {MASTER_FILE}")
-print(f"  Retrain today: {'YES' if SHOULD_RETRAIN else 'NO (runs Mon/Thu/Sun only)'}")
+print(
+    f"  Retrain today: {
+        'YES' if SHOULD_RETRAIN else 'NO (runs Mon/Thu/Sun only)'}"
+)
 print()
 
 # ======================================================================
@@ -75,7 +78,7 @@ try:
     )
 
     if result.returncode != 0:
-        print(f"❌ ERROR fetching games:")
+        print("❌ ERROR fetching games:")
         print(result.stderr)
         sys.exit(1)
 
@@ -85,7 +88,7 @@ try:
     games_added = games_after - games_before
     latest_date_after = pd.to_datetime(df_after["GAME_DATE"]).max()
 
-    print(f"✅ Games updated:")
+    print("✅ Games updated:")
     print(f"   Before: {games_before:,}")
     print(f"   After:  {games_after:,}")
     print(f"   Added:  {games_added:,} new games")
@@ -111,16 +114,16 @@ if SHOULD_RETRAIN and games_added > 0:
     print()
 
     try:
-        print("Starting model training (this takes ~5-10 minutes)...")
+        print("Starting model training (this takes ~5 - 10 minutes)...")
         result = subprocess.run(
-            [sys.executable, "scripts/production/train_ensemble_v1_production.py"],
+            [sys.executable, "scripts/production/train_ensemble_v1_production.py"],  # noqa: E501
             cwd=PROJECT_ROOT,
             capture_output=True,
             text=True,
         )
 
         if result.returncode != 0:
-            print(f"❌ ERROR training model:")
+            print("❌ ERROR training model:")
             print(result.stderr)
             print("\n⚠️  Continuing with existing model...")
         else:
@@ -133,11 +136,12 @@ if SHOULD_RETRAIN and games_added > 0:
 
 else:
     print("=" * 80)
-    print(f"STEP 2: SKIPPING model retrain")
+    print("STEP 2: SKIPPING model retrain")
     print("=" * 80)
     print(
-        f"Reason: {'No new games added' if games_added == 0 else 'Not scheduled (next: Mon/Thu/Sun)'}"
-    )
+        f"Reason: {
+            'No new games added' if games_added == 0 else 'Not scheduled (next: Mon/Thu/Sun)'}"
+    )  # noqa: E501
     print()
 
 # ======================================================================
@@ -151,14 +155,14 @@ print()
 
 try:
     result = subprocess.run(
-        [sys.executable, "scripts/production/daily_betting_recommendations.py"],
+        [sys.executable, "scripts/production/daily_betting_recommendations.py"],  # noqa: E501
         cwd=PROJECT_ROOT,
         capture_output=True,
         text=True,
     )
 
     if result.returncode != 0:
-        print(f"❌ ERROR generating predictions:")
+        print("❌ ERROR generating predictions:")
         print(result.stderr)
         # Don't exit - predictions might not be critical
     else:
@@ -181,12 +185,14 @@ print("\n" + "=" * 80)
 print("✅ DAILY PIPELINE COMPLETE")
 print("=" * 80)
 print()
-print(f"Summary:")
+print("Summary:")
 print(f"  ✅ Games fetched: {games_added:,} new")
 print(
-    f"  {'✅' if SHOULD_RETRAIN and games_added > 0 else '⊘'} Model retrained: {'YES' if SHOULD_RETRAIN and games_added > 0 else 'NO'}"
+    f"  {
+        '✅' if SHOULD_RETRAIN and games_added > 0 else '⊘'} Model retrained: {
+            'YES' if SHOULD_RETRAIN and games_added > 0 else 'NO'}"
 )
-print(f"  ✅ Predictions generated: Check data/results/")
+print("  ✅ Predictions generated: Check data/results/")
 print()
 print(f"Next run: Tomorrow at {datetime.now().strftime('%H:%M')}")
 print()

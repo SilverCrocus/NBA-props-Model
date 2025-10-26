@@ -1,32 +1,32 @@
 """
-Generate Full 2024-25 Predictions with Two-Stage Model
+Generate Full 2024 - 25 Predictions with Two-Stage Model
 
-Uses the trained two-stage model to generate predictions for all 2024-25 games
+Uses the trained two-stage model to generate predictions for all 2024 - 25 games  # noqa: E501
 with proper walk-forward validation (no temporal leakage).
 """
 
 import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error
 from tqdm import tqdm
-
-# Add project root
-project_root = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(project_root))
+from walk_forward_training_advanced_features import calculate_all_features
 
 from config import data_config
 from src.models.two_stage_predictor import TwoStagePredictor
 from utils.ctg_feature_builder import CTGFeatureBuilder
 
+# Add project root
+project_root = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(project_root))
+
+
 # Import feature calculation from baseline script
 sys.path.append(str(Path(__file__).parent))
-from walk_forward_training_advanced_features import calculate_all_features
 
 print("=" * 80)
-print("TWO-STAGE MODEL - FULL 2024-25 PREDICTIONS")
+print("TWO-STAGE MODEL - FULL 2024 - 25 PREDICTIONS")
 print("=" * 80)
 
 # Load trained two-stage model
@@ -52,15 +52,23 @@ all_games["GAME_DATE"] = pd.to_datetime(all_games["GAME_DATE"], format="mixed")
 all_games = all_games.sort_values("GAME_DATE").reset_index(drop=True)
 
 print(f"✅ Loaded {len(all_games):,} games")
-print(f"   Date range: {all_games['GAME_DATE'].min()} to {all_games['GAME_DATE'].max()}")
+print(
+    f"   Date range: {
+        all_games['GAME_DATE'].min()} to {
+            all_games['GAME_DATE'].max()}"
+)
 
-# Filter to 2024-25 season
+# Filter to 2024 - 25 season
 season_2024_25 = all_games[
-    (all_games["GAME_DATE"] >= "2024-10-01") & (all_games["GAME_DATE"] <= "2025-06-30")
-].copy()
+    (all_games["GAME_DATE"] >= "2024 - 10 - 01") & (all_games["GAME_DATE"] <= "2025 - 06 - 30")
+].copy()  # noqa: E501
 
-print(f"\n3. 2024-25 season games: {len(season_2024_25):,}")
-print(f"   Date range: {season_2024_25['GAME_DATE'].min()} to {season_2024_25['GAME_DATE'].max()}")
+print(f"\n3. 2024 - 25 season games: {len(season_2024_25):,}")
+print(
+    f"   Date range: {
+        season_2024_25['GAME_DATE'].min()} to {
+            season_2024_25['GAME_DATE'].max()}"
+)
 print(f"   Unique dates: {season_2024_25['GAME_DATE'].nunique()}")
 
 # Initialize CTG feature builder
@@ -104,14 +112,14 @@ for pred_date in tqdm(prediction_dates, desc="Walk-forward"):
                 pred_date,
                 player_name,
                 opponent_team,
-                "2024-25",
+                "2024 - 25",
                 ctg_builder,
                 all_games,
             )
 
             # Convert to DataFrame for two-stage predictor
             # Get feature columns from trained model
-            all_feature_cols = predictor.minutes_features + predictor.pra_features
+            all_feature_cols = predictor.minutes_features + predictor.pra_features  # noqa: E501
             all_feature_cols = list(set(all_feature_cols))  # Remove duplicates
 
             # Build feature vector
@@ -140,26 +148,30 @@ for pred_date in tqdm(prediction_dates, desc="Walk-forward"):
                 }
             )
 
-        except Exception as e:
+        except Exception:  # noqa: F841
             failed_predictions += 1
             continue
 
 # Convert to DataFrame
 predictions_df = pd.DataFrame(predictions)
 
-print(f"\n" + "=" * 80)
+print("\n" + "=" * 80)
 print("PREDICTION RESULTS")
 print("=" * 80)
 print(f"\nTotal predictions: {len(predictions_df):,}")
 print(f"Failed predictions: {failed_predictions:,}")
-print(f"Success rate: {len(predictions_df)/(len(predictions_df)+failed_predictions)*100:.1f}%")
+print(
+    f"Success rate: {
+        len(predictions_df) / (
+            len(predictions_df) + failed_predictions) * 100:.1f}%"
+)
 
 if len(predictions_df) > 0:
     # Calculate metrics
     mae_pra = mean_absolute_error(predictions_df["PRA"], predictions_df["predicted_PRA"])
     mae_min = mean_absolute_error(predictions_df["MIN"], predictions_df["predicted_MIN"])
 
-    print(f"\n📊 PERFORMANCE:")
+    print("\n📊 PERFORMANCE:")
     print(f"   PRA MAE: {mae_pra:.2f} points")
     print(f"   Minutes MAE: {mae_min:.2f} minutes")
 
@@ -172,39 +184,49 @@ if len(predictions_df) > 0:
     print(f"   Improvement: {improvement:+.2f} points ({improvement_pct:+.1f}%)")
 
     if mae_pra < baseline_mae:
-        print(f"   ✅ TWO-STAGE IS BETTER!")
+        print("   ✅ TWO-STAGE IS BETTER!")
     else:
-        print(f"   ⚠️  Two-stage did not improve over baseline")
+        print("   ⚠️  Two-stage did not improve over baseline")
 
     # Accuracy bands
-    print(f"\n📊 ACCURACY:")
-    print(f"   Within ±3 pts: {(predictions_df['abs_error'] <= 3).mean()*100:.1f}%")
-    print(f"   Within ±5 pts: {(predictions_df['abs_error'] <= 5).mean()*100:.1f}%")
-    print(f"   Within ±10 pts: {(predictions_df['abs_error'] <= 10).mean()*100:.1f}%")
+    print("\n📊 ACCURACY:")
+    print(f"   Within ±3 pts: {(predictions_df['abs_error'] <= 3).mean() * 100:.1f}%")  # noqa: E501
+    print(f"   Within ±5 pts: {(predictions_df['abs_error'] <= 5).mean() * 100:.1f}%")  # noqa: E501
+    print(
+        f"   Within ±10 pts: {(predictions_df['abs_error'] <= 10).mean() * 100:.1f}%"
+    )  # noqa: E501
 
     # Save predictions
-    output_file = data_config.RESULTS_DIR / "two_stage_predictions_2024_25_FULL.csv"
+    output_file = data_config.RESULTS_DIR / "two_stage_predictions_2024_25_FULL.csv"  # noqa: E501
     predictions_df.to_csv(output_file, index=False)
     print(f"\n✅ Saved to {output_file}")
 
     # Compare coverage to baseline
     baseline_file = data_config.RESULTS_DIR / "walk_forward_advanced_features_2024_25.csv"
     baseline_df = pd.read_csv(baseline_file)
-    print(f"\n📊 COVERAGE COMPARISON:")
+    print("\n📊 COVERAGE COMPARISON:")
     print(f"   Baseline: {len(baseline_df):,} predictions")
     print(f"   Two-stage: {len(predictions_df):,} predictions")
-    print(f"   Difference: {len(predictions_df) - len(baseline_df):,} predictions")
+    print(
+        f"   Difference: {
+            len(predictions_df) -
+            len(baseline_df):,    } predictions"
+    )
 
     if len(predictions_df) < len(baseline_df) * 0.9:
-        print(f"   ⚠️  Two-stage has significantly fewer predictions")
-        print(f"      This may be due to missing features or stricter requirements")
+        print("   ⚠️  Two-stage has significantly fewer predictions")
+        print("      This may be due to missing features or stricter requirements")  # noqa: E501
 else:
     print("\n❌ No predictions generated")
 
 print("\n" + "=" * 80)
 print("GENERATION COMPLETE")
 print("=" * 80)
-print(f"\nNext steps:")
-print(f"  1. Apply calibration: uv run python scripts/calibration/calibrate_twostage.py")
-print(f"  2. Backtest with odds: uv run python scripts/backtesting/backtest_twostage.py")
-print(f"  3. Compare all approaches")
+print("\nNext steps:")
+print(
+    "  1. Apply calibration: uv run python scripts/calibration/calibrate_twostage.py"
+)  # noqa: E501
+print(
+    "  2. Backtest with odds: uv run python scripts/backtesting/backtest_twostage.py"
+)  # noqa: E501
+print("  3. Compare all approaches")

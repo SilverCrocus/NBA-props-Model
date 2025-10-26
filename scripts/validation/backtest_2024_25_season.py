@@ -2,9 +2,9 @@
 """
 Comprehensive Backtest with 4pt Threshold and Monte Carlo Simulation
 
-Tests model on 2024-25 season with:
-1. Train on data up to 2023-24 season
-2. Test on 2024-25 season with 4pt edge threshold
+Tests model on 2024 - 25 season with:
+1. Train on data up to 2023 - 24 season
+2. Test on 2024 - 25 season with 4pt edge threshold
 3. Analyze over/under distribution and win rates
 4. Run Monte Carlo simulation for betting strategy
 """
@@ -13,16 +13,15 @@ import pickle
 from datetime import datetime
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
+from xgboost import XGBRegressor
 
 # ======================================================================
 # CONFIGURATION
 # ======================================================================
 
-# Model path (will be trained up to 2023-24)
+# Model path (will be trained up to 2023 - 24)
 MODEL_PATH = "models/model_4pt_threshold_2024_25.pkl"
 
 # Data paths
@@ -50,7 +49,7 @@ print("=" * 80)
 print("COMPREHENSIVE BACKTEST: 4PT THRESHOLD + MONTE CARLO")
 print("=" * 80)
 print()
-print(f"Configuration:")
+print("Configuration:")
 print(f"  Min Edge: {MIN_EDGE} pts")
 print(f"  Max Edge: {MAX_EDGE} pts")
 print(f"  Monte Carlo Simulations: {NUM_SIMULATIONS:,}")
@@ -59,11 +58,11 @@ print(f"  Bet Size: ${BET_SIZE}")
 print()
 
 # ======================================================================
-# STEP 1: TRAIN MODEL ON DATA UP TO 2023-24
+# STEP 1: TRAIN MODEL ON DATA UP TO 2023 - 24
 # ======================================================================
 
 print("=" * 80)
-print("STEP 1: TRAIN MODEL (2003-2024)")
+print("STEP 1: TRAIN MODEL (2003 - 2024)")
 print("=" * 80)
 print()
 
@@ -72,16 +71,22 @@ df_all = pd.read_csv(GAME_LOGS_PATH)
 df_all["GAME_DATE"] = pd.to_datetime(df_all["GAME_DATE"])
 
 # Split data
-train_data = df_all[df_all["GAME_DATE"] < "2024-10-22"].copy()
+train_data = df_all[df_all["GAME_DATE"] < "2024 - 10 - 22"].copy()
 test_data = df_all[
-    (df_all["GAME_DATE"] >= "2024-10-22") & (df_all["GAME_DATE"] <= "2025-04-30")
+    (df_all["GAME_DATE"] >= "2024 - 10 - 22") & (df_all["GAME_DATE"] <= "2025 - 04 - 30")
 ].copy()
 
 print(
-    f"Training data: {len(train_data):,} games ({train_data['GAME_DATE'].min()} to {train_data['GAME_DATE'].max()})"
+    f"Training data: {
+        len(train_data):,    } games ({
+            train_data['GAME_DATE'].min()} to {
+                train_data['GAME_DATE'].max()})"
 )
 print(
-    f"Test data: {len(test_data):,} games ({test_data['GAME_DATE'].min()} to {test_data['GAME_DATE'].max()})"
+    f"Test data: {
+        len(test_data):,    } games ({
+            test_data['GAME_DATE'].min()} to {
+                test_data['GAME_DATE'].max()})"
 )
 print()
 
@@ -191,7 +196,6 @@ y_train = train_data["PRA"]
 
 # Train XGBoost model
 print("Training XGBoost model...")
-from xgboost import XGBRegressor
 
 model = XGBRegressor(
     n_estimators=200,
@@ -208,7 +212,7 @@ model.fit(X_train, y_train)
 train_preds = model.predict(X_train)
 train_mae = np.mean(np.abs(train_preds - y_train))
 
-print(f"✅ Model trained")
+print("✅ Model trained")
 print(f"   Training MAE: {train_mae:.2f} pts")
 print()
 
@@ -227,11 +231,11 @@ print(f"✅ Model saved to {MODEL_PATH}")
 print()
 
 # ======================================================================
-# STEP 2: WALK-FORWARD VALIDATION ON 2024-25 SEASON
+# STEP 2: WALK-FORWARD VALIDATION ON 2024 - 25 SEASON
 # ======================================================================
 
 print("=" * 80)
-print("STEP 2: WALK-FORWARD VALIDATION (2024-25)")
+print("STEP 2: WALK-FORWARD VALIDATION (2024 - 25)")
 print("=" * 80)
 print()
 
@@ -325,10 +329,12 @@ for i, pred_date in enumerate(unique_dates, 1):
         all_predictions.append(result)
 
     if (i % 10) == 0 or i == len(unique_dates):
-        print(f"   Processed {i}/{len(unique_dates)} dates ({len(all_predictions):,} predictions)")
+        print(
+            f"   Processed {i}/{len(unique_dates)} dates ({len(all_predictions):,} predictions)"
+        )  # noqa: E501
 
 print()
-print(f"✅ Walk-forward validation complete")
+print("✅ Walk-forward validation complete")
 print(f"   Total predictions: {len(all_predictions):,}")
 print()
 
@@ -354,7 +360,7 @@ print("=" * 80)
 print()
 
 # Load historical DraftKings odds
-ODDS_PATH = "data/historical_odds/2024-25/pra_odds.csv"
+ODDS_PATH = "data/historical_odds/2024 - 25/pra_odds.csv"
 print(f"Loading odds from: {ODDS_PATH}")
 df_odds = pd.read_csv(ODDS_PATH)
 df_odds["event_date"] = pd.to_datetime(df_odds["event_date"])
@@ -418,7 +424,7 @@ print()
 print(f"Total Bets: {total_bets:,}")
 print(f"Wins: {wins:,}")
 print(f"Losses: {losses:,}")
-print(f"Win Rate: {win_rate*100:.2f}%")
+print(f"Win Rate: {win_rate * 100:.2f}%")
 print()
 
 # Over/Under distribution
@@ -432,13 +438,21 @@ over_win_rate = over_wins / len(over_bets) if len(over_bets) > 0 else 0
 under_win_rate = under_wins / len(under_bets) if len(under_bets) > 0 else 0
 
 print("Over/Under Distribution:")
-print(f"  OVER bets: {len(over_bets):,} ({len(over_bets)/total_bets*100:.1f}%)")
+print(
+    f"  OVER bets: {
+        len(over_bets):,} ({
+            len(over_bets) / total_bets * 100:.1f}%)"
+)
 print(f"    Wins: {over_wins:,}")
-print(f"    Win Rate: {over_win_rate*100:.2f}%")
+print(f"    Win Rate: {over_win_rate * 100:.2f}%")
 print()
-print(f"  UNDER bets: {len(under_bets):,} ({len(under_bets)/total_bets*100:.1f}%)")
+print(
+    f"  UNDER bets: {
+        len(under_bets):,} ({
+            len(under_bets) / total_bets * 100:.1f}%)"
+)
 print(f"    Wins: {under_wins:,}")
-print(f"    Win Rate: {under_win_rate*100:.2f}%")
+print(f"    Win Rate: {under_win_rate * 100:.2f}%")
 print()
 
 # ROI calculation
@@ -448,7 +462,7 @@ total_profit = (wins * profit_per_win) + (losses * loss_per_loss)
 total_wagered = total_bets * BET_SIZE
 roi = (total_profit / total_wagered) * 100 if total_wagered > 0 else 0
 
-print(f"Financial Performance:")
+print("Financial Performance:")
 print(f"  Total Wagered: ${total_wagered:,.2f}")
 print(f"  Total Profit: ${total_profit:,.2f}")
 print(f"  ROI: {roi:.2f}%")
@@ -546,26 +560,26 @@ print("=" * 80)
 print()
 print(f"Simulations Run: {NUM_SIMULATIONS:,}")
 print()
-print(f"Final Profit Statistics:")
+print("Final Profit Statistics:")
 print(f"  Mean: ${mean_profit:,.2f}")
 print(f"  Median: ${median_profit:,.2f}")
 print(f"  Std Dev: ${std_profit:,.2f}")
 print(f"  Min: ${min_profit:,.2f}")
 print(f"  Max: ${max_profit:,.2f}")
 print()
-print(f"Percentiles:")
+print("Percentiles:")
 print(f"  5th: ${p5:,.2f}")
 print(f"  25th: ${p25:,.2f}")
 print(f"  75th: ${p75:,.2f}")
 print(f"  95th: ${p95:,.2f}")
 print()
-print(f"ROI Statistics:")
+print("ROI Statistics:")
 print(f"  Mean: {mean_roi:.2f}%")
 print(f"  Median: {median_roi:.2f}%")
 print()
-print(f"Risk Metrics:")
-print(f"  Bankruptcy Rate: {bankruptcy_rate*100:.2f}%")
-print(f"  Probability of Profit: {(df_sim['final_profit'] > 0).mean()*100:.2f}%")
+print("Risk Metrics:")
+print(f"  Bankruptcy Rate: {bankruptcy_rate * 100:.2f}%")
+print(f"  Probability of Profit: {(df_sim['final_profit'] > 0).mean() * 100:.2f}%")  # noqa: E501
 print()
 
 # Save simulation results
@@ -581,22 +595,30 @@ print("=" * 80)
 print("FINAL SUMMARY")
 print("=" * 80)
 print()
-print(f"📊 Model Performance:")
+print("📊 Model Performance:")
 print(f"   Training MAE: {train_mae:.2f} pts")
 print(f"   Test MAE: {mae:.2f} pts")
 print()
-print(f"💰 Betting Performance (4pt threshold):")
+print("💰 Betting Performance (4pt threshold):")
 print(f"   Total Bets: {total_bets:,}")
-print(f"   Win Rate: {win_rate*100:.2f}%")
+print(f"   Win Rate: {win_rate * 100:.2f}%")
 print(f"   ROI: {roi:.2f}%")
 print()
-print(f"   Over Bets: {len(over_bets):,} ({over_win_rate*100:.2f}% win rate)")
-print(f"   Under Bets: {len(under_bets):,} ({under_win_rate*100:.2f}% win rate)")
+print(
+    f"   Over Bets: {
+        len(over_bets):,} ({
+            over_win_rate * 100:.2f}% win rate)"
+)
+print(
+    f"   Under Bets: {
+        len(under_bets):,} ({
+            under_win_rate * 100:.2f}% win rate)"
+)
 print()
-print(f"🎲 Monte Carlo Simulation:")
+print("🎲 Monte Carlo Simulation:")
 print(f"   Expected Profit: ${mean_profit:,.2f}")
 print(f"   Expected ROI: {mean_roi:.2f}%")
-print(f"   Probability of Profit: {(df_sim['final_profit'] > 0).mean()*100:.2f}%")
-print(f"   Bankruptcy Risk: {bankruptcy_rate*100:.2f}%")
+print(f"   Probability of Profit: {(df_sim['final_profit'] > 0).mean() * 100:.2f}%")  # noqa: E501
+print(f"   Bankruptcy Risk: {bankruptcy_rate * 100:.2f}%")
 print()
 print("=" * 80)

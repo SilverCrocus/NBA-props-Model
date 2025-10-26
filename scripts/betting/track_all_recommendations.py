@@ -6,7 +6,7 @@ Automatically tracks ALL bets from the recommendations CSV.
 This runs automatically when you run nba_today.py
 
 Usage:
-  uv run python scripts/betting/track_all_recommendations.py 2025-10-21
+  uv run python scripts/betting/track_all_recommendations.py 2025 - 10 - 21
 """
 
 import argparse
@@ -80,10 +80,15 @@ def track_all_recommendations(date: str):
         # Create unique bet_id using player, teams, line, and direction
         # This prevents the same game from being tracked multiple times
         player_slug = row["player_name"].replace(" ", "_")
-        teams_slug = f"{row['away_team'].replace(' ', '_')}_vs_{row['home_team'].replace(' ', '_')}"
+        teams_slug = f"{
+            row['away_team'].replace(
+                ' ', '_')}_vs_{
+            row['home_team'].replace(
+                ' ', '_')}"
         bet_id = f"{player_slug}_{teams_slug}_{row['line']}_{row['direction']}"
 
-        # Check if already tracked (same player, same game, same line, same direction)
+        # Check if already tracked (same player, same game, same line, same
+        # direction)
         if bet_id in ledger["bet_id"].values:
             skipped += 1
             continue
@@ -101,7 +106,7 @@ def track_all_recommendations(date: str):
             "decimal_odds": row["decimal_odds"],
             "predicted_PRA": row["predicted_PRA"],
             "calibrated_prob": row["calibrated_prob"],
-            "edge": row["edge"],
+            "edge": row["point_edge"],
             "confidence": row["confidence"],
             "recommended_bet_size": row["bet_size"],
             "actual_PRA": None,
@@ -129,20 +134,19 @@ def track_all_recommendations(date: str):
         print(f"   (Skipped {skipped} duplicates)")
 
     # Summary
-    total_edge = sum(b["edge"] for b in new_bets)
-    avg_edge = total_edge / len(new_bets) if new_bets else 0
+    avg_point_edge = sum(b["edge"] for b in new_bets) / len(new_bets) if new_bets else 0
 
-    print(f"\n📊 Summary:")
+    print("\n📊 Summary:")
     print(f"   Total bets: {len(new_bets)}")
-    print(f"   Avg edge: {avg_edge:.1%}")
-    print(f"   Confidence levels:")
+    print(f"   Avg point edge: {avg_point_edge:.1f} pts")
+    print("   Confidence levels:")
 
     for conf in ["VERY HIGH", "HIGH", "MEDIUM", "LOW"]:
         count = sum(1 for b in new_bets if b["confidence"] == conf)
         if count > 0:
             print(f"      {conf}: {count} bets")
 
-    print(f"\n💡 Next: Wait for games to finish, then run:")
+    print("\n💡 Next: Wait for games to finish, then run:")
     print(f"   uv run track_bet.py update {date}")
 
 

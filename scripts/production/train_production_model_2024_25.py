@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 """
-Train Production Model for 2024-25 Season Backtest
+Train Production Model for 2024 - 25 Season Backtest
 ===================================================
 
 Training Strategy:
-- Train on ALL data from 2003 through 2023-24 season
-- Hold out 2024-25 season ENTIRELY for testing
+- Train on ALL data from 2003 through 2023 - 24 season
+- Hold out 2024 - 25 season ENTIRELY for testing
 - Use same ensemble architecture (3 folds with time-series CV)
 - Apply isotonic regression calibration
 
-This ensures 2024-25 is completely unseen during training.
+This ensures 2024 - 25 is completely unseen during training.
 
 Folds:
-- Fold 1: Train 2003-2021, Val 2022-23
-- Fold 2: Train 2003-2022, Val 2023-24
-- Fold 3: Train 2003-2023, Val 2024 (through June)
+- Fold 1: Train 2003 - 2021, Val 2022 - 23
+- Fold 2: Train 2003 - 2022, Val 2023 - 24
+- Fold 3: Train 2003 - 2023, Val 2024 (through June)
 
-Test: 2024-25 season only (Oct 2024 - April 2025)
+Test: 2024 - 25 season only (Oct 2024 - April 2025)
 
 Output:
 - models/production_2024_25_fold_1.pkl
@@ -29,21 +29,19 @@ Usage: uv run python scripts/production/train_production_model_2024_25.py
 
 import pickle
 import sys
-from pathlib import Path
-from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
 import xgboost as xgb
+from fast_feature_builder import FastFeatureBuilder
 from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import mean_absolute_error
 
 # Add scripts/utils to path
 sys.path.append("scripts/utils")
-from fast_feature_builder import FastFeatureBuilder
 
 print("=" * 80)
-print("TRAIN PRODUCTION MODEL FOR 2024-25 BACKTEST")
+print("TRAIN PRODUCTION MODEL FOR 2024 - 25 BACKTEST")
 print("=" * 80)
 print()
 
@@ -51,36 +49,36 @@ print()
 # CONFIGURATION
 # ======================================================================
 
-# Time-series CV folds - include 2022-23 and 2023-24 in training/validation
+# Time-series CV folds - include 2022 - 23 and 2023 - 24 in training/validation
 FOLDS = [
     {
         "name": "Fold 1",
-        "train_start": "2003-01-01",
-        "train_end": "2021-06-30",
-        "val_start": "2021-07-01",
-        "val_end": "2022-06-30",
+        "train_start": "2003 - 01 - 01",
+        "train_end": "2021 - 06 - 30",
+        "val_start": "2021 - 07 - 01",
+        "val_end": "2022 - 06 - 30",
         "model_path": "models/production_2024_25_fold_1.pkl",
     },
     {
         "name": "Fold 2",
-        "train_start": "2003-01-01",
-        "train_end": "2022-06-30",
-        "val_start": "2022-07-01",
-        "val_end": "2023-06-30",
+        "train_start": "2003 - 01 - 01",
+        "train_end": "2022 - 06 - 30",
+        "val_start": "2022 - 07 - 01",
+        "val_end": "2023 - 06 - 30",
         "model_path": "models/production_2024_25_fold_2.pkl",
     },
     {
         "name": "Fold 3",
-        "train_start": "2003-01-01",
-        "train_end": "2023-06-30",
-        "val_start": "2023-07-01",
-        "val_end": "2024-06-30",
+        "train_start": "2003 - 01 - 01",
+        "train_end": "2023 - 06 - 30",
+        "val_start": "2023 - 07 - 01",
+        "val_end": "2024 - 06 - 30",
         "model_path": "models/production_2024_25_fold_3.pkl",
     },
 ]
 
-# Test set (2024-25 season ONLY)
-TEST_START = "2024-10-01"  # 2024-25 season only
+# Test set (2024 - 25 season ONLY)
+TEST_START = "2024 - 10 - 01"  # 2024 - 25 season only
 
 # XGBoost hyperparameters (same as ensemble)
 XGBOOST_PARAMS = {
@@ -115,7 +113,9 @@ historical_df = historical_df.sort_values(["PLAYER_ID", "GAME_DATE"])
 
 print(f"✅ Historical: {len(historical_df):,} games")
 print(
-    f"   Date range: {historical_df['GAME_DATE'].min().date()} to {historical_df['GAME_DATE'].max().date()}"
+    f"   Date range: {
+        historical_df['GAME_DATE'].min().date()} to {
+            historical_df['GAME_DATE'].max().date()}"
 )
 print()
 
@@ -125,19 +125,23 @@ if "PRA" not in historical_df.columns:
 
 # Filter to MIN >= 25 (match betting population)
 print(
-    f"Before MIN filter: {len(historical_df):,} games, PRA avg = {historical_df['PRA'].mean():.2f}"
+    f"Before MIN filter: {
+        len(historical_df):,    } games, PRA avg = {
+            historical_df['PRA'].mean():.2f}"
 )
 historical_df = historical_df[historical_df["MIN"] >= 25].copy()
 print(
-    f"After MIN >= 25:   {len(historical_df):,} games, PRA avg = {historical_df['PRA'].mean():.2f}"
+    f"After MIN >= 25:   {
+        len(historical_df):,    } games, PRA avg = {
+            historical_df['PRA'].mean():.2f}"
 )
 print()
 
 # ======================================================================
-# 2. VERIFY 2024-25 IS HELD OUT
+# 2. VERIFY 2024 - 25 IS HELD OUT
 # ======================================================================
 
-print("VERIFYING 2024-25 SEASON HOLDOUT...")
+print("VERIFYING 2024 - 25 SEASON HOLDOUT...")
 print()
 
 # Split training and test data
@@ -147,19 +151,23 @@ test_data = historical_df[historical_df["GAME_DATE"] >= train_cutoff].copy()
 
 print(f"Training data: {len(train_data):,} games")
 print(
-    f"   Date range: {train_data['GAME_DATE'].min().date()} to {train_data['GAME_DATE'].max().date()}"
+    f"   Date range: {
+        train_data['GAME_DATE'].min().date()} to {
+            train_data['GAME_DATE'].max().date()}"
 )
 print()
-print(f"Test data (2024-25): {len(test_data):,} games")
+print(f"Test data (2024 - 25): {len(test_data):,} games")
 print(
-    f"   Date range: {test_data['GAME_DATE'].min().date()} to {test_data['GAME_DATE'].max().date()}"
+    f"   Date range: {
+        test_data['GAME_DATE'].min().date()} to {
+            test_data['GAME_DATE'].max().date()}"
 )
 print()
 
 if test_data["GAME_DATE"].min() < train_data["GAME_DATE"].max():
     raise ValueError("❌ DATA LEAKAGE DETECTED: Test data overlaps with training data!")
 
-print("✅ VERIFIED: 2024-25 season is completely held out from training")
+print("✅ VERIFIED: 2024 - 25 season is completely held out from training")
 print()
 
 # ======================================================================
@@ -175,7 +183,7 @@ full_df = builder.build_features(historical_df, pd.DataFrame(), verbose=True)
 
 print(f"✅ Features built: {full_df.shape}")
 print(
-    f"   Total features: {len([c for c in full_df.columns if c not in ['PLAYER_ID', 'GAME_DATE', 'PRA']])}"
+    f"   Total features: {len([c for c in full_df.columns if c not in ['PLAYER_ID', 'GAME_DATE', 'PRA']])}"  # noqa: E501
 )
 print()
 
@@ -199,7 +207,7 @@ for col in feature_cols:
     if pd.api.types.is_numeric_dtype(full_df[col]):
         numeric_feature_cols.append(col)
     else:
-        print(f"   Dropping non-numeric column: {col} (dtype: {full_df[col].dtype})")
+        print(f"   Dropping non-numeric column: {col} (dtype: {full_df[col].dtype})")  # noqa: E501
 
 # CRITICAL: Remove same-game box score stats (DATA LEAKAGE)
 leaking_features = [
@@ -294,7 +302,7 @@ for i, fold in enumerate(FOLDS, 1):
     y_pred_raw = model.predict(X_val)
     mae_raw = mean_absolute_error(y_val, y_pred_raw)
 
-    print(f"   ✅ Model trained")
+    print("   ✅ Model trained")
     print(f"   Raw MAE: {mae_raw:.2f} pts")
     print()
 
@@ -326,13 +334,19 @@ for i, fold in enumerate(FOLDS, 1):
 
     improvement = mae_raw - mae_calibrated
 
-    print(f"   ✅ Calibrator trained")
+    print("   ✅ Calibrator trained")
     print(f"   Calibrated MAE: {mae_calibrated:.2f} pts")
-    print(f"   Improvement: {improvement:.2f} pts ({improvement/mae_raw*100:.1f}%)")
+    print(
+        f"   Improvement: {
+            improvement:.2f} pts ({
+            improvement /
+            mae_raw *
+            100:.1f}%)"
+    )
     print()
 
     # Save model and calibrator
-    print(f"Saving model and calibrator...")
+    print("Saving model and calibrator...")
     fold_model_dict = {
         "model": model,
         "calibrator": calibrator,
@@ -380,29 +394,37 @@ print(results_df.to_string(index=False))
 print()
 
 print(
-    f"Average MAE (raw):        {results_df['mae_raw'].mean():.2f} ± {results_df['mae_raw'].std():.2f} pts"
+    f"Average MAE (raw):        {
+        results_df['mae_raw'].mean():.2f} ± {
+            results_df['mae_raw'].std():.2f} pts"
 )
 print(
-    f"Average MAE (calibrated): {results_df['mae_calibrated'].mean():.2f} ± {results_df['mae_calibrated'].std():.2f} pts"
+    f"Average MAE (calibrated): {
+        results_df['mae_calibrated'].mean():.2f} ± {
+            results_df['mae_calibrated'].std():.2f} pts"
 )
 print(f"Average improvement:      {results_df['improvement'].mean():.2f} pts")
 print()
 
 # ======================================================================
-# 6. TEST SET EVALUATION (2024-25 ONLY)
+# 6. TEST SET EVALUATION (2024 - 25 ONLY)
 # ======================================================================
 
 print("=" * 80)
-print("STEP 4: 2024-25 SEASON EVALUATION")
+print("STEP 4: 2024 - 25 SEASON EVALUATION")
 print("=" * 80)
 print()
 
-# Get test data (2024-25 season only)
+# Get test data (2024 - 25 season only)
 test_mask = full_df["GAME_DATE"] >= TEST_START
 test_df = full_df[test_mask].copy()
 
-print(f"Test set (2024-25 only): {len(test_df):,} games")
-print(f"Date range: {test_df['GAME_DATE'].min().date()} to {test_df['GAME_DATE'].max().date()}")
+print(f"Test set (2024 - 25 only): {len(test_df):,} games")
+print(
+    f"Date range: {
+        test_df['GAME_DATE'].min().date()} to {
+            test_df['GAME_DATE'].max().date()}"
+)
 print()
 
 X_test = test_df[feature_cols].fillna(0)
@@ -439,10 +461,10 @@ final_mae = mean_absolute_error(y_test, final_pred)
 
 print()
 print("=" * 80)
-print("FINAL 2024-25 SEASON RESULTS")
+print("FINAL 2024 - 25 SEASON RESULTS")
 print("=" * 80)
 print(f"Ensemble + Averaged Calibration MAE: {final_mae:.2f} pts")
-print(f"Test games (2024-25 only): {len(test_df):,}")
+print(f"Test games (2024 - 25 only): {len(test_df):,}")
 print()
 
 # ======================================================================
@@ -460,13 +482,13 @@ ensemble_meta = {
     "test_games": len(test_df),
     "xgboost_params": XGBOOST_PARAMS,
     "created_at": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S"),
-    "description": "Production model for 2024-25 backtest - trained on 2003-2024 data only",
+    "description": "Production model for 2024 - 25 backtest - trained on 2003 - 2024 data only",  # noqa: E501
 }
 
 with open("models/production_2024_25_meta.pkl", "wb") as f:
     pickle.dump(ensemble_meta, f)
 
-print(f"   ✅ Saved to models/production_2024_25_meta.pkl")
+print("   ✅ Saved to models/production_2024_25_meta.pkl")
 print()
 
 # ======================================================================
@@ -509,20 +531,22 @@ print("✅ PRODUCTION MODEL TRAINING COMPLETE!")
 print("=" * 80)
 print()
 print("Models saved:")
-print(f"   - models/production_2024_25_fold_1.pkl")
-print(f"   - models/production_2024_25_fold_2.pkl")
-print(f"   - models/production_2024_25_fold_3.pkl")
-print(f"   - models/production_2024_25_meta.pkl")
+print("   - models/production_2024_25_fold_1.pkl")
+print("   - models/production_2024_25_fold_2.pkl")
+print("   - models/production_2024_25_fold_3.pkl")
+print("   - models/production_2024_25_meta.pkl")
 print()
 print("Performance Summary:")
 print(
-    f"   - CV MAE (averaged): {results_df['mae_calibrated'].mean():.2f} ± {results_df['mae_calibrated'].std():.2f} pts"
+    f"   - CV MAE (averaged): {
+        results_df['mae_calibrated'].mean():.2f} ± {
+            results_df['mae_calibrated'].std():.2f} pts"
 )
-print(f"   - 2024-25 Test MAE: {final_mae:.2f} pts")
+print(f"   - 2024 - 25 Test MAE: {final_mae:.2f} pts")
 print()
-print("✅ VERIFIED: 2024-25 season was completely held out during training")
+print("✅ VERIFIED: 2024 - 25 season was completely held out during training")
 print()
 print("Next Steps:")
-print("   1. Run backtest on 2024-25 season with betting simulation")
+print("   1. Run backtest on 2024 - 25 season with betting simulation")
 print("   2. Compare win rate/ROI to previous models")
 print()

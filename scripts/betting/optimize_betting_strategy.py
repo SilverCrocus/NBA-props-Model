@@ -14,7 +14,6 @@ Input: data/results/backtest_ensemble_2024_25_real_odds.csv
 Output: Comprehensive strategy recommendations
 """
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -47,7 +46,9 @@ bets_df["edge_bin"] = pd.cut(bets_df["edge_abs"], bins=edge_bins)
 
 edge_analysis = (
     bets_df.groupby("edge_bin")
-    .agg({"is_correct": ["sum", "count", "mean"], "profit": "sum", "bet_amount": "sum"})
+    .agg(
+        {"is_correct": ["sum", "count", "mean"], "profit": "sum", "bet_amount": "sum"}
+    )  # noqa: E501
     .reset_index()
 )
 
@@ -68,7 +69,12 @@ for threshold in [0, 1, 2, 3, 4, 5, 6]:
         roi = (filtered["profit"].sum() / filtered["bet_amount"].sum()) * 100
         total_profit = filtered["profit"].sum()
         print(
-            f"  Edge >= {threshold} pts: {len(filtered):4d} bets | {win_rate*100:5.1f}% WR | {roi:6.2f}% ROI | ${total_profit:8,.0f} profit"
+            f"  Edge >= {threshold} pts: {
+                len(filtered):4d} bets | {
+                win_rate *
+                100:5.1f}% WR | {
+                roi:6.2f}% ROI | ${
+                    total_profit:8,.0f} profit"
         )
 print()
 
@@ -87,7 +93,9 @@ bets_df["conf_bin"] = pd.cut(bets_df["edge_abs"], bins=conf_bins)
 
 conf_analysis = (
     bets_df.groupby("conf_bin")
-    .agg({"is_correct": ["sum", "count", "mean"], "profit": "sum", "bet_amount": "sum"})
+    .agg(
+        {"is_correct": ["sum", "count", "mean"], "profit": "sum", "bet_amount": "sum"}
+    )  # noqa: E501
     .reset_index()
 )
 
@@ -120,7 +128,12 @@ for bet_type in ["over", "under"]:
             roi = (filtered["profit"].sum() / filtered["bet_amount"].sum()) * 100
             total_profit = filtered["profit"].sum()
             print(
-                f"  Edge >= {threshold} pts: {len(filtered):4d} bets | {win_rate*100:5.1f}% WR | {roi:6.2f}% ROI | ${total_profit:8,.0f} profit"
+                f"  Edge >= {threshold} pts: {
+                    len(filtered):4d} bets | {
+                    win_rate *
+                    100:5.1f}% WR | {
+                    roi:6.2f}% ROI | ${
+                    total_profit:8,.0f} profit"
             )
 
 print()
@@ -177,11 +190,17 @@ bets_df["streak_id"] = (bets_df["is_correct"] != bets_df["is_correct"].shift()).
 streaks = bets_df.groupby("streak_id").agg({"is_correct": ["first", "count"]}).reset_index()
 streaks.columns = ["streak_id", "is_win", "length"]
 
-win_streaks = streaks[streaks["is_win"] == True]["length"]
-loss_streaks = streaks[streaks["is_win"] == False]["length"]
+win_streaks = streaks[streaks["is_win"]]["length"]
+loss_streaks = streaks[streaks["is_win"] is False]["length"]
 
-print(f"Longest winning streak: {win_streaks.max() if len(win_streaks) > 0 else 0} bets")
-print(f"Longest losing streak: {loss_streaks.max() if len(loss_streaks) > 0 else 0} bets")
+print(
+    f"Longest winning streak: {
+        win_streaks.max() if len(win_streaks) > 0 else 0} bets"
+)
+print(
+    f"Longest losing streak: {
+        loss_streaks.max() if len(loss_streaks) > 0 else 0} bets"
+)
 print(f"Average winning streak: {win_streaks.mean():.1f} bets")
 print(f"Average losing streak: {loss_streaks.mean():.1f} bets")
 print()
@@ -198,7 +217,9 @@ print()
 bets_df["month"] = bets_df["date"].dt.to_period("M")
 monthly_stats = (
     bets_df.groupby("month")
-    .agg({"profit": "sum", "is_correct": ["sum", "count", "mean"], "bet_amount": "sum"})
+    .agg(
+        {"profit": "sum", "is_correct": ["sum", "count", "mean"], "bet_amount": "sum"}  # noqa: E501
+    )
     .reset_index()
 )
 
@@ -209,15 +230,18 @@ profitable_months = (monthly_stats["profit"] > 0).sum()
 total_months = len(monthly_stats)
 
 print(
-    f"Profitable months: {profitable_months}/{total_months} ({profitable_months/total_months*100:.1f}%)"
+    f"Profitable months: {profitable_months}/{total_months} ({
+        profitable_months / total_months * 100:.1f}%)"
 )
 print(f"Average monthly profit: ${monthly_stats['profit'].mean():,.2f}")
 print(
-    f"Best month: {monthly_stats.loc[monthly_stats['profit'].idxmax(), 'month']} (${monthly_stats['profit'].max():,.2f})"
-)
+    f"Best month: {monthly_stats.loc[monthly_stats['profit'].idxmax(),
+                                       'month']} (${monthly_stats['profit'].max():,.2f})"
+)  # noqa: E501
 print(
-    f"Worst month: {monthly_stats.loc[monthly_stats['profit'].idxmin(), 'month']} (${monthly_stats['profit'].min():,.2f})"
-)
+    f"Worst month: {monthly_stats.loc[monthly_stats['profit'].idxmin(),
+                                        'month']} (${monthly_stats['profit'].min():,.2f})"
+)  # noqa: E501
 print()
 
 # ======================================================================
@@ -265,13 +289,13 @@ for strategy in strategies:
         roi = (total_profit / filtered["bet_amount"].sum()) * 100
 
         print(f"\n{strategy['name']}:")
-        print(f"  Settings:")
+        print("  Settings:")
         print(f"    - Edge threshold: {strategy['edge_threshold']} pts")
-        print(f"    - Max bet size: {strategy['max_bet_pct']*100:.0f}% of bankroll")
-        print(f"    - Kelly fraction: {strategy['kelly_fraction']*100:.0f}%")
-        print(f"  Results:")
+        print(f"    - Max bet size: {strategy['max_bet_pct'] * 100:.0f}% of bankroll")  # noqa: E501
+        print(f"    - Kelly fraction: {strategy['kelly_fraction'] * 100:.0f}%")
+        print("  Results:")
         print(f"    - Bets: {len(filtered):,}")
-        print(f"    - Win rate: {win_rate*100:.1f}%")
+        print(f"    - Win rate: {win_rate * 100:.1f}%")
         print(f"    - ROI: {roi:.2f}%")
         print(f"    - Total profit: ${total_profit:,.2f}")
 
@@ -303,7 +327,9 @@ for threshold in [0, 1, 2, 3, 4, 5]:
             else 0
         )
 
-        if sharpe > best_sharpe and win_rate > 0.55:  # Must beat 55% to account for vig
+        if (
+            sharpe > best_sharpe and win_rate > 0.55
+        ):  # Must beat 55% to account for vig  # noqa: E501
             best_sharpe = sharpe
             optimal_threshold = threshold
 
@@ -317,19 +343,19 @@ if optimal_threshold is not None:
     print(f"1. Edge Threshold: {optimal_threshold} points")
     print(f"   - Only bet when |prediction - line| >= {optimal_threshold}")
     print()
-    print(f"2. Bet Sizing: Quarter Kelly (25% Kelly)")
-    print(f"   - Max bet size: 5% of bankroll")
+    print("2. Bet Sizing: Quarter Kelly (25% Kelly)")
+    print("   - Max bet size: 5% of bankroll")
     print()
-    print(f"3. Expected Results:")
-    print(f"   - Volume: ~{len(optimal_bets)/7:.0f} bets per month")
-    print(f"   - Win Rate: {optimal_win_rate*100:.1f}%")
+    print("3. Expected Results:")
+    print(f"   - Volume: ~{len(optimal_bets) / 7:.0f} bets per month")
+    print(f"   - Win Rate: {optimal_win_rate * 100:.1f}%")
     print(f"   - ROI: {optimal_roi:.2f}%")
     print(f"   - Risk-adjusted return (Sharpe): {best_sharpe:.2f}")
     print()
-    print(f"4. Risk Management:")
+    print("4. Risk Management:")
     print(f"   - Max drawdown observed: {max_drawdown_pct:.2f}%")
-    print(f"   - Recommended bankroll: $5,000 minimum")
-    print(f"   - Stop trading if drawdown > 30%")
+    print("   - Recommended bankroll: $5,000 minimum")
+    print("   - Stop trading if drawdown > 30%")
     print()
 
 print("=" * 80)

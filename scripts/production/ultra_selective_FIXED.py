@@ -3,10 +3,9 @@
 Ultra-Selective Betting Strategy - Applied to LEAK-FREE Predictions
 
 This script applies the 4-tier quality scoring system to the calibrated
-predictions that have NO DATA LEAKAGE (trained on 2023-24, applied to 2024-25).
+predictions that have NO DATA LEAKAGE (trained on 2023 - 24, applied to 2024 - 25).  # noqa: E501
 """
 
-import numpy as np
 import pandas as pd
 from scipy.stats import binomtest
 
@@ -16,7 +15,7 @@ print("=" * 80)
 print()
 
 # Load leak-free calibrated predictions
-print("1. Loading leak-free calibrated predictions (2024-25)...")
+print("1. Loading leak-free calibrated predictions (2024 - 25)...")
 df = pd.read_csv("data/results/backtest_2024_25_CALIBRATED_FIXED.csv")
 df = df.dropna(subset=["predicted_PRA_calibrated", "betting_line"])
 
@@ -27,11 +26,15 @@ print()
 df["edge"] = df["predicted_PRA_calibrated"] - df["betting_line"]
 df["abs_edge"] = df["edge"].abs()
 
-# Phase 1: Edge filter (5-7 pts)
-print("2. Applying Phase 1 filter (edge 5-7 pts)...")
+# Phase 1: Edge filter (5 - 7 pts)
+print("2. Applying Phase 1 filter (edge 5 - 7 pts)...")
 phase1_filtered = df[(df["abs_edge"] >= 5.0) & (df["abs_edge"] <= 7.0)].copy()
 print(
-    f"   ✅ {len(phase1_filtered):,} bets pass edge filter ({len(phase1_filtered)/len(df)*100:.1f}%)"
+    f"   ✅ {
+        len(phase1_filtered):,    } bets pass edge filter ({
+            len(phase1_filtered) /
+            len(df) *
+        100:.1f}%)"
 )
 print()
 
@@ -95,9 +98,13 @@ print()
 
 # Ultra-selective filter (quality ≥ 0.75)
 print("4. Applying ultra-selective filter (quality ≥ 0.75)...")
-ultra_selective = phase1_filtered[phase1_filtered["quality_score"] >= 0.75].copy()
+ultra_selective = phase1_filtered[phase1_filtered["quality_score"] >= 0.75].copy()  # noqa: E501
 print(
-    f"   ✅ {len(ultra_selective):,} bets selected ({len(ultra_selective)/len(df)*100:.1f}% of all predictions)"
+    f"   ✅ {
+        len(ultra_selective):,    } bets selected ({
+            len(ultra_selective) /
+            len(df) *
+        100:.1f}% of all predictions)"
 )
 print()
 
@@ -128,24 +135,26 @@ print()
 print(f"Total Bets: {total_bets}")
 print(f"Wins: {wins}")
 print(f"Losses: {losses}")
-print(f"Win Rate: {win_rate*100:.2f}%")
+print(f"Win Rate: {win_rate * 100:.2f}%")
 print()
 
 # Statistical significance test
 if total_bets > 0:
     # Test against 56% null hypothesis (professional sharp level)
     result = binomtest(wins, total_bets, 0.56, alternative="two-sided")
-    print(f"Statistical Test (H0: win rate = 56%):")
+    print("Statistical Test (H0: win rate = 56%):")
     print(f"  P-value: {result.pvalue:.4f}")
     if result.pvalue < 0.05:
-        print(f"  ✅ Significantly different from 56% (p < 0.05)")
+        print("  ✅ Significantly different from 56% (p < 0.05)")
     else:
-        print(f"  ✅ Not significantly different from 56% (consistent with sharp bettor)")
+        print(
+            "  ✅ Not significantly different from 56% (consistent with sharp bettor)"
+        )  # noqa: E501
     print()
 
 # ROI calculation (assuming -110 odds)
 roi = (wins * 0.909 - losses) / total_bets if total_bets > 0 else 0
-print(f"ROI (flat betting): {roi*100:+.2f}%")
+print(f"ROI (flat betting): {roi * 100:+.2f}%")
 print()
 
 # Bankroll simulation (Fixed 2%)
@@ -170,7 +179,7 @@ if total_bets > 0:
     profit_2pct = bankroll_2pct - 1000
     roi_2pct = (profit_2pct / 1000) * 100
 
-    print(f"Starting Bankroll: $1,000")
+    print("Starting Bankroll: $1,000")
     print(f"Ending Bankroll (Fixed 2%): ${bankroll_2pct:,.2f}")
     print(f"Profit: ${profit_2pct:+,.2f}")
     print(f"ROI: {roi_2pct:+.1f}%")
@@ -191,6 +200,6 @@ if win_rate < 0.52:
 elif win_rate < 0.56:
     print("⚠️  Win rate below sharp bettor level (56%) - needs improvement")
 elif win_rate <= 0.60:
-    print("✅ Win rate at professional sharp level (56-60%) - EXCELLENT!")
+    print("✅ Win rate at professional sharp level (56 - 60%) - EXCELLENT!")
 else:
-    print("⚠️  Win rate suspiciously high (>60%) - verify no remaining leakage")
+    print("⚠️  Win rate suspiciously high (>60%) - verify no remaining leakage")  # noqa: E501

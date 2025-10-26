@@ -7,14 +7,14 @@ GOLD STANDARD APPROACH:
 - Rolling 3-fold time-series cross-validation
 - Ensemble predictions (average of 3 models)
 - Averaged calibration across folds
-- Truly held-out test set (2023-24 & 2024-25)
+- Truly held-out test set (2023 - 24 & 2024 - 25)
 
 Folds:
-- Fold 1: Train 2003-2019, Val 2020-21
-- Fold 2: Train 2003-2020, Val 2021-22
-- Fold 3: Train 2003-2021, Val 2022-23
+- Fold 1: Train 2003 - 2019, Val 2020 - 21
+- Fold 2: Train 2003 - 2020, Val 2021 - 22
+- Fold 3: Train 2003 - 2021, Val 2022 - 23
 
-Final Test: 2023-24 & 2024-25 (never seen during training/validation)
+Final Test: 2023 - 24 & 2024 - 25 (never seen during training/validation)
 
 Output:
 - models/ensemble_fold_1.pkl
@@ -27,18 +27,16 @@ Usage: uv run python scripts/production/train_ensemble_timeseries_cv.py
 
 import pickle
 import sys
-from pathlib import Path
-from typing import Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
 import xgboost as xgb
+from fast_feature_builder import FastFeatureBuilder
 from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import mean_absolute_error
 
 # Add scripts/utils to path
 sys.path.append("scripts/utils")
-from fast_feature_builder import FastFeatureBuilder
 
 print("=" * 80)
 print("TRAIN ENSEMBLE MODEL - TIME-SERIES CROSS-VALIDATION")
@@ -53,32 +51,32 @@ print()
 FOLDS = [
     {
         "name": "Fold 1",
-        "train_start": "2003-01-01",
-        "train_end": "2019-06-30",
-        "val_start": "2019-07-01",
-        "val_end": "2020-06-30",
+        "train_start": "2003 - 01 - 01",
+        "train_end": "2019 - 06 - 30",
+        "val_start": "2019 - 07 - 01",
+        "val_end": "2020 - 06 - 30",
         "model_path": "models/ensemble_fold_1.pkl",
     },
     {
         "name": "Fold 2",
-        "train_start": "2003-01-01",
-        "train_end": "2020-06-30",
-        "val_start": "2020-07-01",
-        "val_end": "2021-06-30",
+        "train_start": "2003 - 01 - 01",
+        "train_end": "2020 - 06 - 30",
+        "val_start": "2020 - 07 - 01",
+        "val_end": "2021 - 06 - 30",
         "model_path": "models/ensemble_fold_2.pkl",
     },
     {
         "name": "Fold 3",
-        "train_start": "2003-01-01",
-        "train_end": "2021-06-30",
-        "val_start": "2021-07-01",
-        "val_end": "2022-06-30",
+        "train_start": "2003 - 01 - 01",
+        "train_end": "2021 - 06 - 30",
+        "val_start": "2021 - 07 - 01",
+        "val_end": "2022 - 06 - 30",
         "model_path": "models/ensemble_fold_3.pkl",
     },
 ]
 
 # Test set (truly held-out)
-TEST_START = "2022-07-01"  # 2022-23, 2023-24, 2024-25
+TEST_START = "2022 - 07 - 01"  # 2022 - 23, 2023 - 24, 2024 - 25
 
 # XGBoost hyperparameters (aggressive regularization)
 XGBOOST_PARAMS = {
@@ -104,7 +102,7 @@ print("STEP 1: Loading data...")
 print()
 
 # Load all historical game logs
-print("Loading historical game logs (2003-2024)...")
+print("Loading historical game logs (2003 - 2024)...")
 historical_df = pd.read_csv("data/game_logs/all_game_logs_through_2025.csv")
 historical_df["GAME_DATE"] = pd.to_datetime(historical_df["GAME_DATE"])
 
@@ -113,7 +111,9 @@ historical_df = historical_df.sort_values(["PLAYER_ID", "GAME_DATE"])
 
 print(f"✅ Historical: {len(historical_df):,} games")
 print(
-    f"   Date range: {historical_df['GAME_DATE'].min().date()} to {historical_df['GAME_DATE'].max().date()}"
+    f"   Date range: {
+        historical_df['GAME_DATE'].min().date()} to {
+            historical_df['GAME_DATE'].max().date()}"
 )
 print()
 
@@ -123,11 +123,15 @@ if "PRA" not in historical_df.columns:
 
 # Filter to MIN >= 25 (match betting population)
 print(
-    f"Before MIN filter: {len(historical_df):,} games, PRA avg = {historical_df['PRA'].mean():.2f}"
+    f"Before MIN filter: {
+        len(historical_df):,    } games, PRA avg = {
+            historical_df['PRA'].mean():.2f}"
 )
 historical_df = historical_df[historical_df["MIN"] >= 25].copy()
 print(
-    f"After MIN >= 25:   {len(historical_df):,} games, PRA avg = {historical_df['PRA'].mean():.2f}"
+    f"After MIN >= 25:   {
+        len(historical_df):,    } games, PRA avg = {
+            historical_df['PRA'].mean():.2f}"
 )
 print()
 
@@ -144,7 +148,7 @@ full_df = builder.build_features(historical_df, pd.DataFrame(), verbose=True)
 
 print(f"✅ Features built: {full_df.shape}")
 print(
-    f"   Total features: {len([c for c in full_df.columns if c not in ['PLAYER_ID', 'GAME_DATE', 'PRA']])}"
+    f"   Total features: {len([c for c in full_df.columns if c not in ['PLAYER_ID', 'GAME_DATE', 'PRA']])}"  # noqa: E501
 )
 print()
 
@@ -168,7 +172,7 @@ for col in feature_cols:
     if pd.api.types.is_numeric_dtype(full_df[col]):
         numeric_feature_cols.append(col)
     else:
-        print(f"   Dropping non-numeric column: {col} (dtype: {full_df[col].dtype})")
+        print(f"   Dropping non-numeric column: {col} (dtype: {full_df[col].dtype})")  # noqa: E501
 
 # CRITICAL: Remove same-game box score stats (DATA LEAKAGE)
 # These are components of PRA and would give perfect predictions
@@ -264,7 +268,7 @@ for i, fold in enumerate(FOLDS, 1):
     y_pred_raw = model.predict(X_val)
     mae_raw = mean_absolute_error(y_val, y_pred_raw)
 
-    print(f"   ✅ Model trained")
+    print("   ✅ Model trained")
     print(f"   Raw MAE: {mae_raw:.2f} pts")
     print()
 
@@ -296,13 +300,19 @@ for i, fold in enumerate(FOLDS, 1):
 
     improvement = mae_raw - mae_calibrated
 
-    print(f"   ✅ Calibrator trained")
+    print("   ✅ Calibrator trained")
     print(f"   Calibrated MAE: {mae_calibrated:.2f} pts")
-    print(f"   Improvement: {improvement:.2f} pts ({improvement/mae_raw*100:.1f}%)")
+    print(
+        f"   Improvement: {
+            improvement:.2f} pts ({
+            improvement /
+            mae_raw *
+            100:.1f}%)"
+    )
     print()
 
     # Save model and calibrator
-    print(f"Saving model and calibrator...")
+    print("Saving model and calibrator...")
     fold_model_dict = {
         "model": model,
         "calibrator": calibrator,
@@ -350,10 +360,14 @@ print(results_df.to_string(index=False))
 print()
 
 print(
-    f"Average MAE (raw):        {results_df['mae_raw'].mean():.2f} ± {results_df['mae_raw'].std():.2f} pts"
+    f"Average MAE (raw):        {
+        results_df['mae_raw'].mean():.2f} ± {
+            results_df['mae_raw'].std():.2f} pts"
 )
 print(
-    f"Average MAE (calibrated): {results_df['mae_calibrated'].mean():.2f} ± {results_df['mae_calibrated'].std():.2f} pts"
+    f"Average MAE (calibrated): {
+        results_df['mae_calibrated'].mean():.2f} ± {
+            results_df['mae_calibrated'].std():.2f} pts"
 )
 print(f"Average improvement:      {results_df['improvement'].mean():.2f} pts")
 print()
@@ -401,12 +415,14 @@ for i, fold in enumerate(FOLDS):
         {"fold": fold["name"], "val_games": len(val_df), "ensemble_mae": mae_ensemble}
     )
 
-    print(f"{fold['name']}: MAE = {mae_ensemble:.2f} pts ({len(val_df):,} games)")
+    print(f"{fold['name']}: MAE = {mae_ensemble:.2f} pts ({len(val_df):,} games)")  # noqa: E501
 
 print()
 ensemble_df = pd.DataFrame(ensemble_results)
 print(
-    f"Average Ensemble MAE: {ensemble_df['ensemble_mae'].mean():.2f} ± {ensemble_df['ensemble_mae'].std():.2f} pts"
+    f"Average Ensemble MAE: {
+        ensemble_df['ensemble_mae'].mean():.2f} ± {
+            ensemble_df['ensemble_mae'].std():.2f} pts"
 )
 print()
 
@@ -424,7 +440,11 @@ test_mask = full_df["GAME_DATE"] >= TEST_START
 test_df = full_df[test_mask].copy()
 
 print(f"Test set: {len(test_df):,} games")
-print(f"Date range: {test_df['GAME_DATE'].min().date()} to {test_df['GAME_DATE'].max().date()}")
+print(
+    f"Date range: {
+        test_df['GAME_DATE'].min().date()} to {
+            test_df['GAME_DATE'].max().date()}"
+)
 print()
 
 X_test = test_df[feature_cols].fillna(0)
@@ -487,7 +507,7 @@ ensemble_meta = {
 with open("models/ensemble_meta.pkl", "wb") as f:
     pickle.dump(ensemble_meta, f)
 
-print(f"   ✅ Saved to models/ensemble_meta.pkl")
+print("   ✅ Saved to models/ensemble_meta.pkl")
 print()
 
 # ======================================================================
@@ -530,14 +550,16 @@ print("✅ ENSEMBLE MODEL TRAINING COMPLETE!")
 print("=" * 80)
 print()
 print("Models saved:")
-print(f"   - models/ensemble_fold_1.pkl")
-print(f"   - models/ensemble_fold_2.pkl")
-print(f"   - models/ensemble_fold_3.pkl")
-print(f"   - models/ensemble_meta.pkl")
+print("   - models/ensemble_fold_1.pkl")
+print("   - models/ensemble_fold_2.pkl")
+print("   - models/ensemble_fold_3.pkl")
+print("   - models/ensemble_meta.pkl")
 print()
 print("Performance Summary:")
 print(
-    f"   - CV MAE (averaged): {results_df['mae_calibrated'].mean():.2f} ± {results_df['mae_calibrated'].std():.2f} pts"
+    f"   - CV MAE (averaged): {
+        results_df['mae_calibrated'].mean():.2f} ± {
+            results_df['mae_calibrated'].std():.2f} pts"
 )
 print(f"   - Ensemble Test MAE: {final_mae:.2f} pts")
 print()

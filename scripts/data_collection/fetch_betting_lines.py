@@ -60,7 +60,7 @@ def create_market_lines(predictions_df, noise_std=2.5):
     # Statistics
     logger.info(f"Lines created: {len(df):,}")
     logger.info(f"Mean line: {df['betting_line'].mean():.2f}")
-    logger.info(f"Over rate: {(df['PRA'] > df['betting_line']).mean()*100:.1f}%")
+    logger.info(f"Over rate: {(df['PRA'] > df['betting_line']).mean() * 100:.1f}%")
 
     return df
 
@@ -74,7 +74,11 @@ def main():
     logger.info("\n1. Loading predictions...")
     df = pd.read_csv("data/results/walk_forward_advanced_features_2024_25.csv")
     logger.info(f"Predictions: {len(df):,}")
-    logger.info(f"Date range: {df['GAME_DATE'].min()} to {df['GAME_DATE'].max()}")
+    logger.info(
+        f"Date range: {
+            df['GAME_DATE'].min()} to {
+            df['GAME_DATE'].max()}"
+    )
 
     # Create betting lines
     logger.info("\n2. Creating betting lines...")
@@ -91,40 +95,46 @@ def main():
     logger.info("BETTING LINES SUMMARY")
     logger.info("=" * 70)
 
-    logger.info(f"\nDataset:")
+    logger.info("\nDataset:")
     logger.info(f"  Predictions: {len(df_with_lines):,}")
     logger.info(f"  Players: {df_with_lines['PLAYER_NAME'].nunique():,}")
     logger.info(f"  Games: {df_with_lines['GAME_DATE'].nunique():,}")
 
-    logger.info(f"\nLine Quality:")
+    logger.info("\nLine Quality:")
     logger.info(f"  Mean line: {df_with_lines['betting_line'].mean():.2f}")
     logger.info(f"  Mean actual: {df_with_lines['PRA'].mean():.2f}")
     logger.info(
-        f"  Line MAE: {(df_with_lines['betting_line'] - df_with_lines['PRA']).abs().mean():.2f}"
+        f"  Line MAE: {(df_with_lines['betting_line'] - df_with_lines['PRA']).abs().mean():.2f}"  # noqa: E501
     )
     logger.info(
-        f"  Actual > Line: {(df_with_lines['PRA'] > df_with_lines['betting_line']).mean()*100:.1f}%"
+        f"  Actual > Line: {(df_with_lines['PRA'] > df_with_lines['betting_line']).mean() * 100:.1f}%"  # noqa: E501
     )
 
-    logger.info(f"\nModel vs Market:")
+    logger.info("\nModel vs Market:")
     edge = df_with_lines["predicted_PRA"] - df_with_lines["betting_line"]
     logger.info(f"  Mean (pred - line): {edge.mean():.3f}")
     logger.info(f"  Std (pred - line): {edge.std():.3f}")
-    logger.info(f"  Pred > Line: {(edge > 0).mean()*100:.1f}%")
+    logger.info(f"  Pred > Line: {(edge > 0).mean() * 100:.1f}%")
 
-    logger.info(f"\nPotential Edge by Threshold:")
+    logger.info("\nPotential Edge by Threshold:")
     for threshold in [1, 2, 3, 5]:
         mask = edge.abs() >= threshold
         if mask.sum() > 0:
-            actual_over = df_with_lines.loc[mask, "PRA"] > df_with_lines.loc[mask, "betting_line"]
+            actual_over = (
+                df_with_lines.loc[mask, "PRA"] > df_with_lines.loc[mask, "betting_line"]
+            )  # noqa: E501
             wr = actual_over.mean() * 100
             n = mask.sum()
-            logger.info(f"  Edge >={threshold} pts: {n:>5,} bets, {wr:>5.1f}% win rate")
+            logger.info(
+                f"  Edge >={threshold} pts: {
+                    n:>5,} bets, {
+                    wr:>5.1f}% win rate"
+            )
 
     logger.info("\n" + "=" * 70)
     logger.info("COMPLETE - Ready for profitability analysis")
     logger.info("=" * 70)
-    logger.info(f"\nNext: Analyze profitability with these betting lines")
+    logger.info("\nNext: Analyze profitability with these betting lines")
 
 
 if __name__ == "__main__":

@@ -6,8 +6,6 @@ Fetches actual player stats from ESPN for bet verification.
 ESPN is more reliable than NBA API for recent games.
 """
 
-import time
-from pathlib import Path
 
 import pandas as pd
 
@@ -48,7 +46,7 @@ TEAM_ABBREV = {
 def get_players_by_team():
     """Get list of players we need stats for, organized by team."""
     ledger = pd.read_csv("data/betting/bet_ledger.csv")
-    recs = pd.read_csv("data/betting/recommendations_2025-10-22.csv")
+    recs = pd.read_csv("data/betting/recommendations_2025 - 10 - 22.csv")
 
     # Merge to get team info
     players_teams = {}

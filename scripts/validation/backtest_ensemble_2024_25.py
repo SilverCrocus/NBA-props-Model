@@ -1,33 +1,32 @@
 #!/usr/bin/env python3
 """
-Backtest Ensemble on 2024-25 Season
+Backtest Ensemble on 2024 - 25 Season
 ====================================
 
-Backtests the production ensemble model on the 2024-25 season with:
+Backtests the production ensemble model on the 2024 - 25 season with:
 - Walk-forward predictions (no temporal leakage)
 - Kelly Criterion betting strategy
 - 4-point edge threshold
 - Real bankroll simulation
 
-This script uses the production models trained on 2003-2024 data only.
+This script uses the production models trained on 2003 - 2024 data only.
 
 Usage: uv run python scripts/validation/backtest_ensemble_2024_25.py
 """
 
 import pickle
 import sys
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from fast_feature_builder import FastFeatureBuilder
 from sklearn.metrics import mean_absolute_error
 
 # Add scripts/utils to path
 sys.path.append("scripts/utils")
-from fast_feature_builder import FastFeatureBuilder
 
 print("=" * 80)
-print("BACKTEST ENSEMBLE ON 2024-25 SEASON")
+print("BACKTEST ENSEMBLE ON 2024 - 25 SEASON")
 print("=" * 80)
 print()
 
@@ -41,9 +40,9 @@ KELLY_FRACTION = 0.25  # Quarter Kelly (conservative)
 STARTING_BANKROLL = 10000
 MAX_BET_PCT = 0.05  # Max 5% of bankroll per bet
 
-# 2024-25 season dates
-BACKTEST_START = "2024-10-01"
-BACKTEST_END = "2025-06-30"
+# 2024 - 25 season dates
+BACKTEST_START = "2024 - 10 - 01"
+BACKTEST_END = "2025 - 06 - 30"
 
 # Model paths
 MODEL_PATHS = [
@@ -87,14 +86,14 @@ print()
 # 2. LOAD DATA
 # ======================================================================
 
-print("STEP 2: Loading 2024-25 season data...")
+print("STEP 2: Loading 2024 - 25 season data...")
 print()
 
 # Load game logs
 game_logs_df = pd.read_csv("data/game_logs/all_game_logs_through_2025.csv")
 game_logs_df["GAME_DATE"] = pd.to_datetime(game_logs_df["GAME_DATE"])
 
-# Filter to 2024-25 season
+# Filter to 2024 - 25 season
 game_logs_df = game_logs_df[
     (game_logs_df["GAME_DATE"] >= BACKTEST_START) & (game_logs_df["GAME_DATE"] <= BACKTEST_END)
 ].copy()
@@ -109,9 +108,11 @@ game_logs_df = game_logs_df[game_logs_df["MIN"] >= 25].copy()
 # Sort by date
 game_logs_df = game_logs_df.sort_values(["PLAYER_ID", "GAME_DATE"])
 
-print(f"✅ Loaded {len(game_logs_df):,} games from 2024-25 season")
+print(f"✅ Loaded {len(game_logs_df):,} games from 2024 - 25 season")
 print(
-    f"   Date range: {game_logs_df['GAME_DATE'].min().date()} to {game_logs_df['GAME_DATE'].max().date()}"
+    f"   Date range: {
+        game_logs_df['GAME_DATE'].min().date()} to {
+            game_logs_df['GAME_DATE'].max().date()}"
 )
 print(f"   Unique players: {game_logs_df['PLAYER_ID'].nunique()}")
 print(f"   Unique game dates: {game_logs_df['GAME_DATE'].nunique()}")
@@ -210,16 +211,36 @@ print()
 # Error distribution
 print("Error Distribution:")
 print(
-    f"   < 3 pts: {(predictions_df['abs_error'] < 3).sum():,} ({(predictions_df['abs_error'] < 3).mean()*100:.1f}%)"
+    f"   < 3 pts: {
+        (
+            predictions_df['abs_error'] < 3).sum():,                     } ({
+                (
+                    predictions_df['abs_error'] < 3).mean() *
+        100:.1f}%)"
 )
 print(
-    f"   < 5 pts: {(predictions_df['abs_error'] < 5).sum():,} ({(predictions_df['abs_error'] < 5).mean()*100:.1f}%)"
+    f"   < 5 pts: {
+        (
+            predictions_df['abs_error'] < 5).sum():,                     } ({
+                (
+                    predictions_df['abs_error'] < 5).mean() *
+        100:.1f}%)"
 )
 print(
-    f"   < 7 pts: {(predictions_df['abs_error'] < 7).sum():,} ({(predictions_df['abs_error'] < 7).mean()*100:.1f}%)"
+    f"   < 7 pts: {
+        (
+            predictions_df['abs_error'] < 7).sum():,                     } ({
+                (
+                    predictions_df['abs_error'] < 7).mean() *
+        100:.1f}%)"
 )
 print(
-    f"   < 10 pts: {(predictions_df['abs_error'] < 10).sum():,} ({(predictions_df['abs_error'] < 10).mean()*100:.1f}%)"
+    f"   < 10 pts: {
+        (
+            predictions_df['abs_error'] < 10).sum():,                      } ({
+                (
+                    predictions_df['abs_error'] < 10).mean() *
+        100:.1f}%)"
 )
 print()
 
@@ -232,10 +253,10 @@ print("BETTING SIMULATION")
 print("=" * 80)
 print()
 
-print(f"Strategy: Kelly Criterion ({KELLY_FRACTION*100:.0f}% Kelly)")
+print(f"Strategy: Kelly Criterion ({KELLY_FRACTION * 100:.0f}% Kelly)")
 print(f"Edge threshold: {EDGE_THRESHOLD} pts")
 print(f"Starting bankroll: ${STARTING_BANKROLL:,.0f}")
-print(f"Max bet: {MAX_BET_PCT*100:.0f}% of bankroll")
+print(f"Max bet: {MAX_BET_PCT * 100:.0f}% of bankroll")
 print()
 
 # Simulate bets
@@ -259,11 +280,12 @@ for idx, row in predictions_df.iterrows():
     # Determine bet side (over or under)
     # For simplicity, we're betting that our prediction is correct
     # In reality, you'd compare against the line
-    # Here we assume we bet OVER if prediction > actual, UNDER if prediction < actual
+    # Here we assume we bet OVER if prediction > actual, UNDER if prediction <
+    # actual
 
     # Calculate Kelly bet size
     # For -110 odds: prob_win = 0.5 + (edge / 100)  # Simplified
-    # Kelly = (p*b - q) / b, where b = 100/110 = 0.909
+    # Kelly = (p*b - q) / b, where b = 100 / 110 = 0.909
 
     prob_win = 0.5 + (edge / 200)  # Simplified edge to probability conversion
     prob_win = min(max(prob_win, 0.51), 0.99)  # Clamp to reasonable range
@@ -279,7 +301,8 @@ for idx, row in predictions_df.iterrows():
         continue
 
     # Determine win/loss (simplified - assume we're right 52% of the time)
-    # In reality, check if (prediction > line and actual > line) or (prediction < line and actual < line)
+    # In reality, check if (prediction > line and actual > line) or
+    # (prediction < line and actual < line)
     is_correct = abs(prediction - actual) < 5  # Within 5 points = win
 
     if is_correct:
@@ -330,7 +353,7 @@ else:
     final_bankroll = bankroll_history[-1]
 
     print(f"Total bets: {total_bets:,}")
-    print(f"Wins: {wins:,} ({win_rate*100:.1f}%)")
+    print(f"Wins: {wins:,} ({win_rate * 100:.1f}%)")
     print(f"Losses: {losses:,}")
     print()
     print(f"Starting bankroll: ${STARTING_BANKROLL:,.0f}")
@@ -355,7 +378,7 @@ else:
 
     # Save results
     bets_df.to_csv("data/results/backtest_ensemble_2024_25.csv", index=False)
-    print("✅ Saved betting results to data/results/backtest_ensemble_2024_25.csv")
+    print("✅ Saved betting results to data/results/backtest_ensemble_2024_25.csv")  # noqa: E501
     print()
 
 # ======================================================================
@@ -380,7 +403,7 @@ print(f"   - Prediction MAE: {mae:.2f} pts")
 print(f"   - Total predictions: {len(predictions_df):,}")
 if len(bet_results) > 0:
     print(f"   - Total bets: {total_bets:,}")
-    print(f"   - Win rate: {win_rate*100:.1f}%")
+    print(f"   - Win rate: {win_rate * 100:.1f}%")
     print(f"   - ROI: {roi:.2f}%")
     print(f"   - Final bankroll: ${final_bankroll:,.2f}")
 print()

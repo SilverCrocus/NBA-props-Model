@@ -5,14 +5,14 @@ This module implements a two-level stacking ensemble for NBA props prediction:
 - Level 0: XGBoost, LightGBM, CatBoost (base models)
 - Level 1: Ridge Regression (meta-learner)
 
-Expected improvement: 5-10% MAE reduction through model diversity
+Expected improvement: 5 - 10% MAE reduction through model diversity
 
 Author: NBA Props Model - Phase 2 Week 2
 Date: October 15, 2025
 """
 
 import logging
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 import catboost as cat
 import lightgbm as lgb
@@ -36,7 +36,7 @@ class TreeEnsemblePredictor:
             - CatBoost: Ordered boosting, symmetric trees, robust
 
         Level 1 (Meta-Learner):
-            - Ridge Regression: Combines base model predictions with L2 regularization
+            - Ridge Regression: Combines base model predictions with L2 regularization  # noqa: E501
 
     Diversity Sources:
         - Different tree growth strategies (level-wise vs leaf-wise vs ordered)
@@ -98,7 +98,7 @@ class TreeEnsemblePredictor:
             "learning_rate": 0.05,
             "subsample": 0.8,
             "colsample_bylevel": 0.8,
-            "min_data_in_leaf": 20,
+            "min_data_in_lea": 20,
             "loss_function": "RMSE",
             "eval_metric": "MAE",
             "random_state": 42,
@@ -139,9 +139,9 @@ class TreeEnsemblePredictor:
             self (fitted ensemble)
         """
         if verbose:
-            logger.info(f"\n{'='*80}")
+            logger.info(f"\n{'=' * 80}")
             logger.info("TRAINING TREE ENSEMBLE")
-            logger.info(f"{'='*80}")
+            logger.info(f"{'=' * 80}")
             logger.info(f"Training samples: {len(X):,}")
             logger.info(f"Features: {X.shape[1]}")
 
@@ -188,7 +188,7 @@ class TreeEnsemblePredictor:
             meta_intercept = self.meta_model.intercept_
 
             if verbose:
-                logger.info(f"      Meta-learner weights:")
+                logger.info("      Meta-learner weights:")
                 logger.info(f"         XGBoost:  {meta_weights[0]:.3f}")
                 logger.info(f"         LightGBM: {meta_weights[1]:.3f}")
                 logger.info(f"         CatBoost: {meta_weights[2]:.3f}")
@@ -199,15 +199,19 @@ class TreeEnsemblePredictor:
             # Simple average
             ensemble_train_pred = meta_X.mean(axis=1)
             if verbose:
-                logger.info(f"      Using simple average (equal weights)")
+                logger.info("      Using simple average (equal weights)")
 
         ensemble_mae = mean_absolute_error(y, ensemble_train_pred)
 
         if verbose:
-            logger.info(f"\n3. Training complete!")
+            logger.info("\n3. Training complete!")
             logger.info(f"      Ensemble Train MAE: {ensemble_mae:.2f}")
-            logger.info(f"      Best base model MAE: {min(xgb_mae, lgb_mae, cat_mae):.2f}")
-            logger.info(f"      Improvement: {min(xgb_mae, lgb_mae, cat_mae) - ensemble_mae:+.2f}")
+            logger.info(
+                f"      Best base model MAE: {min(xgb_mae, lgb_mae, cat_mae):.2f}"
+            )  # noqa: E501
+            logger.info(
+                f"      Improvement: {min(xgb_mae, lgb_mae, cat_mae) - ensemble_mae:+.2f}"
+            )  # noqa: E501
 
         self.is_fitted = True
         return self
@@ -300,9 +304,9 @@ class TreeEnsemblePredictor:
         }
 
         if verbose:
-            logger.info(f"\n{'='*80}")
+            logger.info(f"\n{'=' * 80}")
             logger.info("EVALUATION RESULTS")
-            logger.info(f"{'='*80}")
+            logger.info(f"{'=' * 80}")
             logger.info(f"\nSamples: {len(y):,}")
 
         # Evaluate each base model
@@ -322,7 +326,7 @@ class TreeEnsemblePredictor:
                 logger.info(f"  R²:   {r2:.3f}")
 
         if verbose:
-            logger.info(f"\nENSEMBLE:")
+            logger.info("\nENSEMBLE:")
             logger.info(f"  MAE:  {ensemble_mae:.2f}")
             logger.info(f"  RMSE: {ensemble_rmse:.2f}")
             logger.info(f"  R²:   {ensemble_r2:.3f}")
@@ -330,8 +334,10 @@ class TreeEnsemblePredictor:
             best_base_mae = min(results[f"{m.lower()}_mae"] for m in self.base_model_names)
             improvement = best_base_mae - ensemble_mae
 
-            logger.info(f"\nImprovement over best base model:")
-            logger.info(f"  {improvement:+.2f} points ({improvement/best_base_mae*100:+.1f}%)")
+            logger.info("\nImprovement over best base model:")
+            logger.info(
+                f"  {improvement:+.2f} points ({improvement / best_base_mae * 100:+.1f}%)"
+            )  # noqa: E501
 
         return results
 
@@ -393,15 +399,15 @@ class TreeEnsemblePredictor:
 
         avg_error_diversity = (error_div_xgb_lgb + error_div_xgb_cat + error_div_lgb_cat) / 3
 
-        logger.info(f"\n{'='*80}")
+        logger.info(f"\n{'=' * 80}")
         logger.info("BASE MODEL DIVERSITY ANALYSIS")
-        logger.info(f"{'='*80}")
-        logger.info(f"\nPrediction Correlations:")
+        logger.info(f"{'=' * 80}")
+        logger.info("\nPrediction Correlations:")
         logger.info(f"  XGBoost <-> LightGBM: {corr_xgb_lgb:.3f}")
         logger.info(f"  XGBoost <-> CatBoost: {corr_xgb_cat:.3f}")
         logger.info(f"  LightGBM <-> CatBoost: {corr_lgb_cat:.3f}")
         logger.info(f"  Average: {avg_correlation:.3f}")
-        logger.info(f"\nError Diversity (lower = more diverse):")
+        logger.info("\nError Diversity (lower = more diverse):")
         logger.info(f"  XGBoost <-> LightGBM: {error_div_xgb_lgb:.2f}")
         logger.info(f"  XGBoost <-> CatBoost: {error_div_xgb_cat:.2f}")
         logger.info(f"  LightGBM <-> CatBoost: {error_div_lgb_cat:.2f}")
@@ -409,11 +415,13 @@ class TreeEnsemblePredictor:
 
         if avg_correlation > 0.95:
             logger.warning(
-                f"\n⚠️  High correlation ({avg_correlation:.3f}) - models may be too similar"
+                f"\n⚠️  High correlation ({
+                    avg_correlation:.3f}) - models may be too similar"
             )
         elif avg_correlation < 0.75:
             logger.info(
-                f"\n✅ Good diversity ({avg_correlation:.3f}) - models are sufficiently different"
+                f"\n✅ Good diversity ({
+                    avg_correlation:.3f}) - models are sufficiently different"
             )
         else:
             logger.info(f"\n✓  Moderate diversity ({avg_correlation:.3f})")

@@ -14,7 +14,8 @@ import pandas as pd
 # Source: ESPN box scores
 ESPN_STATS = {
     "Deni Avdija": {"PTS": 20, "REB": 7, "AST": 1, "PRA": 28},
-    "Zach LaVine": {"PTS": 30, "REB": 2, "AST": 1, "PRA": 33},  # User confirmed
+    # User confirmed
+    "Zach LaVine": {"PTS": 30, "REB": 2, "AST": 1, "PRA": 33},
     # Add more as we verify them
 }
 
@@ -85,7 +86,10 @@ for idx, bet in ledger.iterrows():
             print(f"✓ {player_name}:")
             print(f"  Old: {old_pra} PRA → {bet['result']}")
             print(
-                f"  New: {actual_pra} PRA ({espn_stats['PTS']}P + {espn_stats['REB']}R + {espn_stats['AST']}A) → {result}"
+                f"  New: {actual_pra} PRA ({
+                    espn_stats['PTS']}P + {
+                    espn_stats['REB']}R + {
+                    espn_stats['AST']}A) → {result}"
             )
             print(f"  Bet: {bet['direction']} {bet['line']}")
             print(f"  P/L: ${profit_loss:+.2f}")
@@ -107,7 +111,7 @@ if corrections:
     win_rate = wins / (wins + losses) * 100 if (wins + losses) > 0 else 0
 
     print("\n" + "=" * 80)
-    print("CORRECTED RESULTS FOR 2025-10-22")
+    print("CORRECTED RESULTS FOR 2025 - 10 - 22")
     print("=" * 80)
     print(f"📊 Record: {wins}W - {losses}L - {pushes}P")
     print(f"🎯 Win Rate: {win_rate:.1f}%")
@@ -127,7 +131,11 @@ if corrections:
     )
 
     print("\n📊 TOP 10 BETS:")
-    print(f"   Record: {top10_wins}W - {top10_losses}L ({top10_wr:.1f}% WR, {top10_roi:+.1f}% ROI)")
+    print(
+        f"   Record: {top10_wins}W - {top10_losses}L ({
+            top10_wr:.1f}% WR, {
+            top10_roi:+.1f}% ROI)"
+    )
 
 else:
     print("✅ No corrections needed - all stats match ESPN")

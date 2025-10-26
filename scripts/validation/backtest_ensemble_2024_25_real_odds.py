@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Backtest Ensemble on 2024-25 Season with Real DraftKings Odds
+Backtest Ensemble on 2024 - 25 Season with Real DraftKings Odds
 ==============================================================
 
-Backtests the production ensemble model on the 2024-25 season with:
+Backtests the production ensemble model on the 2024 - 25 season with:
 - Walk-forward predictions (no temporal leakage)
 - Real DraftKings betting lines and odds
 - Kelly Criterion betting strategy
@@ -11,26 +11,25 @@ Backtests the production ensemble model on the 2024-25 season with:
 - Real bankroll simulation
 
 This script uses:
-- Production models trained on 2003-2024 data only
-- Actual DraftKings odds from data/historical_odds/2024-25/pra_odds.csv
+- Production models trained on 2003 - 2024 data only
+- Actual DraftKings odds from data/historical_odds/2024 - 25/pra_odds.csv
 
 Usage: uv run python scripts/validation/backtest_ensemble_2024_25_real_odds.py
 """
 
 import pickle
 import sys
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from fast_feature_builder import FastFeatureBuilder
 from sklearn.metrics import mean_absolute_error
 
 # Add scripts/utils to path
 sys.path.append("scripts/utils")
-from fast_feature_builder import FastFeatureBuilder
 
 print("=" * 80)
-print("BACKTEST ENSEMBLE ON 2024-25 SEASON (REAL DRAFTKINGS ODDS)")
+print("BACKTEST ENSEMBLE ON 2024 - 25 SEASON (REAL DRAFTKINGS ODDS)")
 print("=" * 80)
 print()
 
@@ -45,9 +44,9 @@ KELLY_FRACTION = 0.25  # Quarter Kelly (conservative)
 STARTING_BANKROLL = 10000
 MAX_BET_PCT = 0.05  # Max 5% of bankroll per bet
 
-# 2024-25 season dates
-BACKTEST_START = "2024-10-01"
-BACKTEST_END = "2025-06-30"
+# 2024 - 25 season dates
+BACKTEST_START = "2024 - 10 - 01"
+BACKTEST_END = "2025 - 06 - 30"
 
 # Bookmaker to use
 BOOKMAKER = "DraftKings"
@@ -60,7 +59,7 @@ MODEL_PATHS = [
 ]
 
 # Historical odds file
-ODDS_FILE = "data/historical_odds/2024-25/pra_odds.csv"
+ODDS_FILE = "data/historical_odds/2024 - 25/pra_odds.csv"
 
 # ======================================================================
 # HELPER FUNCTIONS
@@ -137,7 +136,9 @@ odds_df["player_name_normalized"] = odds_df["player_name"].apply(normalize_playe
 
 print(f"✅ Loaded {len(odds_df):,} DraftKings odds")
 print(
-    f"   Date range: {odds_df['event_date'].min().date()} to {odds_df['event_date'].max().date()}"
+    f"   Date range: {
+        odds_df['event_date'].min().date()} to {
+            odds_df['event_date'].max().date()}"
 )
 print(f"   Unique players: {odds_df['player_name'].nunique()}")
 print(f"   Unique dates: {odds_df['event_date'].nunique()}")
@@ -147,14 +148,14 @@ print()
 # 3. LOAD GAME DATA
 # ======================================================================
 
-print("STEP 3: Loading 2024-25 season game data...")
+print("STEP 3: Loading 2024 - 25 season game data...")
 print()
 
 # Load game logs
 game_logs_df = pd.read_csv("data/game_logs/all_game_logs_through_2025.csv")
 game_logs_df["GAME_DATE"] = pd.to_datetime(game_logs_df["GAME_DATE"])
 
-# Filter to 2024-25 season
+# Filter to 2024 - 25 season
 game_logs_df = game_logs_df[
     (game_logs_df["GAME_DATE"] >= BACKTEST_START) & (game_logs_df["GAME_DATE"] <= BACKTEST_END)
 ].copy()
@@ -172,9 +173,11 @@ game_logs_df["player_name_normalized"] = game_logs_df["PLAYER_NAME"].apply(norma
 # Sort by date
 game_logs_df = game_logs_df.sort_values(["PLAYER_ID", "GAME_DATE"])
 
-print(f"✅ Loaded {len(game_logs_df):,} games from 2024-25 season")
+print(f"✅ Loaded {len(game_logs_df):,} games from 2024 - 25 season")
 print(
-    f"   Date range: {game_logs_df['GAME_DATE'].min().date()} to {game_logs_df['GAME_DATE'].max().date()}"
+    f"   Date range: {
+        game_logs_df['GAME_DATE'].min().date()} to {
+            game_logs_df['GAME_DATE'].max().date()}"
 )
 print(f"   Unique players: {game_logs_df['PLAYER_ID'].nunique()}")
 print(f"   Unique game dates: {game_logs_df['GAME_DATE'].nunique()}")
@@ -272,14 +275,22 @@ print()
 
 # Merge predictions with odds
 predictions_with_odds = predictions_df.merge(
-    odds_df[["player_name_normalized", "event_date", "line", "over_price", "under_price"]],
+    odds_df[
+        ["player_name_normalized", "event_date", "line", "over_price", "under_price"]
+    ],  # noqa: E501
     left_on=["player_name_normalized", "GAME_DATE"],
     right_on=["player_name_normalized", "event_date"],
     how="inner",
 )
 
-print(f"✅ Matched {len(predictions_with_odds):,} predictions with DraftKings odds")
-print(f"   Match rate: {len(predictions_with_odds) / len(predictions_df) * 100:.1f}%")
+print(
+    f"✅ Matched {
+        len(predictions_with_odds):,    } predictions with DraftKings odds"
+)
+print(
+    f"   Match rate: {
+        len(predictions_with_odds) / len(predictions_df) * 100:.1f}%"
+)
 print()
 
 # ======================================================================
@@ -299,16 +310,36 @@ print()
 # Error distribution
 print("Error Distribution:")
 print(
-    f"   < 3 pts: {(predictions_with_odds['abs_error'] < 3).sum():,} ({(predictions_with_odds['abs_error'] < 3).mean()*100:.1f}%)"
+    f"   < 3 pts: {
+        (
+            predictions_with_odds['abs_error'] < 3).sum():,                     } ({  # noqa: E501
+                (
+                    predictions_with_odds['abs_error'] < 3).mean() *
+        100:.1f}%)"
 )
 print(
-    f"   < 5 pts: {(predictions_with_odds['abs_error'] < 5).sum():,} ({(predictions_with_odds['abs_error'] < 5).mean()*100:.1f}%)"
+    f"   < 5 pts: {
+        (
+            predictions_with_odds['abs_error'] < 5).sum():,                     } ({  # noqa: E501
+                (
+                    predictions_with_odds['abs_error'] < 5).mean() *
+        100:.1f}%)"
 )
 print(
-    f"   < 7 pts: {(predictions_with_odds['abs_error'] < 7).sum():,} ({(predictions_with_odds['abs_error'] < 7).mean()*100:.1f}%)"
+    f"   < 7 pts: {
+        (
+            predictions_with_odds['abs_error'] < 7).sum():,                     } ({  # noqa: E501
+                (
+                    predictions_with_odds['abs_error'] < 7).mean() *
+        100:.1f}%)"
 )
 print(
-    f"   < 10 pts: {(predictions_with_odds['abs_error'] < 10).sum():,} ({(predictions_with_odds['abs_error'] < 10).mean()*100:.1f}%)"
+    f"   < 10 pts: {
+        (
+            predictions_with_odds['abs_error'] < 10).sum():,                      } ({  # noqa: E501
+                (
+                    predictions_with_odds['abs_error'] < 10).mean() *
+        100:.1f}%)"
 )
 print()
 
@@ -321,10 +352,10 @@ print("BETTING SIMULATION (REAL DRAFTKINGS ODDS)")
 print("=" * 80)
 print()
 
-print(f"Strategy: Kelly Criterion ({KELLY_FRACTION*100:.0f}% Kelly)")
+print(f"Strategy: Kelly Criterion ({KELLY_FRACTION * 100:.0f}% Kelly)")
 print(f"Edge threshold: {EDGE_THRESHOLD} pts")
 print(f"Starting bankroll: ${STARTING_BANKROLL:,.0f}")
-print(f"Max bet: {MAX_BET_PCT*100:.0f}% of bankroll")
+print(f"Max bet: {MAX_BET_PCT * 100:.0f}% of bankroll")
 print()
 
 # Simulate bets
@@ -342,7 +373,8 @@ for idx, row in predictions_with_odds.iterrows():
     # Calculate edge
     pred_over_line = prediction - line
 
-    # Determine if we have an edge (prediction is significantly different from line)
+    # Determine if we have an edge (prediction is significantly different from
+    # line)
     if abs(pred_over_line) < EDGE_THRESHOLD:
         continue  # No edge
 
@@ -438,7 +470,7 @@ else:
     final_bankroll = bankroll_history[-1]
 
     print(f"Total bets: {total_bets:,}")
-    print(f"Wins: {wins:,} ({win_rate*100:.1f}%)")
+    print(f"Wins: {wins:,} ({win_rate * 100:.1f}%)")
     print(f"Losses: {losses:,}")
     print()
     print(f"Total wagered: ${total_wagered:,.2f}")
@@ -454,7 +486,7 @@ else:
     print("Breakdown by Bet Side:")
     side_stats = (
         bets_df.groupby("bet_side")
-        .agg({"is_correct": ["sum", "count"], "profit": "sum", "bet_amount": "sum"})
+        .agg({"is_correct": ["sum", "count"], "profit": "sum", "bet_amount": "sum"})  # noqa: E501
         .reset_index()
     )
     side_stats.columns = ["bet_side", "wins", "bets", "profit", "wagered"]
@@ -467,7 +499,7 @@ else:
     bets_df["month"] = pd.to_datetime(bets_df["date"]).dt.to_period("M")
     monthly_stats = (
         bets_df.groupby("month")
-        .agg({"profit": "sum", "is_correct": ["sum", "count"], "bet_amount": "sum"})
+        .agg({"profit": "sum", "is_correct": ["sum", "count"], "bet_amount": "sum"})  # noqa: E501
         .reset_index()
     )
     monthly_stats.columns = ["month", "profit", "wins", "bets", "wagered"]
@@ -480,7 +512,9 @@ else:
 
     # Save results
     bets_df.to_csv("data/results/backtest_ensemble_2024_25_real_odds.csv", index=False)
-    print("✅ Saved betting results to data/results/backtest_ensemble_2024_25_real_odds.csv")
+    print(
+        "✅ Saved betting results to data/results/backtest_ensemble_2024_25_real_odds.csv"
+    )  # noqa: E501
     print()
 
 # ======================================================================
@@ -489,7 +523,9 @@ else:
 
 print("Saving predictions with odds...")
 predictions_with_odds.to_csv("data/results/predictions_ensemble_2024_25_with_odds.csv", index=False)
-print("✅ Saved predictions to data/results/predictions_ensemble_2024_25_with_odds.csv")
+print(
+    "✅ Saved predictions to data/results/predictions_ensemble_2024_25_with_odds.csv"
+)  # noqa: E501
 print()
 
 # ======================================================================
@@ -505,7 +541,7 @@ print(f"   - Prediction MAE: {mae:.2f} pts")
 print(f"   - Total predictions with odds: {len(predictions_with_odds):,}")
 if len(bet_results) > 0:
     print(f"   - Total bets: {total_bets:,}")
-    print(f"   - Win rate: {win_rate*100:.1f}%")
+    print(f"   - Win rate: {win_rate * 100:.1f}%")
     print(f"   - ROI on wagered: {roi:.2f}%")
     print(f"   - Final bankroll: ${final_bankroll:,.2f}")
     print(f"   - Profit: ${total_profit:,.2f} ({roi_on_bankroll:+.2f}%)")

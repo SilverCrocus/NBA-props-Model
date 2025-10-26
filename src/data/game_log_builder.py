@@ -13,11 +13,10 @@ Date: 2024
 """
 
 import logging
-from datetime import datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
-import numpy as np
 import pandas as pd
 
 logging.basicConfig(level=logging.INFO)
@@ -46,7 +45,7 @@ class GameLogDatasetBuilder:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-        logger.info(f"Initialized GameLogDatasetBuilder")
+        logger.info("Initialized GameLogDatasetBuilder")
         logger.info(f"Game logs: {self.game_logs_path}")
         logger.info(f"CTG data: {self.ctg_data_dir}")
 
@@ -67,7 +66,11 @@ class GameLogDatasetBuilder:
         df["OPPONENT"] = df["MATCHUP"].str.extract(r"(vs\.|@)\s*([A-Z]{3})")[1]
 
         logger.info(f"Loaded {len(df):,} game logs")
-        logger.info(f"Date range: {df['GAME_DATE'].min()} to {df['GAME_DATE'].max()}")
+        logger.info(
+            f"Date range: {
+                df['GAME_DATE'].min()} to {
+                df['GAME_DATE'].max()}"
+        )
         logger.info(f"Unique players: {df['PLAYER_ID'].nunique()}")
 
         return df
@@ -77,7 +80,7 @@ class GameLogDatasetBuilder:
         Load all CTG stat categories for a given season.
 
         Args:
-            season: Season string (e.g., '2017-18')
+            season: Season string (e.g., '2017 - 18')
             season_type: 'regular_season' or 'playoffs'
 
         Returns:
@@ -153,7 +156,8 @@ class GameLogDatasetBuilder:
                     continue
 
                 base_df = ctg_stats["shooting_frequency"].copy()
-                base_df = base_df[base_df["MIN"] >= min_minutes]  # Filter low-minute players
+                # Filter low-minute players
+                base_df = base_df[base_df["MIN"] >= min_minutes]
 
                 # Add season identifiers
                 base_df["SEASON"] = season
@@ -179,7 +183,8 @@ class GameLogDatasetBuilder:
                         continue
 
                     # CRITICAL FIX: Deduplicate players BEFORE merging
-                    # If a player appears multiple times (traded, multiple teams), keep first occurrence
+                    # If a player appears multiple times (traded, multiple
+                    # teams), keep first occurrence
                     cat_df_dedup = cat_df.drop_duplicates(subset=["Player"], keep="first")
 
                     # Merge on Player
@@ -200,7 +205,10 @@ class GameLogDatasetBuilder:
         # Combine all seasons
         if all_ctg_data:
             ctg_combined = pd.concat(all_ctg_data, ignore_index=True)
-            logger.info(f"Combined CTG stats: {len(ctg_combined):,} player-seasons")
+            logger.info(
+                f"Combined CTG stats: {
+                    len(ctg_combined):,    } player-seasons"
+            )
 
             # CRITICAL FIX: Deduplicate CTG combined BEFORE merging
             # Ensure one row per player-season-seasontype
@@ -209,7 +217,9 @@ class GameLogDatasetBuilder:
             )
 
             logger.info(
-                f"CTG before dedup: {len(ctg_combined):,}, after dedup: {len(ctg_combined_dedup):,}"
+                f"CTG before dedup: {
+                    len(ctg_combined):,    }, after dedup: {
+                    len(ctg_combined_dedup):,        }"
             )
 
             # Merge to game logs
@@ -246,7 +256,10 @@ class GameLogDatasetBuilder:
         Returns:
             DataFrame with lag features added
         """
-        logger.info(f"Creating lag features for {len(stats)} stats, lags={lags}...")
+        logger.info(
+            f"Creating lag features for {
+                len(stats)} stats, lags={lags}..."
+        )
 
         result = df.copy()
 
@@ -281,7 +294,10 @@ class GameLogDatasetBuilder:
         Returns:
             DataFrame with rolling features added
         """
-        logger.info(f"Creating rolling features for {len(stats)} stats, windows={windows}...")
+        logger.info(
+            f"Creating rolling features for {
+                len(stats)} stats, windows={windows}..."
+        )
 
         result = df.copy()
 
@@ -321,7 +337,12 @@ class GameLogDatasetBuilder:
                     .reset_index(level=0, drop=True)
                 )
 
-        logger.info(f"Created {len(stats) * len(windows) * 3} rolling features (mean, std, max)")
+        logger.info(
+            f"Created {
+                len(stats) *
+                len(windows) *
+                3} rolling features (mean, std, max)"
+        )
         return result
 
     def create_ewma_features(
@@ -344,7 +365,10 @@ class GameLogDatasetBuilder:
         Returns:
             DataFrame with EWMA features added
         """
-        logger.info(f"Creating EWMA features for {len(stats)} stats, spans={spans}...")
+        logger.info(
+            f"Creating EWMA features for {
+                len(stats)} stats, spans={spans}..."
+        )
 
         result = df.copy()
 
@@ -451,8 +475,11 @@ class GameLogDatasetBuilder:
         result = result.merge(
             opp_stats[
                 ["OPPONENT", "GAME_DATE"]
-                + [f"opp_allowed_{s}_L10" for s in ["PRA", "PTS", "REB", "AST"]]
-            ],
+                + [
+                    f"opp_allowed_{s}_L10"
+                    for s in ["PRA", "PTS", "REB", "AST"]  # noqa: E501  # noqa: E501  # noqa: E501
+                ]
+            ],  # noqa: E501
             on=["OPPONENT", "GAME_DATE"],
             how="left",
         )
@@ -554,7 +581,8 @@ class GameLogDatasetBuilder:
             result[f"{stat}_hot_streak_magnitude"] = ((l3 - l10) / l10).fillna(0)
 
             # Count consecutive games above L10 average
-            # Simplified approach: count how many of last 5 games were above L10 avg
+            # Simplified approach: count how many of last 5 games were above
+            # L10 avg
             shifted_stat = result.groupby("PLAYER_ID")[stat].shift(1)
             above_avg = (shifted_stat > l10).astype(int).fillna(0)
 
@@ -642,12 +670,19 @@ class GameLogDatasetBuilder:
 
         if before_dedup != after_dedup:
             logger.warning(
-                f"⚠️  Removed {before_dedup - after_dedup:,} duplicate player-game combinations!"
+                f"⚠️  Removed {
+                    before_dedup -
+                    after_dedup:,    } duplicate player-game combinations!"
             )
 
         final_count = len(df)
         logger.info(
-            f"Filtered: {initial_count:,} -> {final_count:,} games ({final_count/initial_count*100:.1f}%)"
+            f"Filtered: {
+                initial_count:,    } -> {
+                final_count:,        } games ({
+                final_count /
+                initial_count *
+                100:.1f}%)"
         )
 
         # Summary stats
@@ -656,11 +691,23 @@ class GameLogDatasetBuilder:
         logger.info("=" * 80)
         logger.info(f"Total games: {len(df):,}")
         logger.info(f"Unique players: {df['PLAYER_ID'].nunique():,}")
-        logger.info(f"Date range: {df['GAME_DATE'].min()} to {df['GAME_DATE'].max()}")
+        logger.info(
+            f"Date range: {
+                df['GAME_DATE'].min()} to {
+                df['GAME_DATE'].max()}"
+        )
         logger.info(f"Seasons: {sorted(df['SEASON'].unique())}")
         logger.info(f"Total features: {len(df.columns)}")
-        logger.info(f"PRA range: {df['PRA'].min():.1f} to {df['PRA'].max():.1f}")
-        logger.info(f"PRA mean: {df['PRA'].mean():.2f} ± {df['PRA'].std():.2f}")
+        logger.info(
+            f"PRA range: {
+                df['PRA'].min():.1f} to {
+                df['PRA'].max():.1f}"
+        )
+        logger.info(
+            f"PRA mean: {
+                df['PRA'].mean():.2f} ± {
+                df['PRA'].std():.2f}"
+        )
 
         return df
 
@@ -688,8 +735,11 @@ class GameLogDatasetBuilder:
         return output_path
 
     def create_train_test_split(
-        self, df: pd.DataFrame, train_end_date: str = "2023-06-30", val_end_date: str = "2024-06-30"
-    ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+        self,
+        df: pd.DataFrame,
+        train_end_date: str = "2023 - 06 - 30",
+        val_end_date: str = "2024 - 06 - 30",
+    ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:  # noqa: E501  # noqa: E501  # noqa: E501
         """
         Create time-based train/validation/test split.
 
@@ -714,13 +764,22 @@ class GameLogDatasetBuilder:
         test = df[df["GAME_DATE"] > val_end].copy()
 
         logger.info(
-            f"Train: {len(train):,} games ({train['GAME_DATE'].min()} to {train['GAME_DATE'].max()})"
+            f"Train: {
+                len(train):,} games ({
+                train['GAME_DATE'].min()} to {
+                train['GAME_DATE'].max()})"
         )
         logger.info(
-            f"Val:   {len(val):,} games ({val['GAME_DATE'].min()} to {val['GAME_DATE'].max()})"
+            f"Val:   {
+                len(val):,} games ({
+                val['GAME_DATE'].min()} to {
+                val['GAME_DATE'].max()})"
         )
         logger.info(
-            f"Test:  {len(test):,} games ({test['GAME_DATE'].min()} to {test['GAME_DATE'].max()})"
+            f"Test:  {
+                len(test):,} games ({
+                test['GAME_DATE'].min()} to {
+                test['GAME_DATE'].max()})"
         )
 
         return train, val, test

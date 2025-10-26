@@ -7,7 +7,6 @@ Date: October 15, 2025
 
 import os
 import sys
-from pathlib import Path
 
 import requests
 from dotenv import load_dotenv

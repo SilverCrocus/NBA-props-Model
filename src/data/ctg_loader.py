@@ -3,11 +3,12 @@ Simple CTG data loader
 Load and combine CTG player stats for model training
 """
 
-import pandas as pd
-import numpy as np
-from pathlib import Path
 import logging
-from typing import List, Dict, Optional
+from pathlib import Path
+from typing import List
+
+import numpy as np
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -18,16 +19,18 @@ class CTGDataLoader:
     Simple and direct - no fallback logic
     """
 
-    def __init__(self, data_path: str = "/Users/diyagamah/Documents/nba_props_model/data"):
+    def __init__(
+        self, data_path: str = "/Users/diyagamah/Documents/nba_props_model/data"
+    ):  # noqa: E501
         self.data_path = Path(data_path)
-        self.player_data_path = self.data_path / "ctg_data_organized" / "players"
+        self.player_data_path = self.data_path / "ctg_data_organized" / "players"  # noqa: E501
 
     def load_season_data(self, season: str, stat_type: str = "all") -> pd.DataFrame:
         """
         Load player data for a specific season
 
         Args:
-            season: Season string (e.g., '2023-24')
+            season: Season string (e.g., '2023 - 24')
             stat_type: Type of stats to load ('shooting', 'defense', 'all')
         """
         season_path = self.player_data_path / season / "regular_season"
@@ -37,15 +40,20 @@ class CTGDataLoader:
 
         # Map stat types to directory names
         stat_dirs = {
-            'shooting': ['shooting_frequency', 'shooting_accuracy'],
-            'defense': ['defense_and_rebounding'],
-            'passing': ['passing'],
-            'all': ['shooting_frequency', 'shooting_accuracy',
-                   'defense_and_rebounding', 'passing', 'foul_drawing']
+            "shooting": ["shooting_frequency", "shooting_accuracy"],
+            "defense": ["defense_and_rebounding"],
+            "passing": ["passing"],
+            "all": [
+                "shooting_frequency",
+                "shooting_accuracy",
+                "defense_and_rebounding",
+                "passing",
+                "foul_drawing",
+            ],
         }
 
         if stat_type not in stat_dirs:
-            stat_type = 'all'
+            stat_type = "all"
 
         combined_df = None
 
@@ -56,21 +64,22 @@ class CTGDataLoader:
                 if csv_files:
                     # Use the first CSV file found
                     df = pd.read_csv(csv_files[0])
-                    df['Season'] = season
-                    df['StatType'] = stat_dir
+                    df["Season"] = season
+                    df["StatType"] = stat_dir
 
                     if combined_df is None:
                         combined_df = df
                     else:
                         # Merge on common columns
-                        merge_cols = ['Player', 'Team', 'Season']
+                        merge_cols = ["Player", "Team", "Season"]
                         available_merge_cols = [col for col in merge_cols if col in df.columns]
 
                         combined_df = pd.merge(
-                            combined_df, df,
+                            combined_df,
+                            df,
                             on=available_merge_cols,
-                            how='outer',
-                            suffixes=('', f'_{stat_dir}')
+                            how="outer",
+                            suffixes=("", f"_{stat_dir}"),
                         )
 
         if combined_df is None:
@@ -97,7 +106,11 @@ class CTGDataLoader:
             raise ValueError("No data loaded from any season")
 
         combined = pd.concat(all_data, ignore_index=True)
-        logger.info(f"Total data loaded: {len(combined)} rows from {len(all_data)} seasons")
+        logger.info(
+            f"Total data loaded: {
+                len(combined)} rows from {
+                len(all_data)} seasons"
+        )
 
         return combined
 
@@ -115,34 +128,35 @@ class CTGDataLoader:
             # Create multiple game entries per player
             # This is placeholder - replace with actual game data
 
-            player = row['Player']
-            season = row['Season']
-            team = row.get('Team', 'UNK')
+            player = row["Player"]
+            season = row["Season"]
+            team = row.get("Team", "UNK")
 
             # Create 20 synthetic games per player-season
             for game_num in range(20):
-                game_date = pd.Timestamp(f"2024-01-01") + pd.Timedelta(days=game_num * 3)
+                game_date = pd.Timestamp("2024 - 01 - 01") + pd.Timedelta(days=game_num * 3)
 
                 # Synthetic opponent rotation
-                opponents = ['BOS', 'LAL', 'MIA', 'GSW', 'BKN', 'PHI', 'DEN', 'MIL']
+                opponents = ["BOS", "LAL", "MIA", "GSW", "BKN", "PHI", "DEN", "MIL"]
                 opponent = opponents[game_num % len(opponents)]
 
                 game_entry = {
-                    'Player': player,
-                    'Date': game_date,
-                    'Season': season,
-                    'Team': team,
-                    'Opponent': opponent,
-                    'GameNum': game_num + 1
+                    "Player": player,
+                    "Date": game_date,
+                    "Season": season,
+                    "Team": team,
+                    "Opponent": opponent,
+                    "GameNum": game_num + 1,
                 }
 
                 # Add stats with some variance
                 for col in row.index:
-                    if col not in ['Player', 'Season', 'Team', 'Age', 'Pos']:
+                    if col not in ["Player", "Season", "Team", "Age", "Pos"]:
                         if pd.notna(row[col]) and isinstance(row[col], (int, float)):
-                            # Add random variance to create game-by-game variation
+                            # Add random variance to create game-by-game
+                            # variation
                             base_value = row[col]
-                            variance = base_value * 0.2 if base_value != 0 else 1
+                            variance = base_value * 0.2 if base_value != 0 else 1  # noqa: E501
                             game_value = np.random.normal(base_value, abs(variance))
                             game_entry[col] = max(0, game_value)  # Ensure non-negative
 
@@ -158,7 +172,7 @@ class CTGDataLoader:
 
         if self.player_data_path.exists():
             for season_dir in self.player_data_path.iterdir():
-                if season_dir.is_dir() and '-' in season_dir.name:
+                if season_dir.is_dir() and "-" in season_dir.name:
                     seasons.append(season_dir.name)
 
         return sorted(seasons)

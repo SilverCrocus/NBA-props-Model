@@ -21,7 +21,7 @@ Or standalone:
 
 import pickle
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict
 
 import numpy as np
 import pandas as pd
@@ -54,7 +54,7 @@ class EnsemblePredictor:
         if meta_path.exists():
             with open(meta_path, "rb") as f:
                 self.meta = pickle.load(f)
-            print(f"   ✅ Loaded metadata")
+            print("   ✅ Loaded metadata")
         else:
             raise FileNotFoundError(f"Ensemble metadata not found at {meta_path}")
 
@@ -89,7 +89,7 @@ class EnsemblePredictor:
             return_components: If True, return dict with individual predictions
 
         Returns:
-            Array of final calibrated predictions (or dict if return_components=True)
+            Array of final calibrated predictions (or dict if return_components=True)  # noqa: E501
         """
         # Ensure X has all required features
         X_prepared = X[self.feature_cols].fillna(0)
@@ -148,7 +148,9 @@ class EnsemblePredictor:
         return {
             "num_models": len(self.models),
             "feature_count": len(self.feature_cols),
-            "cv_mae": np.mean([r["mae_calibrated"] for r in self.meta["fold_results"]]),
+            "cv_mae": np.mean(
+                [r["mae_calibrated"] for r in self.meta["fold_results"]]
+            ),  # noqa: E501
             "test_mae": self.meta.get("test_mae"),
             "created_at": self.meta.get("created_at"),
             "folds": [f["name"] for f in self.meta["folds"]],
@@ -192,7 +194,7 @@ def main():
         # Load recent games
         df = pd.read_csv("data/game_logs/all_game_logs_through_2025.csv")
         df["GAME_DATE"] = pd.to_datetime(df["GAME_DATE"])
-        df = df[df["GAME_DATE"] >= "2023-01-01"].copy()
+        df = df[df["GAME_DATE"] >= "2023 - 01 - 01"].copy()
 
         # Add PRA
         if "PRA" not in df.columns:

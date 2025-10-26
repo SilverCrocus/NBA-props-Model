@@ -1,0 +1,171 @@
+================================================================================
+NBA PROPS MODEL DIAGNOSTIC REPORT
+================================================================================
+
+Sample Size: 100 bets
+Date Range: 2025-10-23 to 2025-10-24
+
+Overall Win Rate: 54.00%
+Overall ROI: 0.24%
+Total Profit/Loss: 1.13 units
+
+================================================================================
+1. PROXY CLV ANALYSIS (No Closing Lines)
+================================================================================
+Model Edge Correlation: -0.044 (p=0.663)
+  ✓ GOOD if > 0.15    ✗ BAD if < 0.05
+
+Sharp Ratio: 54.00%
+  ✓ GOOD if > 60%     ✗ BAD if < 55%
+
+Edge Realization: 0.529
+  ✓ GOOD if > 0.55    ✗ BAD if < 0.50
+
+Implied Line Movement:
+  Positive ILM: 100 bets, WR = 54.00%
+  Negative ILM: 0 bets, WR = 0.00%
+
+BAD: No statistical edge detected
+
+================================================================================
+2. STAKE DIAGNOSTICS (Kelly Overconfidence Test)
+================================================================================
+Stake-Win Correlation: -0.040 (p=0.695)
+  ✓ GOOD if ≈ 0       ✗ BAD if < -0.10
+
+Win Rate by Stake Quartile:
+  Q1: 64.00%
+  Q2: 52.00%
+  Q3: 44.44%
+  Q4: 56.52%
+Monotonic: ✗ NO
+
+ROI by Stake Quartile:
+  Q1: 9.80%
+  Q2: -0.41%
+  Q3: -3.37%
+  Q4: 0.64%
+
+Loss/Win Imbalance: -4.23%
+  ✓ GOOD if < 10%     ✗ BAD if > 20%
+
+BAD: Kelly overconfident - reduce to 1/4 or 1/2 Kelly
+
+================================================================================
+3. SIDE BIAS ANALYSIS (OVER vs UNDER)
+================================================================================
+OVER Win Rate: 64.00% (16/25 bets)
+UNDER Win Rate: 50.67% (38/75 bets)
+Win Rate Gap: 13.33%
+  ⚠ WARNING if gap > 5%
+
+ROI by Side:
+  OVER: 7.13%
+  UNDER: -0.97%
+
+Mean Edge - OVER: 3.63 pts
+Mean Edge - UNDER: 4.88 pts
+Edge Difference p-value: 0.063
+
+Sample Ratio (OVER/UNDER): 0.33
+
+BAD: Large side bias - apply side-specific isotonic regression
+
+================================================================================
+4. EDGE BUCKET MONOTONICITY
+================================================================================
+
+Win Rate by Edge Bucket:
+  0-2 pts: WR=65.00%, ROI=9.29%
+  2-4 pts: WR=46.88%, ROI=-2.50%
+  4-6 pts: WR=57.14%, ROI=1.68%
+  6-8 pts: WR=66.67%, ROI=4.24%
+  8+ pts: WR=40.00%, ROI=-4.08%
+
+Monotonicity Correlation: -0.300 (p=0.624)
+  ✓ GOOD if > 0.90    ✗ BAD if < 0.70
+Has Reversal: ✗ YES
+
+BAD: Non-monotonic - APPLY ISOTONIC REGRESSION
+
+================================================================================
+5. PROBABILITY CALIBRATION
+================================================================================
+
+Brier Score: 0.2757
+  ✓ GOOD if < 0.20    ✗ BAD if > 0.25
+
+Log Loss: 0.7578
+  ✓ GOOD if < 0.65    ✗ BAD if > 0.70
+
+Expected Calibration Error (ECE): 0.2027
+  ✓ GOOD if < 0.05    ✗ BAD if > 0.10
+
+Max Calibration Error: 0.5499
+
+BAD: Poor calibration - recalibrate with isotonic regression
+
+================================================================================
+6. ROOT CAUSE: WR > BE but ROI < 0
+================================================================================
+Traditional Win Rate: 54.00%
+Breakeven Win Rate: 53.39%
+WR vs Breakeven: 0.61%
+
+Odds-Weighted Win Rate: 52.11%
+OWWR Gap: -1.89%
+  ⚠ If negative: Heavy stakes on losses
+
+Mean Odds - Wins: 1.873
+Mean Odds - Losses: 1.877
+Odds Imbalance: -0.004
+  ⚠ If negative: Winning on shorter odds
+
+Expected ROI: 23.91%
+Actual ROI: 0.24%
+Calibration Gap: -23.67%
+  ⚠ If gap > 5%: Model overconfident
+
+Avg Kelly Fraction: 0.1457
+Heavy Loss Impact: 18.80% of capital
+
+Model probabilities overconfident
+
+================================================================================
+7. ADVANCED DIAGNOSTICS
+================================================================================
+Prediction Error - Wins: 4.57 pts
+Prediction Error - Losses: 12.26 pts
+Error Ratio (Wins/Losses): 0.372
+  ✓ GOOD if < 1.0 (more accurate on wins)
+
+Z-Score Statistics:
+  Mean: 0.346 (should be ≈ 0)
+  Std: 1.024 (should be ≈ 1)
+  Median: 0.106
+Sigma Calibrated: ✓ YES
+  ✓ GOOD if std ∈ [0.8, 1.2]
+
+Market Efficiency:
+  Edge Correlation: -0.066 (p=0.514)
+  Has True Edge: ✗ NO
+
+Sequence Randomness:
+  Runs Test p-value: 0.177
+  Random: ✓ YES
+
+WARNING: No statistical edge vs market
+
+================================================================================
+ACTIONABLE RECOMMENDATIONS
+================================================================================
+1. ❌ CRITICAL: No edge correlation - improve features or stop betting
+2. ⚠ HIGH: Large side bias - apply side-specific isotonic regression
+3. ⚠ HIGH: Non-monotonic edges - apply isotonic regression
+4. ⚠ HIGH: Poor calibration (ECE > 0.10) - recalibrate probabilities
+5. ⚠ MEDIUM: No statistical edge vs market - improve model or pause
+6. ⚠ MEDIUM: Model overconfident - recalibrate probabilities
+
+================================================================================
+END REPORT
+================================================================================

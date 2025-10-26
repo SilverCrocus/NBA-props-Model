@@ -54,7 +54,7 @@ def print_overall_summary(ledger: pd.DataFrame):
     print("BETTING PERFORMANCE DASHBOARD")
     print("=" * 80)
 
-    print(f"\n📊 OVERALL STATS")
+    print("\n📊 OVERALL STATS")
     print(f"   Total Bets Placed: {total_bets}")
     print(f"   Settled: {len(settled)}")
     print(f"   Pending: {pending}")
@@ -73,11 +73,11 @@ def print_overall_summary(ledger: pd.DataFrame):
 
     win_rate = wins / (wins + losses) * 100 if (wins + losses) > 0 else 0
 
-    print(f"\n🎯 RESULTS")
+    print("\n🎯 RESULTS")
     print(f"   Record: {wins}W - {losses}L - {pushes}P")
     print(f"   Win Rate: {win_rate:.1f}%")
 
-    print(f"\n💰 FINANCIAL")
+    print("\n💰 FINANCIAL")
     print(f"   Total Wagered: ${total_wagered:.2f}")
     print(f"   Total Profit: ${total_profit:+.2f}")
     print(f"   ROI: {roi:+.1f}%")
@@ -92,14 +92,28 @@ def print_overall_summary(ledger: pd.DataFrame):
         worst_bet = settled.loc[settled["profit_loss"].idxmin()]
 
         print(
-            f"\n🏆 BEST BET: {best_bet['player_name']} ({best_bet['game_date'].strftime('%Y-%m-%d')})"
+            f"\n🏆 BEST BET: {
+                best_bet['player_name']} ({
+                best_bet['game_date'].strftime('%Y-%m-%d')})"
         )
-        print(f"   {best_bet['direction']} {best_bet['line']} → ${best_bet['profit_loss']:+.2f}")
+        print(
+            f"   {
+                best_bet['direction']} {
+                best_bet['line']} → ${
+                best_bet['profit_loss']:+.2f}"
+        )
 
         print(
-            f"\n💔 WORST BET: {worst_bet['player_name']} ({worst_bet['game_date'].strftime('%Y-%m-%d')})"
+            f"\n💔 WORST BET: {
+                worst_bet['player_name']} ({
+                worst_bet['game_date'].strftime('%Y-%m-%d')})"
         )
-        print(f"   {worst_bet['direction']} {worst_bet['line']} → ${worst_bet['profit_loss']:+.2f}")
+        print(
+            f"   {
+                worst_bet['direction']} {
+                worst_bet['line']} → ${
+                worst_bet['profit_loss']:+.2f}"
+        )
 
 
 def print_detailed_breakdown(ledger: pd.DataFrame):
@@ -116,8 +130,10 @@ def print_detailed_breakdown(ledger: pd.DataFrame):
     print("=" * 80)
 
     # By confidence level
-    print(f"\n📊 BY CONFIDENCE LEVEL:")
-    print(f"{'Level':<12} {'Bets':<8} {'W-L-P':<12} {'Win%':<8} {'ROI%':<10} {'P/L':<10}")
+    print("\n📊 BY CONFIDENCE LEVEL:")
+    print(
+        f"{'Level':<12} {'Bets':<8} {'W-L-P':<12} {'Win%':<8} {'ROI%':<10} {'P/L':<10}"
+    )  # noqa: E501
     print("-" * 80)
 
     for conf in ["VERY HIGH", "HIGH", "MEDIUM", "LOW"]:
@@ -137,12 +153,20 @@ def print_detailed_breakdown(ledger: pd.DataFrame):
         roi = (profit / wagered * 100) if wagered > 0 else 0
 
         print(
-            f"{conf:<12} {len(conf_bets):<8} {wins}-{losses}-{pushes:<8} {win_rate:<7.1f}% {roi:<9.1f}% ${profit:+.2f}"
+            f"{
+                conf:<12} {
+                len(conf_bets):<8} {wins}-{losses}-{
+                pushes:<8} {
+                    win_rate:<7.1f}% {
+                        roi:<9.1f}% ${
+                            profit:+.2f}"
         )
 
     # By direction
-    print(f"\n📊 BY BET TYPE:")
-    print(f"{'Direction':<12} {'Bets':<8} {'W-L-P':<12} {'Win%':<8} {'ROI%':<10} {'P/L':<10}")
+    print("\n📊 BY BET TYPE:")
+    print(
+        f"{'Direction':<12} {'Bets':<8} {'W-L-P':<12} {'Win%':<8} {'ROI%':<10} {'P/L':<10}"
+    )  # noqa: E501
     print("-" * 80)
 
     for direction in ["OVER", "UNDER"]:
@@ -162,18 +186,26 @@ def print_detailed_breakdown(ledger: pd.DataFrame):
         roi = (profit / wagered * 100) if wagered > 0 else 0
 
         print(
-            f"{direction:<12} {len(dir_bets):<8} {wins}-{losses}-{pushes:<8} {win_rate:<7.1f}% {roi:<9.1f}% ${profit:+.2f}"
+            f"{
+                direction:<12} {
+                len(dir_bets):<8} {wins}-{losses}-{
+                pushes:<8} {
+                    win_rate:<7.1f}% {
+                        roi:<9.1f}% ${
+                            profit:+.2f}"
         )
 
     # By edge bucket
-    print(f"\n📊 BY EDGE SIZE:")
-    print(f"{'Edge Range':<12} {'Bets':<8} {'W-L-P':<12} {'Win%':<8} {'ROI%':<10} {'P/L':<10}")
+    print("\n📊 BY EDGE SIZE:")
+    print(
+        f"{'Edge Range':<12} {'Bets':<8} {'W-L-P':<12} {'Win%':<8} {'ROI%':<10} {'P/L':<10}"
+    )  # noqa: E501
     print("-" * 80)
 
     edge_buckets = [
-        ("0-10%", 0, 0.10),
-        ("10-20%", 0.10, 0.20),
-        ("20-30%", 0.20, 0.30),
+        ("0 - 10%", 0, 0.10),
+        ("10 - 20%", 0.10, 0.20),
+        ("20 - 30%", 0.20, 0.30),
         ("30%+", 0.30, 1.0),
     ]
 
@@ -194,12 +226,20 @@ def print_detailed_breakdown(ledger: pd.DataFrame):
         roi = (profit / wagered * 100) if wagered > 0 else 0
 
         print(
-            f"{label:<12} {len(edge_bets):<8} {wins}-{losses}-{pushes:<8} {win_rate:<7.1f}% {roi:<9.1f}% ${profit:+.2f}"
+            f"{
+                label:<12} {
+                len(edge_bets):<8} {wins}-{losses}-{
+                pushes:<8} {
+                    win_rate:<7.1f}% {
+                        roi:<9.1f}% ${
+                            profit:+.2f}"
         )
 
     # By bookmaker
-    print(f"\n📊 BY BOOKMAKER:")
-    print(f"{'Bookmaker':<12} {'Bets':<8} {'W-L-P':<12} {'Win%':<8} {'ROI%':<10} {'P/L':<10}")
+    print("\n📊 BY BOOKMAKER:")
+    print(
+        f"{'Bookmaker':<12} {'Bets':<8} {'W-L-P':<12} {'Win%':<8} {'ROI%':<10} {'P/L':<10}"
+    )  # noqa: E501
     print("-" * 80)
 
     for book in settled["bookmaker"].unique():
@@ -217,7 +257,13 @@ def print_detailed_breakdown(ledger: pd.DataFrame):
         roi = (profit / wagered * 100) if wagered > 0 else 0
 
         print(
-            f"{book:<12} {len(book_bets):<8} {wins}-{losses}-{pushes:<8} {win_rate:<7.1f}% {roi:<9.1f}% ${profit:+.2f}"
+            f"{
+                book:<12} {
+                len(book_bets):<8} {wins}-{losses}-{
+                pushes:<8} {
+                    win_rate:<7.1f}% {
+                        roi:<9.1f}% ${
+                            profit:+.2f}"
         )
 
 
@@ -237,7 +283,7 @@ def print_chronological_performance(ledger: pd.DataFrame):
     settled = settled.sort_values("game_date")
 
     print(
-        f"\n{'Date':<12} {'Bets':<6} {'W-L-P':<10} {'Win%':<8} {'P/L':<10} {'Cumulative P/L':<15}"
+        f"\n{'Date':<12} {'Bets':<6} {'W-L-P':<10} {'Win%':<8} {'P/L':<10} {'Cumulative P/L':<15}"  # noqa: E501
     )
     print("-" * 80)
 
@@ -257,7 +303,13 @@ def print_chronological_performance(ledger: pd.DataFrame):
 
         date_str = pd.to_datetime(date).strftime("%Y-%m-%d")
         print(
-            f"{date_str:<12} {len(day_bets):<6} {wins}-{losses}-{pushes:<7} {win_rate:<7.1f}% ${profit:+8.2f}  ${cumulative_pl:+.2f}"
+            f"{
+                date_str:<12} {
+                len(day_bets):<6} {wins}-{losses}-{
+                pushes:<7} {
+                    win_rate:<7.1f}% ${
+                        profit:+8.2f}  ${
+                            cumulative_pl:+.2f}"
         )
 
 

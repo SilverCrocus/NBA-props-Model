@@ -3,7 +3,7 @@
 Update Latest NBA Game Logs
 ============================
 
-Fetches the most recent NBA games and appends them to the master game logs file.
+Fetches the most recent NBA games and appends them to the master game logs file.  # noqa: E501
 Use this daily during the season to keep your production model up-to-date.
 
 Features:
@@ -15,7 +15,6 @@ Features:
 Usage: uv run python scripts/update_latest_games.py
 """
 
-import argparse
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -39,12 +38,12 @@ MASTER_FILE = DATA_DIR / "all_game_logs_through_2025.csv"
 BACKUP_FILE = DATA_DIR / f"all_game_logs_backup_{datetime.now().strftime('%Y%m%d')}.csv"
 
 # Current season
-CURRENT_SEASON = "2025-26"
+CURRENT_SEASON = "2025 - 26"
 
 # How many days back to fetch (default: 7 days to catch any games we missed)
 DAYS_BACK = 7
 
-print(f"Configuration:")
+print("Configuration:")
 print(f"  Current season: {CURRENT_SEASON}")
 print(f"  Master file: {MASTER_FILE}")
 print(f"  Fetching games from last {DAYS_BACK} days")
@@ -58,7 +57,7 @@ print("STEP 1: Loading existing game logs...")
 
 if not MASTER_FILE.exists():
     print(f"❌ ERROR: Master file not found: {MASTER_FILE}")
-    print("   Please run fetch_all_game_logs.py first to create the master file")
+    print("   Please run fetch_all_game_logs.py first to create the master file")  # noqa: E501
     exit(1)
 
 # Load existing data
@@ -67,7 +66,9 @@ df_existing["GAME_DATE"] = pd.to_datetime(df_existing["GAME_DATE"])
 
 print(f"✅ Loaded {len(df_existing):,} existing game logs")
 print(
-    f"   Date range: {df_existing['GAME_DATE'].min().date()} to {df_existing['GAME_DATE'].max().date()}"
+    f"   Date range: {
+        df_existing['GAME_DATE'].min().date()} to {
+            df_existing['GAME_DATE'].max().date()}"
 )
 print(f"   Latest game: {df_existing['GAME_DATE'].max().date()}")
 print()
@@ -89,7 +90,7 @@ print()
 
 all_new_games = []
 
-print(f"Fetching Regular Season games...")
+print("Fetching Regular Season games...")
 try:
     # Fetch league game log for current season
     # Use PlayerOrTeam='P' to get PLAYER game logs (not team logs)
@@ -111,7 +112,9 @@ try:
 
         print(f"✅ Found {len(df_new):,} games from last {DAYS_BACK} days")
         print(
-            f"   Date range: {df_new['GAME_DATE'].min().date()} to {df_new['GAME_DATE'].max().date()}"
+            f"   Date range: {
+                df_new['GAME_DATE'].min().date()} to {
+                df_new['GAME_DATE'].max().date()}"
         )
 
         all_new_games.append(df_new)
@@ -137,7 +140,7 @@ print()
 if not all_new_games:
     print("⚠️  No new games to add")
     print(
-        "   Either no games were played recently, or all recent games are already in the database"
+        "   Either no games were played recently, or all recent games are already in the database"  # noqa: E501
     )
     print()
     exit(0)
@@ -148,7 +151,11 @@ df_new_all = pd.concat(all_new_games, ignore_index=True)
 print(f"Total new games fetched: {len(df_new_all):,}")
 
 # Check what columns are available in new data
-print(f"Columns in new data: {df_new_all.columns.tolist()[:20]}...")  # Show first 20
+print(
+    f"Columns in new data: {
+        df_new_all.columns.tolist()[
+            :20]}..."
+)  # Show first 20
 print()
 
 # Map column names if needed (NBA API sometimes uses different names)
@@ -169,12 +176,24 @@ if column_map:
 # Deduplicate against existing data
 # Use GAME_ID and PLAYER_ID as unique identifier
 if "PLAYER_ID" in df_new_all.columns and "GAME_ID" in df_new_all.columns:
-    existing_keys = set(
-        zip(df_existing["GAME_ID"].astype(str), df_existing["PLAYER_ID"].astype(str))
+    # BUG FIX: Ensure both dataframes use same dtype for comparison
+    # Convert both to int64 explicitly to avoid type mismatch
+    df_existing["GAME_ID"] = df_existing["GAME_ID"].astype("int64")
+    df_existing["PLAYER_ID"] = df_existing["PLAYER_ID"].astype("int64")
+    df_new_all["GAME_ID"] = df_new_all["GAME_ID"].astype("int64")
+    df_new_all["PLAYER_ID"] = df_new_all["PLAYER_ID"].astype("int64")
+
+    # Create set of existing (GAME_ID, PLAYER_ID) tuples
+    existing_keys = set(zip(df_existing["GAME_ID"], df_existing["PLAYER_ID"]))
+
+    print(
+        f"Existing games in database: {
+            len(existing_keys):,    } unique (GAME_ID, PLAYER_ID) pairs"
     )
 
+    # Filter out games that already exist
     new_games_mask = ~df_new_all.apply(
-        lambda row: (str(row["GAME_ID"]), str(row["PLAYER_ID"])) in existing_keys, axis=1
+        lambda row: (row["GAME_ID"], row["PLAYER_ID"]) in existing_keys, axis=1
     )
 
     df_truly_new = df_new_all[new_games_mask].copy()
@@ -217,6 +236,20 @@ common_cols = list(set(df_existing.columns) & set(df_truly_new.columns))
 # Combine old and new data
 df_updated = pd.concat([df_existing[common_cols], df_truly_new[common_cols]], ignore_index=True)
 
+# FINAL SAFETY CHECK: Remove any duplicates that slipped through
+# (Shouldn't happen, but prevents catastrophic data corruption)
+before_final_dedup = len(df_updated)
+df_updated = df_updated.drop_duplicates(subset=["GAME_ID", "PLAYER_ID"], keep="first")
+after_final_dedup = len(df_updated)
+
+if before_final_dedup != after_final_dedup:
+    print(
+        f"⚠️  WARNING: Removed {
+            before_final_dedup -
+            after_final_dedup:,    } duplicates in final safety check"
+    )
+    print("   This indicates deduplication logic needs investigation")
+
 # Sort by date
 if "PLAYER_ID" in df_updated.columns:
     df_updated = df_updated.sort_values(["GAME_DATE", "PLAYER_ID"])
@@ -232,12 +265,14 @@ df_updated.to_csv(MASTER_FILE, index=False)
 
 print(f"✅ Updated master file: {MASTER_FILE}")
 print()
-print(f"Summary:")
+print("Summary:")
 print(f"  Previous total: {len(df_existing):,} games")
 print(f"  New games added: {len(df_truly_new):,}")
 print(f"  New total: {len(df_updated):,} games")
 print(
-    f"  Date range: {df_updated['GAME_DATE'].min().date()} to {df_updated['GAME_DATE'].max().date()}"
+    f"  Date range: {
+        df_updated['GAME_DATE'].min().date()} to {
+            df_updated['GAME_DATE'].max().date()}"
 )
 print()
 

@@ -45,14 +45,16 @@ ESPN_STATS_OCT22 = {
     "Brandon Miller": {"PTS": 25, "REB": 0, "AST": 7, "MIN": 31},
     "Terance Mann": {"PTS": 13, "REB": 1, "AST": 1, "MIN": 19},
     # Toronto Raptors @ Atlanta Hawks (401809935)
-    "RJ Barrett": {"PTS": 25, "REB": 8, "AST": 5, "MIN": 30},  # Note: RJ not R.J.
+    # Note: RJ not R.J.
+    "RJ Barrett": {"PTS": 25, "REB": 8, "AST": 5, "MIN": 30},
     "Scottie Barnes": {"PTS": 22, "REB": 6, "AST": 9, "MIN": 32},
     "Trae Young": {"PTS": 22, "REB": 1, "AST": 5, "MIN": 34},
     "Brandon Ingram": {"PTS": 22, "REB": 7, "AST": 8, "MIN": 35},
     "Nickeil Alexander-Walker": {"PTS": 10, "REB": 4, "AST": 4, "MIN": 28},
     # Washington Wizards @ Milwaukee Bucks (401809939)
     "Alex Sarr": {"PTS": 10, "REB": 11, "AST": 3, "MIN": 26},
-    "Khris Middleton": {"PTS": 23, "REB": 6, "AST": 3, "MIN": 27},  # Fixed: was Giannis's stats
+    # Fixed: was Giannis's stats
+    "Khris Middleton": {"PTS": 23, "REB": 6, "AST": 3, "MIN": 27},
     "Bobby Portis": {"PTS": 2, "REB": 6, "AST": 1, "MIN": 17},
     # Los Angeles Clippers @ Utah Jazz (401809940)
     "Keyonte George": {"PTS": 16, "REB": 2, "AST": 9, "MIN": 30},
@@ -80,12 +82,12 @@ def update_game_logs():
     # Load game logs
     df = pd.read_csv(game_logs_file)
     df.to_csv(backup_file, index=False)
-    print(f"✅ Backup created\n")
+    print("✅ Backup created\n")
 
     df["GAME_DATE"] = pd.to_datetime(df["GAME_DATE"])
 
     # Filter to Oct 22, 2025
-    oct22_games = df[df["GAME_DATE"] == "2025-10-22"].copy()
+    oct22_games = df[df["GAME_DATE"] == "2025 - 10 - 22"].copy()
 
     print(f"Found {len(oct22_games)} game logs from October 22, 2025")
     print()
@@ -99,12 +101,14 @@ def update_game_logs():
         # Handle RJ Barrett special case
         if player_name == "RJ Barrett":
             player_mask = (
-                (df["GAME_DATE"] == "2025-10-22")
-                & (df["PLAYER_NAME"].str.contains("Barrett", case=False, na=False))
+                (df["GAME_DATE"] == "2025 - 10 - 22")
+                & (df["PLAYER_NAME"].str.contains("Barrett", case=False, na=False))  # noqa: E501
                 & (df["PLAYER_NAME"].str.contains("RJ", case=False, na=False))
             )
         else:
-            player_mask = (df["GAME_DATE"] == "2025-10-22") & (df["PLAYER_NAME"] == player_name)
+            player_mask = (df["GAME_DATE"] == "2025 - 10 - 22") & (
+                df["PLAYER_NAME"] == player_name
+            )  # noqa: E501
 
         player_games = df[player_mask]
 
@@ -120,7 +124,7 @@ def update_game_logs():
         old_pts = df.loc[idx, "PTS"]
         old_reb = df.loc[idx, "REB"]
         old_ast = df.loc[idx, "AST"]
-        old_min = df.loc[idx, "MIN"]
+        __old_min = df.loc[idx, "MIN"]  # noqa: F841
         old_pra = old_pts + old_reb + old_ast
 
         # New stats from ESPN
@@ -131,13 +135,13 @@ def update_game_logs():
         new_pra = new_pts + new_reb + new_ast
 
         # Check if correction needed
-        if (old_pts != new_pts) or (old_reb != new_reb) or (old_ast != new_ast):
+        if (old_pts != new_pts) or (old_reb != new_reb) or (old_ast != new_ast):  # noqa: E501
             corrections.append(
                 {
                     "player": player_name,
                     "old": f"{old_pts}P {old_reb}R {old_ast}A = {old_pra} PRA",
                     "new": f"{new_pts}P {new_reb}R {new_ast}A = {new_pra} PRA",
-                    "diff": new_pra - old_pra,
+                    "di": new_pra - old_pra,
                 }
             )
 

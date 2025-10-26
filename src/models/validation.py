@@ -5,8 +5,8 @@ No fallback logic - direct implementation only.
 
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.model_selection import TimeSeriesSplit
 
 
 class TimeSeriesValidator:
@@ -28,12 +28,7 @@ class TimeSeriesValidator:
         # Use TimeSeriesSplit for validation
         tscv = TimeSeriesSplit(n_splits=self.n_splits, test_size=self.test_size)
 
-        results = {
-            'mae': [],
-            'rmse': [],
-            'r2': [],
-            'fold_dates': []
-        }
+        results = {"mae": [], "rmse": [], "r2": [], "fold_dates": []}
 
         for fold, (train_idx, test_idx) in enumerate(tscv.split(X_sorted)):
             # Get train/test sets
@@ -57,30 +52,34 @@ class TimeSeriesValidator:
             rmse = np.sqrt(mean_squared_error(y_test, y_pred))
             r2 = r2_score(y_test, y_pred)
 
-            results['mae'].append(mae)
-            results['rmse'].append(rmse)
-            results['r2'].append(r2)
-            results['fold_dates'].append({
-                'fold': fold + 1,
-                'train': train_dates,
-                'test': test_dates
-            })
+            results["mae"].append(mae)
+            results["rmse"].append(rmse)
+            results["r2"].append(r2)
+            results["fold_dates"].append(
+                {"fold": fold + 1, "train": train_dates, "test": test_dates}
+            )
 
         # Calculate summary statistics
-        results['summary'] = {
-            'mae_mean': np.mean(results['mae']),
-            'mae_std': np.std(results['mae']),
-            'rmse_mean': np.mean(results['rmse']),
-            'rmse_std': np.std(results['rmse']),
-            'r2_mean': np.mean(results['r2']),
-            'r2_std': np.std(results['r2'])
+        results["summary"] = {
+            "mae_mean": np.mean(results["mae"]),
+            "mae_std": np.std(results["mae"]),
+            "rmse_mean": np.mean(results["rmse"]),
+            "rmse_std": np.std(results["rmse"]),
+            "r2_mean": np.mean(results["r2"]),
+            "r2_std": np.std(results["r2"]),
         }
 
         return results
 
-    def walk_forward_validation(self, model, X: pd.DataFrame, y: pd.Series,
-                               dates: pd.Series, initial_train_size: int = 5000,
-                               step_size: int = 500) -> dict:
+    def walk_forward_validation(
+        self,
+        model,
+        X: pd.DataFrame,
+        y: pd.Series,
+        dates: pd.Series,
+        initial_train_size: int = 5000,
+        step_size: int = 500,
+    ) -> dict:
         """Implement walk-forward validation for realistic backtesting."""
         # Sort by date
         sort_idx = dates.argsort()
@@ -124,19 +123,24 @@ class TimeSeriesValidator:
         r2 = r2_score(actuals, predictions)
 
         return {
-            'mae': mae,
-            'rmse': rmse,
-            'r2': r2,
-            'n_predictions': len(predictions),
-            'date_range': (min(prediction_dates), max(prediction_dates)),
-            'predictions': predictions,
-            'actuals': actuals,
-            'dates': prediction_dates
+            "mae": mae,
+            "rmse": rmse,
+            "r2": r2,
+            "n_predictions": len(predictions),
+            "date_range": (min(prediction_dates), max(prediction_dates)),
+            "predictions": predictions,
+            "actuals": actuals,
+            "dates": prediction_dates,
         }
 
-    def season_based_validation(self, model, df: pd.DataFrame,
-                               feature_cols: list, target_col: str,
-                               season_col: str = 'season') -> dict:
+    def season_based_validation(
+        self,
+        model,
+        df: pd.DataFrame,
+        feature_cols: list,
+        target_col: str,
+        season_col: str = "season",
+    ) -> dict:
         """Validate by training on past seasons and testing on current."""
         if season_col not in df.columns:
             raise ValueError(f"Season column '{season_col}' not found")
@@ -150,8 +154,8 @@ class TimeSeriesValidator:
 
         # Train on each season, test on next
         for i in range(len(seasons) - 1):
-            train_seasons = seasons[:i+1]
-            test_season = seasons[i+1]
+            train_seasons = seasons[: i + 1]
+            test_season = seasons[i + 1]
 
             # Split data
             train_df = df[df[season_col].isin(train_seasons)]
@@ -171,14 +175,16 @@ class TimeSeriesValidator:
             rmse = np.sqrt(mean_squared_error(y_test, y_pred))
             r2 = r2_score(y_test, y_pred)
 
-            results.append({
-                'train_seasons': train_seasons,
-                'test_season': test_season,
-                'mae': mae,
-                'rmse': rmse,
-                'r2': r2,
-                'n_train': len(train_df),
-                'n_test': len(test_df)
-            })
+            results.append(
+                {
+                    "train_seasons": train_seasons,
+                    "test_season": test_season,
+                    "mae": mae,
+                    "rmse": rmse,
+                    "r2": r2,
+                    "n_train": len(train_df),
+                    "n_test": len(test_df),
+                }
+            )
 
         return results

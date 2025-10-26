@@ -6,16 +6,16 @@ Records which bets from daily recommendations you actually placed.
 
 Usage:
   # Record ALL recommended bets for a date
-  uv run python scripts/betting/record_bets.py 2025-10-21 --all
+  uv run python scripts/betting/record_bets.py 2025 - 10 - 21 --all
 
   # Record specific bets (interactive selection)
-  uv run python scripts/betting/record_bets.py 2025-10-21
+  uv run python scripts/betting/record_bets.py 2025 - 10 - 21
 
   # Record top N bets
-  uv run python scripts/betting/record_bets.py 2025-10-21 --top 5
+  uv run python scripts/betting/record_bets.py 2025 - 10 - 21 --top 5
 
   # Specify actual stake amounts (if different from recommended)
-  uv run python scripts/betting/record_bets.py 2025-10-21 --top 5 --stakes 10,10,15,20,25
+  uv run python scripts/betting/record_bets.py 2025 - 10 - 21 --top 5 --stakes 10,10,15,20,25  # noqa: E501
 """
 
 import argparse
@@ -90,7 +90,14 @@ def select_bets_interactive(recommendations: pd.DataFrame) -> pd.DataFrame:
 
     for idx, row in recommendations.iterrows():
         edge_value = row.get("edge", row.get("prob_edge", 0))
-        print(f"\n{idx+1}. {row['player_name']} - {row['direction']} {row['line']}")
+        print(
+            f"\n{
+                idx +
+                1}. {
+                row['player_name']} - {
+                row['direction']} {
+                    row['line']}"
+        )
         print(f"   Edge: {edge_value:.1%} | Confidence: {row['confidence']}")
         print(f"   Recommended: ${row['bet_size']:.2f}")
 
@@ -131,7 +138,10 @@ def record_bets(date: str, select_all: bool = False, top_n: int = None, custom_s
     # Create bet records
     new_bets = []
     for idx, row in selected.iterrows():
-        bet_id = f"{date}_{row['player_name'].replace(' ', '_')}_{row['direction']}"
+        bet_id = f"{date}_{
+            row['player_name'].replace(
+                ' ', '_')}_{
+            row['direction']}"
 
         # Check if already recorded
         if bet_id in ledger["bet_id"].values:
@@ -184,12 +194,16 @@ def record_bets(date: str, select_all: bool = False, top_n: int = None, custom_s
     print("=" * 80)
     for bet in new_bets:
         print(f"✓ {bet['player_name']} - {bet['direction']} {bet['line']}")
-        print(f"  Stake: ${bet['actual_bet_size']:.2f} | Edge: {bet['edge']:.1%}")
+        print(
+            f"  Stake: ${
+                bet['actual_bet_size']:.2f} | Edge: {
+                bet['edge']:.1%}"
+        )
 
     total_wagered = sum(b["actual_bet_size"] for b in new_bets)
     print(f"\n💰 Total wagered: ${total_wagered:.2f}")
     print(f"📊 Bets recorded: {len(new_bets)}")
-    print(f"\n💡 Next: Wait for games to finish, then run:")
+    print("\n💡 Next: Wait for games to finish, then run:")
     print(f"   uv run python scripts/betting/update_results.py {date}")
 
 

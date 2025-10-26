@@ -62,7 +62,7 @@ class PositionDefenseFeatureBuilder:
         Load player position mappings from CTG data.
 
         Args:
-            seasons: List of seasons to load (e.g., ['2023-24', '2024-25'])
+            seasons: List of seasons to load (e.g., ['2023 - 24', '2024 - 25'])
                     If None, loads all available seasons
 
         Returns:
@@ -117,7 +117,7 @@ class PositionDefenseFeatureBuilder:
         self.position_map = dict(zip(all_positions["Player"], all_positions["Pos"]))
 
         logger.info(f"   Loaded {len(self.position_map):,} player positions")
-        logger.info(f"   Position distribution:")
+        logger.info("   Position distribution:")
 
         position_counts = pd.Series(list(self.position_map.values())).value_counts()
         for pos, count in position_counts.items():
@@ -169,7 +169,8 @@ class PositionDefenseFeatureBuilder:
         # Get games where opponent_team played (before current_date)
         past_games = (
             games_df[
-                (games_df["GAME_DATE"] < current_date) & (games_df["OPP_TEAM"] == opponent_team)
+                (games_df["GAME_DATE"] < current_date)
+                & (games_df["OPP_TEAM"] == opponent_team)  # noqa: E501
             ]
             .sort_values("GAME_DATE", ascending=False)
             .head(window * 10)
@@ -189,8 +190,12 @@ class PositionDefenseFeatureBuilder:
             if len(position_games) < 3:  # Need minimum 3 games
                 # Use overall stats if insufficient data for this position
                 defense_by_position[position] = {
-                    "PRA_allowed": past_games["PRA"].mean() if len(past_games) > 0 else 30.0,
-                    "FG_pct_allowed": past_games["FG_PCT"].mean() if len(past_games) > 0 else 0.45,
+                    "PRA_allowed": (
+                        past_games["PRA"].mean() if len(past_games) > 0 else 30.0
+                    ),  # noqa: E501
+                    "FG_pct_allowed": (
+                        past_games["FG_PCT"].mean() if len(past_games) > 0 else 0.45
+                    ),  # noqa: E501
                     "n_games": 0,
                 }
             else:
@@ -319,11 +324,14 @@ class PositionDefenseFeatureBuilder:
         coverage_pct = games_with_position / total_games * 100
 
         logger.info(
-            f"   Position coverage: {games_with_position:,}/{total_games:,} ({coverage_pct:.1f}%)"
+            f"   Position coverage: {
+                games_with_position:,}/{
+                total_games:,} ({
+                coverage_pct:.1f}%)"
         )
 
         # Show distribution
-        logger.info(f"   Position distribution:")
+        logger.info("   Position distribution:")
         position_counts = game_logs_df["POSITION"].value_counts()
         for pos, count in position_counts.items():
             pct = count / games_with_position * 100

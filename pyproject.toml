@@ -5,6 +5,7 @@ description = "NBA player props prediction model using CTG advanced stats and ML
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "betacal>=1.1.0",
     "catboost>=1.2.8",
     "certifi>=2025.8.3",
     "lightgbm>=4.6.0",
@@ -79,6 +80,8 @@ warn_unused_ignores = true
 
 [dependency-groups]
 dev = [
+    "autoflake>=2.3.1",
+    "autopep8>=2.3.2",
     "black>=25.9.0",
     "flake8>=7.3.0",
     "isort>=7.0.0",

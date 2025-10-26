@@ -3,13 +3,12 @@
 Find Optimal Betting Strategy
 ==============================
 
-Analyzes backtest results to find the optimal edge threshold and betting parameters.
-Tests multiple edge thresholds to maximize ROI while maintaining acceptable win rate.
+Analyzes backtest results to find the optimal edge threshold and betting parameters.  # noqa: E501
+Tests multiple edge thresholds to maximize ROI while maintaining acceptable win rate.  # noqa: E501
 
 Usage: uv run python scripts/betting/find_optimal_strategy.py
 """
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -155,9 +154,9 @@ for edge_threshold in edge_thresholds:
             "roi_on_bankroll": roi_on_bankroll,
             "final_bankroll": final_bankroll,
             "over_bets": (bets_df["bet_side"] == "over").sum(),
-            "over_wins": bets_df[bets_df["bet_side"] == "over"]["is_correct"].sum(),
+            "over_wins": bets_df[bets_df["bet_side"] == "over"]["is_correct"].sum(),  # noqa: E501
             "under_bets": (bets_df["bet_side"] == "under").sum(),
-            "under_wins": bets_df[bets_df["bet_side"] == "under"]["is_correct"].sum(),
+            "under_wins": bets_df[bets_df["bet_side"] == "under"]["is_correct"].sum(),  # noqa: E501
         }
     )
 
@@ -178,13 +177,13 @@ print()
 
 # Format for display
 display_df = results_df.copy()
-display_df["win_rate"] = display_df["win_rate"].apply(lambda x: f"{x*100:.1f}%")
+display_df["win_rate"] = display_df["win_rate"].apply(lambda x: f"{x * 100:.1f}%")
 display_df["roi"] = display_df["roi"].apply(lambda x: f"{x:.1f}%")
 display_df["roi_on_bankroll"] = display_df["roi_on_bankroll"].apply(lambda x: f"{x:.1f}%")
 display_df["final_bankroll"] = display_df["final_bankroll"].apply(lambda x: f"${x:,.0f}")
 display_df["total_profit"] = display_df["total_profit"].apply(lambda x: f"${x:,.0f}")
-display_df["over_win_rate"] = display_df["over_win_rate"].apply(lambda x: f"{x*100:.1f}%")
-display_df["under_win_rate"] = display_df["under_win_rate"].apply(lambda x: f"{x*100:.1f}%")
+display_df["over_win_rate"] = display_df["over_win_rate"].apply(lambda x: f"{x * 100:.1f}%")
+display_df["under_win_rate"] = display_df["under_win_rate"].apply(lambda x: f"{x * 100:.1f}%")
 
 print(
     display_df[
@@ -224,10 +223,14 @@ best_roi = results_df.loc[best_roi_idx]
 print("1. HIGHEST ROI:")
 print(f"   Edge threshold: {best_roi['edge_threshold']} pts")
 print(f"   Total bets: {best_roi['total_bets']:.0f}")
-print(f"   Win rate: {best_roi['win_rate']*100:.1f}%")
+print(f"   Win rate: {best_roi['win_rate'] * 100:.1f}%")
 print(f"   ROI on wagered: {best_roi['roi']:.1f}%")
 print(f"   Final bankroll: ${best_roi['final_bankroll']:,.0f}")
-print(f"   Total profit: ${best_roi['total_profit']:,.0f} ({best_roi['roi_on_bankroll']:.1f}%)")
+print(
+    f"   Total profit: ${
+        best_roi['total_profit']:,.0f} ({
+            best_roi['roi_on_bankroll']:.1f}%)"
+)
 print()
 
 # Best profit
@@ -237,11 +240,13 @@ best_profit = results_df.loc[best_profit_idx]
 print("2. HIGHEST PROFIT:")
 print(f"   Edge threshold: {best_profit['edge_threshold']} pts")
 print(f"   Total bets: {best_profit['total_bets']:.0f}")
-print(f"   Win rate: {best_profit['win_rate']*100:.1f}%")
+print(f"   Win rate: {best_profit['win_rate'] * 100:.1f}%")
 print(f"   ROI on wagered: {best_profit['roi']:.1f}%")
 print(f"   Final bankroll: ${best_profit['final_bankroll']:,.0f}")
 print(
-    f"   Total profit: ${best_profit['total_profit']:,.0f} ({best_profit['roi_on_bankroll']:.1f}%)"
+    f"   Total profit: ${
+        best_profit['total_profit']:,.0f} ({
+            best_profit['roi_on_bankroll']:.1f}%)"
 )
 print()
 
@@ -255,11 +260,13 @@ if len(high_volume) > 0:
     print(f"3. HIGHEST WIN RATE (minimum {min_bets} bets):")
     print(f"   Edge threshold: {best_winrate['edge_threshold']} pts")
     print(f"   Total bets: {best_winrate['total_bets']:.0f}")
-    print(f"   Win rate: {best_winrate['win_rate']*100:.1f}%")
+    print(f"   Win rate: {best_winrate['win_rate'] * 100:.1f}%")
     print(f"   ROI on wagered: {best_winrate['roi']:.1f}%")
     print(f"   Final bankroll: ${best_winrate['final_bankroll']:,.0f}")
     print(
-        f"   Total profit: ${best_winrate['total_profit']:,.0f} ({best_winrate['roi_on_bankroll']:.1f}%)"
+        f"   Total profit: ${
+            best_winrate['total_profit']:,.0f} ({
+            best_winrate['roi_on_bankroll']:.1f}%)"
     )
     print()
 
@@ -272,11 +279,13 @@ best_balanced = results_df.loc[best_balanced_idx]
 print("4. MOST BALANCED (ROI × Volume):")
 print(f"   Edge threshold: {best_balanced['edge_threshold']} pts")
 print(f"   Total bets: {best_balanced['total_bets']:.0f}")
-print(f"   Win rate: {best_balanced['win_rate']*100:.1f}%")
+print(f"   Win rate: {best_balanced['win_rate'] * 100:.1f}%")
 print(f"   ROI on wagered: {best_balanced['roi']:.1f}%")
 print(f"   Final bankroll: ${best_balanced['final_bankroll']:,.0f}")
 print(
-    f"   Total profit: ${best_balanced['total_profit']:,.0f} ({best_balanced['roi_on_bankroll']:.1f}%)"
+    f"   Total profit: ${
+        best_balanced['total_profit']:,.0f} ({
+            best_balanced['roi_on_bankroll']:.1f}%)"
 )
 print()
 
@@ -299,24 +308,37 @@ print()
 
 print("Based on the analysis:")
 print()
-print(f"• For MAXIMUM PROFIT: Use {best_profit['edge_threshold']:.0f} pts edge threshold")
 print(
-    f"  - Expected profit: ${best_profit['total_profit']:,.0f} ({best_profit['roi_on_bankroll']:.1f}% return)"
+    f"• For MAXIMUM PROFIT: Use {
+        best_profit['edge_threshold']:.0f} pts edge threshold"
+)
+print(
+    f"  - Expected profit: ${
+        best_profit['total_profit']:,.0f} ({
+            best_profit['roi_on_bankroll']:.1f}% return)"
 )
 print(f"  - Volume: {best_profit['total_bets']:.0f} bets")
 print()
-print(f"• For MAXIMUM ROI: Use {best_roi['edge_threshold']:.0f} pts edge threshold")
-print(f"  - Expected ROI: {best_roi['roi']:.1f}% on wagered")
-print(f"  - Win rate: {best_roi['win_rate']*100:.1f}%")
-print()
-print(f"• For BALANCED APPROACH: Use {best_balanced['edge_threshold']:.0f} pts edge threshold")
 print(
-    f"  - Good balance of ROI ({best_balanced['roi']:.1f}%) and volume ({best_balanced['total_bets']:.0f} bets)"
+    f"• For MAXIMUM ROI: Use {
+        best_roi['edge_threshold']:.0f} pts edge threshold"
+)
+print(f"  - Expected ROI: {best_roi['roi']:.1f}% on wagered")
+print(f"  - Win rate: {best_roi['win_rate'] * 100:.1f}%")
+print()
+print(
+    f"• For BALANCED APPROACH: Use {
+        best_balanced['edge_threshold']:.0f} pts edge threshold"
+)
+print(
+    f"  - Good balance of ROI ({
+        best_balanced['roi']:.1f}%) and volume ({
+            best_balanced['total_bets']:.0f} bets)"
 )
 print()
 print("Strategy parameters (already optimal):")
-print(f"  - Kelly fraction: {KELLY_FRACTION*100:.0f}% (quarter-Kelly)")
-print(f"  - Max bet: {MAX_BET_PCT*100:.0f}% of bankroll")
+print(f"  - Kelly fraction: {KELLY_FRACTION * 100:.0f}% (quarter-Kelly)")
+print(f"  - Max bet: {MAX_BET_PCT * 100:.0f}% of bankroll")
 print()
 
 print("=" * 80)

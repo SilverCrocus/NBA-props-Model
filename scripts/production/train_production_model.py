@@ -3,17 +3,17 @@
 Train Production Model - Uses ALL Available Data
 
 This script trains a production-ready model using:
-1. ALL game logs (2003 through latest 2024-25 data)
+1. ALL game logs (2003 through latest 2024 - 25 data)
 2. Proper train/validation split for hyperparameter tuning
-3. Calibration on 2023-24 data (keep as validation)
-4. Final model trained on 2003-2024 data
+3. Calibration on 2023 - 24 data (keep as validation)
+4. Final model trained on 2003 - 2024 data
 
 Usage:
     uv run python scripts/production/train_production_model.py
 
 Output:
     - models/production_model_v2.0_PRODUCTION_latest.pkl (uncalibrated)
-    - models/production_model_v2.0_PRODUCTION_CALIBRATED_latest.pkl (calibrated)
+    - models/production_model_v2.0_PRODUCTION_CALIBRATED_latest.pkl (calibrated)  # noqa: E501
 """
 
 import pickle
@@ -27,8 +27,9 @@ import xgboost as xgb
 from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import brier_score_loss, log_loss, mean_absolute_error
 
-sys.path.append(str(Path(__file__).parent.parent.parent))
 from scripts.utils.fast_feature_builder import FastFeatureBuilder
+
+sys.path.append(str(Path(__file__).parent.parent.parent))
 
 print("=" * 80)
 print("PRODUCTION MODEL TRAINING - Using ALL Available Data")
@@ -52,7 +53,11 @@ if "PRA" not in df.columns:
     df["PRA"] = df["PTS"] + df["REB"] + df["AST"]
 
 print(f"✅ Loaded {len(df):,} games")
-print(f"   Date range: {df['GAME_DATE'].min().date()} to {df['GAME_DATE'].max().date()}")
+print(
+    f"   Date range: {
+        df['GAME_DATE'].min().date()} to {
+            df['GAME_DATE'].max().date()}"
+)
 print(f"   Players: {df['PLAYER_ID'].nunique():,}")
 print()
 
@@ -64,28 +69,36 @@ print("STEP 2: SPLITTING DATA")
 print("=" * 80)
 print()
 
-# For calibration validation: Keep 2023-24 as calibration validation set
-# For model training: Use 2003-2024 (including 2024-25 available data)
+# For calibration validation: Keep 2023 - 24 as calibration validation set
+# For model training: Use 2003 - 2024 (including 2024 - 25 available data)
 print("Data split strategy:")
-print("  Calibration validation: 2023-24 season (for isotonic regression)")
-print("  Model training: 2003 through latest 2024-25 data")
+print("  Calibration validation: 2023 - 24 season (for isotonic regression)")
+print("  Model training: 2003 through latest 2024 - 25 data")
 print()
 
-# Calibration validation set (2023-24)
-calib_start = pd.to_datetime("2023-10-24")
-calib_end = pd.to_datetime("2024-10-21")
+# Calibration validation set (2023 - 24)
+calib_start = pd.to_datetime("2023 - 10 - 24")
+calib_end = pd.to_datetime("2024 - 10 - 21")
 calibration_df = df[(df["GAME_DATE"] >= calib_start) & (df["GAME_DATE"] <= calib_end)].copy()
 
 # Training set: Everything EXCEPT calibration period
-# This includes 2003-2023 AND available 2024-25 data
+# This includes 2003 - 2023 AND available 2024 - 25 data
 train_df = df[~((df["GAME_DATE"] >= calib_start) & (df["GAME_DATE"] <= calib_end))].copy()
 
 print(f"Training data: {len(train_df):,} games")
-print(f"  Date range: {train_df['GAME_DATE'].min().date()} to {train_df['GAME_DATE'].max().date()}")
+print(
+    f"  Date range: {
+        train_df['GAME_DATE'].min().date()} to {
+            train_df['GAME_DATE'].max().date()}"
+)
 print()
 
 print(f"Calibration validation: {len(calibration_df):,} games")
-print(f"  Date range: {calibration_df['GAME_DATE'].min().date()} to {calibration_df['GAME_DATE'].max().date()}")
+print(
+    f"  Date range: {
+        calibration_df['GAME_DATE'].min().date()} to {
+            calibration_df['GAME_DATE'].max().date()}"
+)
 print()
 
 # ============================================================================
@@ -97,12 +110,15 @@ print("=" * 80)
 
 # For training data, we need to build features properly
 # Split into historical and target for feature building
-historical_cutoff = pd.to_datetime("2023-10-23")  # Day before 2023-24 season
+historical_cutoff = pd.to_datetime("2023 - 10 - 23")  # Day before 2023 - 24 season
 historical_train = train_df[train_df["GAME_DATE"] <= historical_cutoff].copy()
 recent_train = train_df[train_df["GAME_DATE"] > historical_cutoff].copy()
 
-print(f"Historical for features: {len(historical_train):,} games (2003 to Oct 2023)")
-print(f"Recent training data: {len(recent_train):,} games (2024-25 season)")
+print(
+    f"Historical for features: {
+        len(historical_train):,    } games (2003 to Oct 2023)"
+)
+print(f"Recent training data: {len(recent_train):,} games (2024 - 25 season)")
 print()
 
 print("Building features for training data...")
@@ -153,8 +169,10 @@ exclude_cols = [
 
 # Get numeric columns only
 feature_cols = [
-    col for col in train_full.columns
-    if col not in exclude_cols and train_full[col].dtype in ['int64', 'float64', 'bool']
+    col
+    for col in train_full.columns
+    if col not in exclude_cols
+    and train_full[col].dtype in ["int64", "float64", "bool"]  # noqa: E501
 ]
 
 # Ensure core stats are included first
@@ -219,7 +237,7 @@ train_preds = model.predict(X_train)
 train_preds = np.maximum(0, train_preds)
 train_mae = mean_absolute_error(y_train, train_preds)
 
-print(f"✅ Model trained")
+print("✅ Model trained")
 print(f"   Training MAE: {train_mae:.2f} points")
 print()
 
@@ -238,7 +256,7 @@ calib_preds = model.predict(X_calib)
 calib_preds = np.maximum(0, calib_preds)
 calib_mae = mean_absolute_error(y_calib, calib_preds)
 
-print(f"✅ Calibration validation:")
+print("✅ Calibration validation:")
 print(f"   Samples: {len(X_calib):,}")
 print(f"   MAE: {calib_mae:.2f} points")
 print()
@@ -251,10 +269,9 @@ print("STEP 7: FEATURE IMPORTANCE")
 print("=" * 80)
 
 importances = model.feature_importances_
-feature_importance_df = pd.DataFrame({
-    "feature": feature_cols,
-    "importance": importances
-}).sort_values("importance", ascending=False)
+feature_importance_df = pd.DataFrame(
+    {"feature": feature_cols, "importance": importances}
+).sort_values("importance", ascending=False)
 
 print("\nTop 15 Features:")
 print(feature_importance_df.head(15).to_string(index=False))
@@ -277,8 +294,10 @@ model_dict = {
     "calib_mae": calib_mae,
     "training_samples": len(X_train),
     "calib_samples": len(X_calib),
-    "date_range": f"{train_full['GAME_DATE'].min().date()} to {train_full['GAME_DATE'].max().date()}",
-    "notes": "Production model trained on all available data including 2024-25 season",
+    "date_range": f"{
+        train_full['GAME_DATE'].min().date()} to {
+            train_full['GAME_DATE'].max().date()}",
+    "notes": "Production model trained on all available data including 2024 - 25 season",  # noqa: E501
 }
 
 model_path = "models/production_model_v2.0_PRODUCTION_latest.pkl"
@@ -299,9 +318,9 @@ print()
 # Use calibration validation data to train isotonic regression
 print("Preparing calibration data...")
 
-# Load historical odds for 2023-24 season
+# Load historical odds for 2023 - 24 season
 try:
-    odds_df = pd.read_csv("data/historical_odds/2023-24/pra_odds.csv")
+    odds_df = pd.read_csv("data/historical_odds/2023 - 24/pra_odds.csv")
     odds_df["event_date"] = pd.to_datetime(odds_df["event_date"])
 
     print(f"✅ Loaded {len(odds_df):,} historical odds")
@@ -339,10 +358,12 @@ try:
             # Ground truth
             actual_over = 1 if actual_pra > line else 0
 
-            calibration_data.append({
-                "prob_over_raw": prob_over_raw,
-                "actual_over": actual_over,
-            })
+            calibration_data.append(
+                {
+                    "prob_over_raw": prob_over_raw,
+                    "actual_over": actual_over,
+                }
+            )
 
         calib_prob_df = pd.DataFrame(calibration_data)
 
@@ -363,7 +384,7 @@ try:
             calib_prob_df["actual_over"], calib_prob_df["prob_over_calibrated"]
         )
 
-        print(f"✅ Calibrator trained")
+        print("✅ Calibrator trained")
         print(f"   Brier score (raw): {brier_raw:.4f}")
         print(f"   Brier score (calibrated): {brier_calibrated:.4f}")
         print(f"   Log loss (raw): {log_loss_raw:.4f}")
@@ -381,7 +402,9 @@ try:
         }
 
         # Save calibrated model
-        calibrated_path = "models/production_model_v2.0_PRODUCTION_CALIBRATED_latest.pkl"
+        calibrated_path = (
+            "models/production_model_v2.0_PRODUCTION_CALIBRATED_latest.pkl"  # noqa: E501
+        )
         with open(calibrated_path, "wb") as f:
             pickle.dump(model_dict, f)
 
@@ -408,7 +431,7 @@ print("=" * 80)
 print()
 
 print("Model Details:")
-print(f"  Version: v2.0_PRODUCTION")
+print("  Version: v2.0_PRODUCTION")
 print(f"  Training samples: {len(X_train):,}")
 print(f"  Training MAE: {train_mae:.2f} points")
 print(f"  Calibration validation MAE: {calib_mae:.2f} points")
@@ -429,7 +452,7 @@ print()
 print("Next Steps:")
 print("  1. Test model on recent games (spot check)")
 print("  2. Generate betting recommendations for upcoming games")
-print("  3. Paper trade for 20-50 bets to validate performance")
+print("  3. Paper trade for 20 - 50 bets to validate performance")
 print("  4. Retrain monthly with new data")
 print()
 

@@ -1,0 +1,63 @@
+================================================================================
+A/B COMPARISON: OLD SIGMOID vs NEW PROBABILISTIC CDF
+Test Period: October 22-23, 2024
+================================================================================
+
+## 1. RECOMMENDATION COUNTS
+   OLD (Sigmoid):     198 recommendations
+   NEW (CDF):          99 recommendations
+   Difference:        -99 (-50.0%)
+
+## 2. MEAN STATISTICS
+
+OLD (Sigmoid):
+   Mean EV:           -0.045 (-4.5%)
+   Mean σ:            5.86
+   σ Range:           [5.86, 5.86]
+   Mean Prob Edge:    -0.024 (-2.4%)
+
+NEW (CDF):
+   Mean EV:           0.274 (27.4%)
+   Mean σ:            10.01
+   σ Range:           [5.07, 23.47]
+   Mean Prob Edge:    0.167 (16.7%)
+
+## 3. EDGE BUCKET ANALYSIS
+
+OLD (Sigmoid) - Win Rate by Edge Bucket:
+             n_bets  n_wins  win_rate  mean_ev  mean_sigma
+edge_bucket                                               
+0-2               0       0       NaN      NaN         NaN
+2-4            5106    2553       0.5  -0.0455        5.86
+4-6            6892    3446       0.5  -0.0455        5.86
+6-8               0       0       NaN      NaN         NaN
+8+                0       0       NaN      NaN         NaN
+
+NEW (CDF) - Win Rate by Edge Bucket:
+             n_bets  n_wins  win_rate  mean_ev  mean_sigma
+edge_bucket                                               
+0-2               0       0       NaN      NaN         NaN
+2-4            2553    1673    0.6553   0.2367      9.7637
+4-6            3446    2319    0.6730   0.3025     10.0585
+6-8               0       0       NaN      NaN         NaN
+8+                0       0       NaN      NaN         NaN
+
+## 4. MONOTONICITY CHECK
+   OLD (Sigmoid): ❌ NON-MONOTONE
+   NEW (CDF):     ❌ NON-MONOTONE
+
+## 5. CORRELATION WITH OUTCOMES (Spearman)
+   OLD (Sigmoid): ρ = 0.304 (p = 0.0000)
+   NEW (CDF):     ρ = 0.065 (p = 0.0000)
+
+## 6. OVERALL WIN RATE
+   OLD (Sigmoid): 50.0% (5999/11998)
+   NEW (CDF):     66.5% (3992/5999)
+   Improvement:   +16.5 percentage points
+
+## 7. ACCEPTANCE CRITERIA
+   Monotone Lift:          ⚠️  CHECK
+
+================================================================================
+⚠️  INVESTIGATE: Non-monotone edge buckets remain
+================================================================================

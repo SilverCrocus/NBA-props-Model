@@ -4,7 +4,7 @@ Monte Carlo Simulation - Test Bet Sequence Sensitivity
 Runs 10,000 simulations with different bet orderings to see if the
 134% return was luck or if it's typical for this win rate.
 
-This answers: "Would I have made similar returns if bets came in a different order?"
+This answers: "Would I have made similar returns if bets came in a different order?"  # noqa: E501
 """
 
 import matplotlib.pyplot as plt
@@ -24,7 +24,7 @@ df["game_date_key"] = df["game_date_obj"].dt.date
 
 # Merge with odds data to get full bet info
 print("   Loading odds data...")
-odds_df = pd.read_csv("data/historical_odds/2024-25/pra_odds.csv")
+odds_df = pd.read_csv("data/historical_odds/2024 - 25/pra_odds.csv")
 odds_df["game_date"] = pd.to_datetime(odds_df["event_date"]).dt.date
 odds_df["player_lower"] = odds_df["player_name"].str.lower().str.strip()
 
@@ -203,22 +203,49 @@ else:
 print("\n📈 PROFITABILITY:")
 profitable = (ending_bankrolls > 1000).sum()
 prob_profit = profitable / n_simulations * 100
-print(f"   Profitable simulations: {profitable:,} / {n_simulations:,} ({prob_profit:.1f}%)")
+print(
+    f"   Profitable simulations: {
+        profitable:,                                    } / {
+            n_simulations:,                                                                                         } ({  # noqa: E501
+                prob_profit:.1f}%)"
+)
 
 breakeven = (ending_bankrolls >= 1000).sum()
 prob_breakeven = breakeven / n_simulations * 100
-print(f"   Break-even or better: {breakeven:,} / {n_simulations:,} ({prob_breakeven:.1f}%)")
+print(
+    f"   Break-even or better: {
+        breakeven:,                                  } / {
+            n_simulations:,                                                                                    } ({  # noqa: E501
+                prob_breakeven:.1f}%)"
+)
 
 busted = (ending_bankrolls < 100).sum()
 prob_bust = busted / n_simulations * 100
-print(f"   Went nearly bust (<$100): {busted:,} / {n_simulations:,} ({prob_bust:.1f}%)")
+print(
+    f"   Went nearly bust (<$100): {
+        busted:,                                      } / {
+            n_simulations:,                                                                                         } ({  # noqa: E501
+                prob_bust:.1f}%)"
+)
 
 print("\n💸 OUTCOMES:")
 best_return = (ending_bankrolls.max() / 1000 - 1) * 100
 worst_return = (ending_bankrolls.min() / 1000 - 1) * 100
-print(f"   Best case:  ${ending_bankrolls.max():,.2f} ({best_return:+.0f}% return)")
-print(f"   Worst case: ${ending_bankrolls.min():,.2f} ({worst_return:+.0f}% return)")
-print(f"   Range:      ${ending_bankrolls.max() - ending_bankrolls.min():,.2f}")
+print(
+    f"   Best case:  ${
+        ending_bankrolls.max():,.2f} ({
+            best_return:+.0f}% return)"
+)
+print(
+    f"   Worst case: ${
+        ending_bankrolls.min():,.2f} ({
+            worst_return:+.0f}% return)"
+)
+print(
+    f"   Range:      ${
+        ending_bankrolls.max() -
+        ending_bankrolls.min():,.2f}"
+)
 
 # Expected value
 mean_return = (ending_bankrolls.mean() / 1000 - 1) * 100
@@ -336,7 +363,7 @@ else:
     verdict = "Below average"
 
 print(
-    f"""
+    """
 Starting with $1,000 and your model's 52.00% win rate:
 
 TYPICAL OUTCOME:
@@ -352,8 +379,8 @@ YOUR ACTUAL OUTCOME:
 RISK ASSESSMENT:
 • Probability of profit: {prob_profit:.1f}%
 • Probability of near-bust: {prob_bust:.1f}%
-• Best case: ${ending_bankrolls.max():,.0f} ({(ending_bankrolls.max() / 1000 - 1) * 100:+.0f}%)
-• Worst case: ${ending_bankrolls.min():,.0f} ({(ending_bankrolls.min() / 1000 - 1) * 100:+.0f}%)
+• Best case: ${ending_bankrolls.max():,.0f} ({(ending_bankrolls.max() / 1000 - 1) * 100:+.0f}%)  # noqa: E501
+• Worst case: ${ending_bankrolls.min():,.0f} ({(ending_bankrolls.min() / 1000 - 1) * 100:+.0f}%)  # noqa: E501
 
 VERDICT: {verdict}
 """
@@ -362,9 +389,9 @@ VERDICT: {verdict}
 if prob_profit < 60:
     print("⚠️  WARNING: Less than 60% chance of profit - model is marginal")
 elif prob_profit < 75:
-    print("⚠️  CAUTION: 60-75% chance of profit - risky but viable")
+    print("⚠️  CAUTION: 60 - 75% chance of profit - risky but viable")
 elif prob_profit < 90:
-    print("✅ GOOD: 75-90% chance of profit - solid model")
+    print("✅ GOOD: 75 - 90% chance of profit - solid model")
 else:
     print("🎉 EXCELLENT: 90%+ chance of profit - strong model")
 

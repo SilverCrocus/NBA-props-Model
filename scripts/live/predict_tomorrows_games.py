@@ -8,7 +8,6 @@ Author: NBA Props Model - Phase 4 Week 1
 Date: October 15, 2025
 """
 
-import json
 import logging
 import os
 import sys
@@ -38,7 +37,7 @@ class LivePredictionPipeline:
         self.api_key = api_key or os.getenv("ODDS_API_KEY") or os.getenv("THEODDSAPI_KEY")
         if not self.api_key:
             raise ValueError(
-                "No API key found. Set ODDS_API_KEY or THEODDSAPI_KEY environment variable."
+                "No API key found. Set ODDS_API_KEY or THEODDSAPI_KEY environment variable."  # noqa: E501
             )
 
         self.base_url = "https://api.the-odds-api.com/v4"
@@ -239,7 +238,7 @@ class LivePredictionPipeline:
 
     def load_recent_game_logs(self, days_back=30):
         """Load recent game logs to build features."""
-        logger.info(f"Loading recent game logs...")
+        logger.info("Loading recent game logs...")
 
         # Load full game logs
         game_logs_path = "data/game_logs/all_game_logs_combined.csv"
@@ -254,21 +253,30 @@ class LivePredictionPipeline:
         cutoff_date = datetime.now() - timedelta(days=days_back)
         recent = df[df["GAME_DATE"] >= cutoff_date].copy()
 
-        # If no recent games (e.g., off-season), use last 20 games per player from available data
+        # If no recent games (e.g., off-season), use last 20 games per player
+        # from available data
         if len(recent) == 0:
             logger.info(
                 f"   No games in last {days_back} days, using most recent games from dataset..."
-            )
+            )  # noqa: E501
             # Get last 20 games per player
             recent = (
                 df.sort_values("GAME_DATE", ascending=False).groupby("PLAYER_NAME").head(20).copy()
             )
-            logger.info(f"   Loaded {len(recent):,} recent games (last 20 per player)")
             logger.info(
-                f"   Date range: {recent['GAME_DATE'].min().date()} to {recent['GAME_DATE'].max().date()}"
+                f"   Loaded {
+                    len(recent):,    } recent games (last 20 per player)"
+            )
+            logger.info(
+                f"   Date range: {
+                    recent['GAME_DATE'].min().date()} to {
+                    recent['GAME_DATE'].max().date()}"
             )
         else:
-            logger.info(f"   Loaded {len(recent):,} games from last {days_back} days")
+            logger.info(
+                f"   Loaded {
+                    len(recent):,    } games from last {days_back} days"
+            )
 
         return recent
 
@@ -280,7 +288,9 @@ class LivePredictionPipeline:
 
         for player_name in player_names:
             # Get player's recent games
-            player_games = recent_games[recent_games["PLAYER_NAME"] == player_name].sort_values(
+            player_games = recent_games[
+                recent_games["PLAYER_NAME"] == player_name
+            ].sort_values(  # noqa: E501
                 "GAME_DATE", ascending=False
             )
 
@@ -410,12 +420,14 @@ class LivePredictionPipeline:
         logger.info(f"Identifying opportunities (edge >= {edge_threshold} points)...")
 
         # Normalize player names for matching
-        predictions_df["player_normalized"] = predictions_df["PLAYER_NAME"].str.strip()
+        predictions_df["player_normalized"] = predictions_df[
+            "PLAYER_NAME"
+        ].str.strip()  # noqa: E501
         odds_df["player_normalized"] = odds_df["player_name"].str.strip()
 
         # Merge predictions with odds
         merged = odds_df.merge(
-            predictions_df[["player_normalized", "predicted_PRA", "games_played"]],
+            predictions_df[["player_normalized", "predicted_PRA", "games_played"]],  # noqa: E501
             on="player_normalized",
             how="left",
         )
@@ -431,7 +443,10 @@ class LivePredictionPipeline:
             lambda x: "OVER" if x > 0 else "UNDER"
         )
         opportunities["bet_odds"] = opportunities.apply(
-            lambda row: row["over_odds"] if row["bet_type"] == "OVER" else row["under_odds"], axis=1
+            lambda row: (
+                row["over_odds"] if row["bet_type"] == "OVER" else row["under_odds"]
+            ),  # noqa: E501
+            axis=1,
         )
 
         # Sort by edge magnitude
@@ -445,7 +460,10 @@ def main():
     logger.info("=" * 70)
     logger.info("LIVE PREDICTION PIPELINE - TOMORROW'S GAMES")
     logger.info("=" * 70)
-    logger.info(f"Current date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info(
+        f"Current date: {
+            datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    )
 
     # Initialize pipeline
     logger.info("\n1. Initializing pipeline...")
@@ -476,7 +494,9 @@ def main():
     all_props = []
 
     for i, event in enumerate(events, 1):
-        logger.info(f"   [{i}/{len(events)}] {event['away_team']} @ {event['home_team']}...")
+        logger.info(
+            f"   [{i}/{len(events)}] {event['away_team']} @ {event['home_team']}..."
+        )  # noqa: E501
 
         event_odds = pipeline.fetch_event_odds(event["id"], event["commence_time"])
 
@@ -486,7 +506,7 @@ def main():
                 all_props.extend(props)
                 logger.info(f"      Found {len(props)} player props")
         else:
-            logger.info(f"      No props available")
+            logger.info("      No props available")
 
         # Rate limit
         if i < len(events):
@@ -543,7 +563,10 @@ def main():
     predictions_df = pipeline.make_predictions(features_df)
 
     logger.info(f"   Predictions generated for {len(predictions_df)} players")
-    logger.info(f"   Mean prediction: {predictions_df['predicted_PRA'].mean():.2f}")
+    logger.info(
+        f"   Mean prediction: {
+            predictions_df['predicted_PRA'].mean():.2f}"
+    )
 
     # Identify opportunities
     logger.info("\n8. Identifying betting opportunities...")
@@ -562,24 +585,37 @@ def main():
 
     if opportunities.empty:
         logger.info("\nNo bets recommended for tomorrow.")
-        logger.info("Strategy: Only bet when edge >= 4 points (55.4% win rate, 10.5% ROI)")
-        logger.info("\nLower-edge opportunities exist but don't meet our profitability threshold.")
+        logger.info(
+            "Strategy: Only bet when edge >= 4 points (55.4% win rate, 10.5% ROI)"
+        )  # noqa: E501
+        logger.info(
+            "\nLower-edge opportunities exist but don't meet our profitability threshold."
+        )  # noqa: E501
     else:
         logger.info(f"\n{len(opportunities)} RECOMMENDED BETS:")
-        logger.info("\nStrategy: Edge >= 4 points (Expected: 55.4% win rate, 10.5% ROI)")
+        logger.info(
+            "\nStrategy: Edge >= 4 points (Expected: 55.4% win rate, 10.5% ROI)"
+        )  # noqa: E501
         logger.info("-" * 70)
 
         for i, row in opportunities.iterrows():
             logger.info(f"\n{row['player_name']}")
             logger.info(f"  Game: {row['away_team']} @ {row['home_team']}")
-            logger.info(f"  Time: {row['game_datetime'].strftime('%Y-%m-%d %H:%M')}")
+            logger.info(
+                f"  Time: {
+                    row['game_datetime'].strftime('%Y-%m-%d %H:%M')}"
+            )
             logger.info(f"  Bookmaker: {row['bookmaker']}")
-            logger.info(f"  ")
+            logger.info("  ")
             logger.info(f"  Betting Line: {row['betting_line']:.1f}")
             logger.info(f"  Our Prediction: {row['predicted_PRA']:.1f}")
             logger.info(f"  Edge: {row['edge']:+.1f} points")
-            logger.info(f"  ")
-            logger.info(f"  RECOMMENDATION: Bet {row['bet_type']} at {row['bet_odds']:+.0f}")
+            logger.info("  ")
+            logger.info(
+                f"  RECOMMENDATION: Bet {
+                    row['bet_type']} at {
+                    row['bet_odds']:+.0f}"
+            )
             logger.info(f"  Recent Games: {row['games_played']}")
 
     # Save results
@@ -616,10 +652,10 @@ def main():
     logger.info(f"  Betting opportunities: {len(opportunities)}")
 
     if not opportunities.empty:
-        logger.info(f"\n  Expected performance:")
-        logger.info(f"  - Win rate: 55.4%")
-        logger.info(f"  - ROI: 10.5%")
-        logger.info(f"  - Based on 756 historical bets with edge >= 4 points")
+        logger.info("\n  Expected performance:")
+        logger.info("  - Win rate: 55.4%")
+        logger.info("  - ROI: 10.5%")
+        logger.info("  - Based on 756 historical bets with edge >= 4 points")
 
 
 if __name__ == "__main__":

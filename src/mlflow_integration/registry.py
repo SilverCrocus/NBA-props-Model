@@ -3,11 +3,12 @@ MLflow Model Registry Manager for NBA Props Model
 Handles model registration, versioning, promotion, and lifecycle management
 """
 
-import mlflow
-from mlflow.tracking import MlflowClient
-from typing import Dict, List, Optional
 import logging
 from datetime import datetime
+from typing import Dict, List
+
+import mlflow
+from mlflow.tracking import MlflowClient
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -27,7 +28,7 @@ class ModelRegistry:
             tracking_uri: MLflow tracking URI (defaults to local)
         """
         if tracking_uri is None:
-            tracking_uri = "file:///Users/diyagamah/Documents/nba_props_model/mlruns"
+            tracking_uri = "file:///Users/diyagamah/Documents/nba_props_model/mlruns"  # noqa: E501
 
         mlflow.set_tracking_uri(tracking_uri)
         self.client = MlflowClient()
@@ -35,10 +36,7 @@ class ModelRegistry:
         logger.info(f"Initialized Model Registry with URI: {tracking_uri}")
 
     def register_model(
-        self,
-        run_id: str,
-        model_name: str = "NBAPropsModel",
-        tags: Dict[str, str] = None
+        self, run_id: str, model_name: str = "NBAPropsModel", tags: Dict[str, str] = None
     ) -> mlflow.entities.model_registry.ModelVersion:
         """
         Register a model from a completed run
@@ -55,13 +53,11 @@ class ModelRegistry:
             model_uri = f"runs:/{run_id}/model"
 
             # Register the model
-            model_version = mlflow.register_model(
-                model_uri=model_uri,
-                name=model_name
-            )
+            model_version = mlflow.register_model(model_uri=model_uri, name=model_name)
 
             logger.info(
-                f"Registered model '{model_name}' version {model_version.version} "
+                f"Registered model '{model_name}' version {
+                    model_version.version} "
                 f"from run {run_id}"
             )
 
@@ -69,10 +65,7 @@ class ModelRegistry:
             if tags:
                 for key, value in tags.items():
                     self.client.set_model_version_tag(
-                        name=model_name,
-                        version=model_version.version,
-                        key=key,
-                        value=str(value)
+                        name=model_name, version=model_version.version, key=key, value=str(value)
                     )
 
             # Add registration timestamp
@@ -80,7 +73,7 @@ class ModelRegistry:
                 name=model_name,
                 version=model_version.version,
                 key="registered_at",
-                value=datetime.now().isoformat()
+                value=datetime.now().isoformat(),
             )
 
             return model_version
@@ -90,10 +83,7 @@ class ModelRegistry:
             raise
 
     def get_model_version(
-        self,
-        model_name: str,
-        version: int = None,
-        stage: str = None
+        self, model_name: str, version: int = None, stage: str = None
     ) -> mlflow.entities.model_registry.ModelVersion:
         """
         Get a specific model version
@@ -130,11 +120,7 @@ class ModelRegistry:
             raise
 
     def promote_model(
-        self,
-        model_name: str,
-        version: int,
-        stage: str,
-        archive_existing: bool = True
+        self, model_name: str, version: int, stage: str, archive_existing: bool = True
     ):
         """
         Promote a model version to a specific stage
@@ -147,24 +133,17 @@ class ModelRegistry:
         """
         try:
             # Archive existing models in target stage
-            if archive_existing and stage in ['Staging', 'Production']:
+            if archive_existing and stage in ["Staging", "Production"]:
                 existing = self.client.get_latest_versions(model_name, stages=[stage])
                 for model_version in existing:
                     self.client.transition_model_version_stage(
-                        name=model_name,
-                        version=model_version.version,
-                        stage="Archived"
+                        name=model_name, version=model_version.version, stage="Archived"
                     )
-                    logger.info(
-                        f"Archived model version {model_version.version} "
-                        f"from {stage}"
-                    )
+                    logger.info(f"Archived model version {model_version.version} " f"from {stage}")
 
             # Promote new version
             self.client.transition_model_version_stage(
-                name=model_name,
-                version=version,
-                stage=stage
+                name=model_name, version=version, stage=stage
             )
 
             # Add promotion timestamp
@@ -172,7 +151,7 @@ class ModelRegistry:
                 name=model_name,
                 version=version,
                 key=f"promoted_to_{stage.lower()}_at",
-                value=datetime.now().isoformat()
+                value=datetime.now().isoformat(),
             )
 
             logger.info(f"Promoted model version {version} to {stage}")
@@ -182,10 +161,7 @@ class ModelRegistry:
             raise
 
     def evaluate_for_production(
-        self,
-        model_name: str,
-        version: int,
-        criteria: Dict[str, float]
+        self, model_name: str, version: int, criteria: Dict[str, float]
     ) -> bool:
         """
         Evaluate if model meets production criteria
@@ -203,15 +179,15 @@ class ModelRegistry:
             run = self.client.get_run(model_version.run_id)
 
             metrics = run.data.metrics
-            params = run.data.params
+            __params = run.data.params  # noqa: F841
 
             results = {}
             all_passed = True
 
             for metric_name, threshold in criteria.items():
-                if metric_name.startswith('min_'):
+                if metric_name.startswith("min_"):
                     # Minimum threshold (e.g., min_win_rate > 0.55)
-                    actual_metric = metric_name.replace('min_', '')
+                    actual_metric = metric_name.replace("min_", "")
                     actual_value = metrics.get(actual_metric)
 
                     if actual_value is None:
@@ -219,22 +195,18 @@ class ModelRegistry:
                         results[metric_name] = False
                         all_passed = False
                     elif actual_value < threshold:
-                        logger.info(
-                            f"FAIL: {actual_metric} ({actual_value:.4f}) "
-                            f"< {threshold}"
-                        )
+                        logger.info(f"FAIL: {actual_metric} ({actual_value:.4f}) " f"< {threshold}")
                         results[metric_name] = False
                         all_passed = False
                     else:
                         logger.info(
-                            f"PASS: {actual_metric} ({actual_value:.4f}) "
-                            f">= {threshold}"
+                            f"PASS: {actual_metric} ({actual_value:.4f}) " f">= {threshold}"
                         )
                         results[metric_name] = True
 
-                elif metric_name.startswith('max_'):
+                elif metric_name.startswith("max_"):
                     # Maximum threshold (e.g., max_mae < 3.5)
-                    actual_metric = metric_name.replace('max_', '')
+                    actual_metric = metric_name.replace("max_", "")
                     actual_value = metrics.get(actual_metric)
 
                     if actual_value is None:
@@ -242,16 +214,12 @@ class ModelRegistry:
                         results[metric_name] = False
                         all_passed = False
                     elif actual_value > threshold:
-                        logger.info(
-                            f"FAIL: {actual_metric} ({actual_value:.4f}) "
-                            f"> {threshold}"
-                        )
+                        logger.info(f"FAIL: {actual_metric} ({actual_value:.4f}) " f"> {threshold}")
                         results[metric_name] = False
                         all_passed = False
                     else:
                         logger.info(
-                            f"PASS: {actual_metric} ({actual_value:.4f}) "
-                            f"<= {threshold}"
+                            f"PASS: {actual_metric} ({actual_value:.4f}) " f"<= {threshold}"
                         )
                         results[metric_name] = True
 
@@ -260,14 +228,14 @@ class ModelRegistry:
                 name=model_name,
                 version=version,
                 key="production_evaluation",
-                value="PASSED" if all_passed else "FAILED"
+                value="PASSED" if all_passed else "FAILED",
             )
 
             self.client.set_model_version_tag(
                 name=model_name,
                 version=version,
                 key="evaluation_timestamp",
-                value=datetime.now().isoformat()
+                value=datetime.now().isoformat(),
             )
 
             return all_passed
@@ -276,26 +244,18 @@ class ModelRegistry:
             logger.error(f"Error evaluating model: {e}")
             return False
 
-    def rollback_model(
-        self,
-        model_name: str,
-        reason: str,
-        target_version: int = None
-    ):
+    def rollback_model(self, model_name: str, reason: str, target_version: int = None):
         """
         Rollback to previous production model
 
         Args:
             model_name: Name of the registered model
             reason: Reason for rollback
-            target_version: Specific version to rollback to (if None, uses previous)
+            target_version: Specific version to rollback to (if None, uses previous)  # noqa: E501
         """
         try:
             # Get current production model
-            current_prod = self.client.get_latest_versions(
-                model_name,
-                stages=["Production"]
-            )
+            current_prod = self.client.get_latest_versions(model_name, stages=["Production"])
 
             if not current_prod:
                 logger.warning("No production model to rollback from")
@@ -305,9 +265,7 @@ class ModelRegistry:
 
             # Archive current production model
             self.client.transition_model_version_stage(
-                name=model_name,
-                version=current_version.version,
-                stage="Archived"
+                name=model_name, version=current_version.version, stage="Archived"
             )
 
             # Add rollback reason
@@ -315,29 +273,26 @@ class ModelRegistry:
                 name=model_name,
                 version=current_version.version,
                 key="rollback_reason",
-                value=reason
+                value=reason,
             )
 
-            logger.info(f"Archived production model v{current_version.version}")
+            logger.info(
+                f"Archived production model v{
+                    current_version.version}"
+            )
 
             # Determine target version
             if target_version is None:
                 # Get previous version
-                all_versions = self.client.search_model_versions(
-                    f"name='{model_name}'"
-                )
-                sorted_versions = sorted(
-                    all_versions,
-                    key=lambda v: int(v.version),
-                    reverse=True
-                )
+                all_versions = self.client.search_model_versions(f"name='{model_name}'")
+                sorted_versions = sorted(all_versions, key=lambda v: int(v.version), reverse=True)
 
                 # Find first version that was previously in production
                 target_version = None
                 for v in sorted_versions:
                     if v.version != current_version.version:
                         tags = {t.key: t.value for t in v.tags}
-                        if 'promoted_to_production_at' in tags:
+                        if "promoted_to_production_at" in tags:
                             target_version = int(v.version)
                             break
 
@@ -347,9 +302,7 @@ class ModelRegistry:
 
             # Promote target version to production
             self.client.transition_model_version_stage(
-                name=model_name,
-                version=target_version,
-                stage="Production"
+                name=model_name, version=target_version, stage="Production"
             )
 
             # Add rollback timestamp
@@ -357,11 +310,12 @@ class ModelRegistry:
                 name=model_name,
                 version=target_version,
                 key="rolled_back_at",
-                value=datetime.now().isoformat()
+                value=datetime.now().isoformat(),
             )
 
             logger.info(
-                f"Rolled back from v{current_version.version} to v{target_version}"
+                f"Rolled back from v{
+                    current_version.version} to v{target_version}"
             )
             logger.info(f"Reason: {reason}")
 
@@ -370,9 +324,7 @@ class ModelRegistry:
             raise
 
     def list_models(
-        self,
-        model_name: str = None,
-        stage: str = None
+        self, model_name: str = None, stage: str = None
     ) -> List[mlflow.entities.model_registry.ModelVersion]:
         """
         List registered models
@@ -393,9 +345,7 @@ class ModelRegistry:
                 # List all registered models
                 versions = []
                 for rm in self.client.search_registered_models():
-                    versions.extend(
-                        self.client.search_model_versions(f"name='{rm.name}'")
-                    )
+                    versions.extend(self.client.search_model_versions(f"name='{rm.name}'"))
 
             return versions
 
@@ -403,11 +353,7 @@ class ModelRegistry:
             logger.error(f"Error listing models: {e}")
             return []
 
-    def get_model_info(
-        self,
-        model_name: str,
-        version: int = None
-    ) -> Dict:
+    def get_model_info(self, model_name: str, version: int = None) -> Dict:
         """
         Get detailed information about a model version
 
@@ -420,10 +366,7 @@ class ModelRegistry:
         """
         try:
             if version is None:
-                model_version = self.get_model_version(
-                    model_name,
-                    stage="Production"
-                )
+                model_version = self.get_model_version(model_name, stage="Production")
             else:
                 model_version = self.client.get_model_version(model_name, version)
 
@@ -448,11 +391,7 @@ class ModelRegistry:
             return {}
 
     def compare_models(
-        self,
-        model_name: str,
-        version1: int,
-        version2: int,
-        metrics: List[str] = None
+        self, model_name: str, version1: int, version2: int, metrics: List[str] = None
     ) -> Dict:
         """
         Compare two model versions
@@ -477,11 +416,7 @@ class ModelRegistry:
                 # Get all common metrics
                 metrics = set(run1.data.metrics.keys()) & set(run2.data.metrics.keys())
 
-            comparison = {
-                "version1": version1,
-                "version2": version2,
-                "metrics": {}
-            }
+            comparison = {"version1": version1, "version2": version2, "metrics": {}}
 
             for metric in metrics:
                 val1 = run1.data.metrics.get(metric)
@@ -492,7 +427,7 @@ class ModelRegistry:
                         "version1": val1,
                         "version2": val2,
                         "difference": val2 - val1,
-                        "percent_change": ((val2 - val1) / val1 * 100) if val1 != 0 else None
+                        "percent_change": ((val2 - val1) / val1 * 100) if val1 != 0 else None,
                     }
 
             return comparison
@@ -501,11 +436,7 @@ class ModelRegistry:
             logger.error(f"Error comparing models: {e}")
             return {}
 
-    def delete_model_version(
-        self,
-        model_name: str,
-        version: int
-    ):
+    def delete_model_version(self, model_name: str, version: int):
         """
         Delete a specific model version
 
@@ -523,9 +454,9 @@ class ModelRegistry:
 
 # Production criteria for NBA props model
 DEFAULT_PRODUCTION_CRITERIA = {
-    "max_val_mae": 3.5,                # MAE must be < 3.5
-    "min_betting_roi": 0.05,           # ROI must be > 5%
-    "min_betting_win_rate": 0.55,      # Win rate must be > 55%
+    "max_val_mae": 3.5,  # MAE must be < 3.5
+    "min_betting_roi": 0.05,  # ROI must be > 5%
+    "min_betting_win_rate": 0.55,  # Win rate must be > 55%
     "max_betting_calibration_error": 0.05,  # Calibration error < 5%
-    "min_betting_sharpe_ratio": 1.0,   # Sharpe ratio > 1.0
+    "min_betting_sharpe_ratio": 1.0,  # Sharpe ratio > 1.0
 }

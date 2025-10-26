@@ -3,13 +3,13 @@ Utility functions for MLflow experiment tracking
 Experiment setup, comparison, reporting, and analysis
 """
 
-import mlflow
-from mlflow.tracking import MlflowClient
-import pandas as pd
-import numpy as np
-from typing import Dict, List, Optional
-from datetime import datetime, timedelta
 import logging
+from datetime import datetime, timedelta
+from typing import Dict, List
+
+import mlflow
+import pandas as pd
+from mlflow.tracking import MlflowClient
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ def setup_mlflow_experiments(tracking_uri: str = None) -> Dict[str, str]:
         Dictionary mapping phase names to experiment IDs
     """
     if tracking_uri is None:
-        tracking_uri = "file:///Users/diyagamah/Documents/nba_props_model/mlruns"
+        tracking_uri = "file:///Users/diyagamah/Documents/nba_props_model/mlruns"  # noqa: E501
 
     mlflow.set_tracking_uri(tracking_uri)
     client = MlflowClient()
@@ -35,23 +35,23 @@ def setup_mlflow_experiments(tracking_uri: str = None) -> Dict[str, str]:
     experiments = [
         {
             "name": "Phase1_Foundation",
-            "description": "Weeks 1-3: Baseline models, feature selection, initial validation",
-            "tags": {"phase": "1", "weeks": "1-3", "focus": "foundation"}
+            "description": "Weeks 1 - 3: Baseline models, feature selection, initial validation",  # noqa: E501
+            "tags": {"phase": "1", "weeks": "1 - 3", "focus": "foundation"},
         },
         {
             "name": "Phase2_Advanced",
-            "description": "Weeks 4-7: Advanced features, opponent features, ensemble methods",
-            "tags": {"phase": "2", "weeks": "4-7", "focus": "advanced_features"}
+            "description": "Weeks 4 - 7: Advanced features, opponent features, ensemble methods",  # noqa: E501
+            "tags": {"phase": "2", "weeks": "4 - 7", "focus": "advanced_features"},
         },
         {
             "name": "Phase3_Calibration",
-            "description": "Weeks 8-9: Model calibration, probability adjustment, betting optimization",
-            "tags": {"phase": "3", "weeks": "8-9", "focus": "calibration"}
+            "description": "Weeks 8 - 9: Model calibration, probability adjustment, betting optimization",  # noqa: E501
+            "tags": {"phase": "3", "weeks": "8 - 9", "focus": "calibration"},
         },
         {
             "name": "Phase4_Production",
-            "description": "Weeks 10-12: Walk-forward validation, production deployment, monitoring",
-            "tags": {"phase": "4", "weeks": "10-12", "focus": "production"}
+            "description": "Weeks 10 - 12: Walk-forward validation, production deployment, monitoring",  # noqa: E501
+            "tags": {"phase": "4", "weeks": "10 - 12", "focus": "production"},
         },
     ]
 
@@ -67,7 +67,7 @@ def setup_mlflow_experiments(tracking_uri: str = None) -> Dict[str, str]:
                 experiment_id = mlflow.create_experiment(
                     name=exp_config["name"],
                     artifact_location=f"mlflow_artifacts/{exp_config['name']}",
-                    tags=exp_config["tags"]
+                    tags=exp_config["tags"],
                 )
                 logger.info(f"Created experiment: {exp_config['name']}")
             else:
@@ -77,15 +77,16 @@ def setup_mlflow_experiments(tracking_uri: str = None) -> Dict[str, str]:
             experiment_ids[exp_config["name"]] = experiment_id
 
         except Exception as e:
-            logger.error(f"Error setting up experiment {exp_config['name']}: {e}")
+            logger.error(
+                f"Error setting up experiment {
+                    exp_config['name']}: {e}"
+            )
 
     return experiment_ids
 
 
 def compare_runs(
-    run_ids: List[str],
-    metrics: List[str] = None,
-    params: List[str] = None
+    run_ids: List[str], metrics: List[str] = None, params: List[str] = None
 ) -> pd.DataFrame:
     """
     Compare multiple MLflow runs
@@ -144,7 +145,7 @@ def get_best_model(
     metric: str = "val_mae",
     ascending: bool = True,
     filter_string: str = None,
-    top_n: int = 1
+    top_n: int = 1,
 ) -> List[Dict]:
     """
     Get best model(s) from an experiment
@@ -172,7 +173,7 @@ def get_best_model(
             experiment_ids=[experiment.experiment_id],
             filter_string=filter_string,
             order_by=order_by,
-            max_results=top_n
+            max_results=top_n,
         )
 
         if runs_df.empty:
@@ -206,10 +207,7 @@ def get_best_model(
         return []
 
 
-def generate_experiment_report(
-    experiment_name: str,
-    output_path: str = None
-) -> str:
+def generate_experiment_report(experiment_name: str, output_path: str = None) -> str:
     """
     Generate comprehensive report for an experiment
 
@@ -243,7 +241,7 @@ def generate_experiment_report(
 
         if not runs_df.empty:
             # Status summary
-            status_counts = runs_df['status'].value_counts()
+            status_counts = runs_df["status"].value_counts()
             report.append("RUN STATUS")
             report.append("-" * 40)
             for status, count in status_counts.items():
@@ -270,8 +268,16 @@ def generate_experiment_report(
                         report.append(f"BEST {display_name.upper()}")
                         report.append("-" * 40)
                         report.append(f"Run ID: {best['run_id']}")
-                        report.append(f"Run Name: {best.get('tags.mlflow.runName', 'N/A')}")
-                        report.append(f"{display_name}: {best[metric_col]:.4f}")
+                        report.append(
+                            f"Run Name: {
+                                best.get(
+                                    'tags.mlflow.runName',
+                                    'N/A')}"
+                        )
+                        report.append(
+                            f"{display_name}: {
+                                best[metric_col]:.4f}"
+                        )
                         report.append("")
 
             # Metric statistics
@@ -297,18 +303,18 @@ def generate_experiment_report(
             report.append("RECENT RUNS (Last 5)")
             report.append("-" * 40)
 
-            recent = runs_df.nlargest(5, 'start_time')
+            recent = runs_df.nlargest(5, "start_time")
             for _, run in recent.iterrows():
-                run_name = run.get('tags.mlflow.runName', 'N/A')
-                start_time = run['start_time'].strftime('%Y-%m-%d %H:%M:%S')
-                status = run['status']
+                run_name = run.get("tags.mlflow.runName", "N/A")
+                start_time = run["start_time"].strftime("%Y-%m-%d %H:%M:%S")
+                status = run["status"]
 
                 report.append(f"- {run_name} ({start_time}) - {status}")
 
                 # Show key metrics if available
-                if 'metrics.val_mae' in run:
+                if "metrics.val_mae" in run:
                     report.append(f"  MAE: {run['metrics.val_mae']:.4f}")
-                if 'metrics.betting_roi' in run:
+                if "metrics.betting_roi" in run:
                     report.append(f"  ROI: {run['metrics.betting_roi']:.4f}")
 
             report.append("")
@@ -319,7 +325,7 @@ def generate_experiment_report(
 
         # Save if output path provided
         if output_path:
-            with open(output_path, 'w') as f:
+            with open(output_path, "w") as f:
                 f.write(report_text)
             logger.info(f"Report saved to {output_path}")
 
@@ -330,23 +336,20 @@ def generate_experiment_report(
         return f"Error: {e}"
 
 
-def get_weekly_summary(
-    week_number: int,
-    experiment_names: List[str] = None
-) -> Dict:
+def get_weekly_summary(week_number: int, experiment_names: List[str] = None) -> Dict:
     """
     Generate weekly progress summary
 
     Args:
-        week_number: Week number (1-12)
-        experiment_names: List of experiment names to include (if None, includes all)
+        week_number: Week number (1 - 12)
+        experiment_names: List of experiment names to include (if None, includes all)  # noqa: E501
 
     Returns:
         Dictionary with weekly summary
     """
     try:
         # Calculate date range for this week
-        # Assuming project started on 2025-10-14
+        # Assuming project started on 2025 - 10 - 14
         project_start = datetime(2025, 10, 14)
         week_start = project_start + timedelta(weeks=week_number - 1)
         week_end = week_start + timedelta(days=7)
@@ -365,40 +368,39 @@ def get_weekly_summary(
 
         summary = {
             "week": week_number,
-            "date_range": f"{week_start.strftime('%Y-%m-%d')} to {week_end.strftime('%Y-%m-%d')}",
+            "date_range": f"{week_start.strftime('%Y-%m-%d')} to {week_end.strftime('%Y-%m-%d')}",  # noqa: E501
             "experiments": {},
             "totals": {
                 "total_runs": 0,
                 "successful_runs": 0,
                 "failed_runs": 0,
                 "models_registered": 0,
-            }
+            },
         }
 
         for exp in experiments:
             # Get runs for this week
             filter_string = (
-                f"attributes.start_time >= {int(week_start.timestamp() * 1000)} "
-                f"AND attributes.start_time < {int(week_end.timestamp() * 1000)}"
+                f"attributes.start_time >= {int(week_start.timestamp() * 1000)} "  # noqa: E501
+                f"AND attributes.start_time < {int(week_end.timestamp() * 1000)}"  # noqa: E501
             )
 
             runs_df = mlflow.search_runs(
-                experiment_ids=[exp.experiment_id],
-                filter_string=filter_string
+                experiment_ids=[exp.experiment_id], filter_string=filter_string
             )
 
             exp_summary = {
                 "total_runs": len(runs_df),
-                "successful": len(runs_df[runs_df['status'] == 'FINISHED']),
-                "failed": len(runs_df[runs_df['status'] == 'FAILED']),
+                "successful": len(runs_df[runs_df["status"] == "FINISHED"]),
+                "failed": len(runs_df[runs_df["status"] == "FAILED"]),
             }
 
             # Get best metrics
             if not runs_df.empty:
-                if 'metrics.val_mae' in runs_df.columns:
-                    exp_summary['best_mae'] = runs_df['metrics.val_mae'].min()
-                if 'metrics.betting_roi' in runs_df.columns:
-                    exp_summary['best_roi'] = runs_df['metrics.betting_roi'].max()
+                if "metrics.val_mae" in runs_df.columns:
+                    exp_summary["best_mae"] = runs_df["metrics.val_mae"].min()
+                if "metrics.betting_roi" in runs_df.columns:
+                    exp_summary["best_roi"] = runs_df["metrics.betting_roi"].max()  # noqa: E501
 
             summary["experiments"][exp.name] = exp_summary
 
@@ -421,21 +423,13 @@ def compare_phases() -> pd.DataFrame:
     Returns:
         DataFrame with phase comparison
     """
-    phases = [
-        "Phase1_Foundation",
-        "Phase2_Advanced",
-        "Phase3_Calibration",
-        "Phase4_Production"
-    ]
+    phases = ["Phase1_Foundation", "Phase2_Advanced", "Phase3_Calibration", "Phase4_Production"]
 
     results = []
 
     for phase_name in phases:
         best_models = get_best_model(
-            experiment_name=phase_name,
-            metric="val_mae",
-            ascending=True,
-            top_n=1
+            experiment_name=phase_name, metric="val_mae", ascending=True, top_n=1
         )
 
         if best_models:
@@ -453,11 +447,7 @@ def compare_phases() -> pd.DataFrame:
     return pd.DataFrame(results)
 
 
-def export_runs_to_csv(
-    experiment_name: str,
-    output_path: str,
-    filter_string: str = None
-):
+def export_runs_to_csv(experiment_name: str, output_path: str, filter_string: str = None):
     """
     Export experiment runs to CSV
 
@@ -473,8 +463,7 @@ def export_runs_to_csv(
             return
 
         runs_df = mlflow.search_runs(
-            experiment_ids=[experiment.experiment_id],
-            filter_string=filter_string
+            experiment_ids=[experiment.experiment_id], filter_string=filter_string
         )
 
         runs_df.to_csv(output_path, index=False)

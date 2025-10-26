@@ -2,7 +2,7 @@
 Monte Carlo Simulation - Optimal Betting Strategy
 
 Runs 10,000 simulations shuffling bet order to assess variance and risk.
-Validates robustness of the optimal strategy (non-stars + 5-7/10+ edges).
+Validates robustness of the optimal strategy (non-stars + 5 - 7 / 10+ edges).
 
 Based on: OPTIMAL_BETTING_STRATEGY.md
 """
@@ -14,9 +14,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from config import data_config
+
 # Add project root to path
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from config import data_config
 
 print("=" * 80)
 print("MONTE CARLO SIMULATION - OPTIMAL BETTING STRATEGY")
@@ -30,7 +31,7 @@ df = pd.read_csv(backtest_file)
 bets = df[df["bet_side"] != "NONE"].copy()
 
 print(f"\n📊 Loaded {len(bets):,} bets from optimal strategy backtest")
-print(f"   Win rate: {(bets['bet_result'] > 0).mean()*100:.2f}%")
+print(f"   Win rate: {(bets['bet_result'] > 0).mean() * 100:.2f}%")
 print(f"   Total profit: ${bets['bet_result'].sum():,.2f}")
 
 # Monte Carlo parameters
@@ -53,7 +54,7 @@ np.random.seed(42)
 
 for i in range(N_SIMULATIONS):
     if (i + 1) % 2000 == 0:
-        print(f"   Completed {i+1:,} simulations...")
+        print(f"   Completed {i + 1:,} simulations...")
 
     # Shuffle bet order
     shuffled_bets = bets.sample(frac=1).reset_index(drop=True)
@@ -102,7 +103,7 @@ print("\n" + "=" * 80)
 print("MONTE CARLO RESULTS")
 print("=" * 80)
 
-print(f"\n💰 ENDING BANKROLL:")
+print("\n💰 ENDING BANKROLL:")
 print("-" * 80)
 print(f"Median:  ${np.median(ending_bankrolls):,.2f}")
 print(f"Mean:    ${np.mean(ending_bankrolls):,.2f}")
@@ -110,7 +111,7 @@ print(f"Min:     ${np.min(ending_bankrolls):,.2f}")
 print(f"Max:     ${np.max(ending_bankrolls):,.2f}")
 print(f"Std Dev: ${np.std(ending_bankrolls):,.2f}")
 
-print(f"\n📈 RETURNS:")
+print("\n📈 RETURNS:")
 print("-" * 80)
 print(f"Median:  {np.median(returns):+.1f}%")
 print(f"Mean:    {np.mean(returns):+.1f}%")
@@ -118,31 +119,49 @@ print(f"Min:     {np.min(returns):+.1f}%")
 print(f"Max:     {np.max(returns):+.1f}%")
 print(f"Std Dev: {np.std(returns):.1f}%")
 
-print(f"\n📊 PROFITABILITY:")
+print("\n📊 PROFITABILITY:")
 print("-" * 80)
 profitable_sims = (ending_bankrolls > STARTING_BANKROLL).sum()
 print(
-    f"Profitable simulations: {profitable_sims:,} / {N_SIMULATIONS:,} ({profitable_sims/N_SIMULATIONS*100:.2f}%)"
+    f"Profitable simulations: {
+        profitable_sims:,                                 } / {
+            N_SIMULATIONS:,                                                                                        } ({  # noqa: E501
+                profitable_sims /
+                N_SIMULATIONS *
+        100:.2f}%)"
 )
 breakeven_sims = (ending_bankrolls == STARTING_BANKROLL).sum()
 print(
-    f"Breakeven simulations: {breakeven_sims:,} / {N_SIMULATIONS:,} ({breakeven_sims/N_SIMULATIONS*100:.2f}%)"
+    f"Breakeven simulations: {
+        breakeven_sims:,                                } / {
+            N_SIMULATIONS:,                                                                                     } ({  # noqa: E501
+                breakeven_sims /
+                N_SIMULATIONS *
+        100:.2f}%)"
 )
 losing_sims = (ending_bankrolls < STARTING_BANKROLL).sum()
 print(
-    f"Losing simulations: {losing_sims:,} / {N_SIMULATIONS:,} ({losing_sims/N_SIMULATIONS*100:.2f}%)"
+    f"Losing simulations: {
+        losing_sims:,                             } / {
+            N_SIMULATIONS:,                                                                            } ({  # noqa: E501
+                losing_sims /
+                N_SIMULATIONS *
+        100:.2f}%)"
 )
 
-print(f"\n⚠️  RISK METRICS:")
+print("\n⚠️  RISK METRICS:")
 print("-" * 80)
 print(
-    f"Near-bust probability (<20% of bankroll): {near_busts:,} / {N_SIMULATIONS:,} ({near_busts/N_SIMULATIONS*100:.2f}%)"
+    f"Near-bust probability (<20% of bankroll): {
+        near_busts:,} / {
+            N_SIMULATIONS:,} ({
+                near_busts / N_SIMULATIONS * 100:.2f}%)"
 )
 print(f"Worst drawdown: {np.min(max_drawdowns):.1f}%")
 print(f"Median drawdown: {np.median(max_drawdowns):.1f}%")
 
 # Percentiles
-print(f"\n📉 RETURN PERCENTILES:")
+print("\n📉 RETURN PERCENTILES:")
 print("-" * 80)
 percentiles = [5, 10, 25, 50, 75, 90, 95]
 for p in percentiles:
@@ -153,15 +172,16 @@ for p in percentiles:
 print("\n📊 Creating visualization...")
 
 # Check if results are deterministic (all identical)
-is_deterministic = np.std(ending_bankrolls) < 1e-6  # Use epsilon for float comparison
+# Use epsilon for float comparison
+is_deterministic = np.std(ending_bankrolls) < 1e-6
 
 if is_deterministic:
-    print("   Note: Results are deterministic (no variance with fixed bet sizing)")
+    print("   Note: Results are deterministic (no variance with fixed bet sizing)")  # noqa: E501
     print("   Creating simplified visualization...")
 
     fig, ax = plt.subplots(1, 1, figsize=(10, 6))
     fig.suptitle(
-        "Monte Carlo Analysis - Optimal Betting Strategy\n(Deterministic Results with Fixed Bet Sizing)",
+        "Monte Carlo Analysis - Optimal Betting Strategy\n(Deterministic Results with Fixed Bet Sizing)",  # noqa: E501
         fontsize=14,
         fontweight="bold",
     )
@@ -197,13 +217,18 @@ if is_deterministic:
         xy=(1, np.median(ending_bankrolls)),
         xytext=(1.3, (STARTING_BANKROLL + np.median(ending_bankrolls)) / 2),
         fontsize=11,
-        bbox=dict(boxstyle="round,pad=0.5", facecolor="lightyellow", edgecolor="black"),
-        arrowprops=dict(arrowstyle="->", connectionstyle="arc3,rad=0.3", linewidth=2),
+        bbox=dict(
+            boxstyle="round,pad=0.5", facecolor="lightyellow", edgecolor="black"
+        ),  # noqa: E501
+        arrowprops=dict(arrowstyle="->", connectionstyle="arc3,rad=0.3", linewidth=2),  # noqa: E501
     )
 
     ax.set_ylabel("Bankroll ($)", fontsize=12, fontweight="bold")
     ax.set_title(
-        f"100% Profitable Across {N_SIMULATIONS:,} Simulations", fontsize=13, fontweight="bold"
+        f"100% Profitable Across {
+            N_SIMULATIONS:,    } Simulations",
+        fontsize=13,
+        fontweight="bold",
     )
     ax.grid(axis="y", alpha=0.3)
     ax.set_ylim(0, np.median(ending_bankrolls) * 1.15)
@@ -283,7 +308,7 @@ else:
         color="red",
         linestyle="--",
         linewidth=2,
-        label=f"Median (50th %ile)",
+        label="Median (50th %ile)",
     )
     ax4.axvline(STARTING_BANKROLL, color="black", linestyle=":", linewidth=2, label="Breakeven")
     ax4.set_xlabel("Ending Bankroll ($)", fontsize=12)
@@ -305,7 +330,7 @@ print("FINAL SUMMARY")
 print("=" * 80)
 
 print(
-    f"""
+    """
 ✅ MONTE CARLO SIMULATION COMPLETE
 
 Simulations run: {N_SIMULATIONS:,}
@@ -315,17 +340,17 @@ Fixed bet size: ${BET_SIZE:,.0f}
 RESULTS:
   Median ending bankroll: ${np.median(ending_bankrolls):,.2f}
   Median return: {np.median(returns):+.1f}%
-  Profitable simulations: {profitable_sims:,} / {N_SIMULATIONS:,} ({profitable_sims/N_SIMULATIONS*100:.1f}%)
+  Profitable simulations: {profitable_sims:,} / {N_SIMULATIONS:,} ({profitable_sims/N_SIMULATIONS * 100:.1f}%)  # noqa: E501
 
 RISK ASSESSMENT:
-  Near-bust probability: {near_busts/N_SIMULATIONS*100:.2f}%
+  Near-bust probability: {near_busts/N_SIMULATIONS * 100:.2f}%
   Worst drawdown: {np.min(max_drawdowns):.1f}%
 
 INTERPRETATION:
   {
-    "✅ EXCELLENT - Strategy is highly robust with predictable returns" if profitable_sims == N_SIMULATIONS
-    else "✅ VERY GOOD - Strategy is profitable in vast majority of scenarios" if profitable_sims > N_SIMULATIONS * 0.95
-    else "⚠️  MODERATE - Strategy has significant variance" if profitable_sims > N_SIMULATIONS * 0.80
+    "✅ EXCELLENT - Strategy is highly robust with predictable returns" if profitable_sims == N_SIMULATIONS  # noqa: E501
+    else "✅ VERY GOOD - Strategy is profitable in vast majority of scenarios" if profitable_sims > N_SIMULATIONS * 0.95  # noqa: E501
+    else "⚠️  MODERATE - Strategy has significant variance" if profitable_sims > N_SIMULATIONS * 0.80  # noqa: E501
     else "❌ HIGH RISK - Strategy shows concerning variance"
   }
 
@@ -334,7 +359,7 @@ regardless of bet order). This is GOOD - it means predictable, consistent
 returns with no variance risk. The "simulation" validates that bet order
 doesn't affect final profitability.
 
-Recommendation: {'✅ DEPLOY TO PRODUCTION' if profitable_sims == N_SIMULATIONS else '⚠️  Monitor closely before scaling'}
+Recommendation: {'✅ DEPLOY TO PRODUCTION' if profitable_sims == N_SIMULATIONS else '⚠️  Monitor closely before scaling'}  # noqa: E501
 """
 )
 

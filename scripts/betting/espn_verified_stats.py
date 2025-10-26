@@ -43,7 +43,7 @@ ESPN_STATS_OCT22 = {
     "Scottie Barnes": {"PTS": 22, "REB": 6, "AST": 9, "PRA": 37, "MIN": 32},
     "Trae Young": {"PTS": 22, "REB": 1, "AST": 5, "PRA": 28, "MIN": 34},
     "Brandon Ingram": {"PTS": 22, "REB": 7, "AST": 8, "PRA": 37, "MIN": 35},
-    "Nickeil Alexander-Walker": {"PTS": 10, "REB": 4, "AST": 4, "PRA": 18, "MIN": 28},
+    "Nickeil Alexander-Walker": {"PTS": 10, "REB": 4, "AST": 4, "PRA": 18, "MIN": 28},  # noqa: E501
     # Washington Wizards @ Milwaukee Bucks (401809939)
     "Alex Sarr": {"PTS": 10, "REB": 11, "AST": 3, "PRA": 24, "MIN": 26},
     "Khris Middleton": {
@@ -123,15 +123,22 @@ def update_ledger():
                         "new_result": result,
                     }
                 )
-                emoji = "✅" if result == "WIN" else "❌" if result == "LOSS" else "〰️"
+                emoji = (
+                    "✅" if result == "WIN" else "❌" if result == "LOSS" else "〰️"
+                )  # noqa: E501
                 print(f"{emoji} {player_name}")
                 if old_pra != actual_pra:
                     print(
-                        f"   PRA: {old_pra} → {actual_pra} ({espn_stats['PTS']}P + {espn_stats['REB']}R + {espn_stats['AST']}A)"
+                        f"   PRA: {old_pra} → {actual_pra} ({
+                            espn_stats['PTS']}P + {
+                            espn_stats['REB']}R + {
+                            espn_stats['AST']}A)"
                     )
                 if result != bet["result"]:
                     print(f"   Result: {bet['result']} → {result}")
-                print(f"   Bet: {bet['direction']} {bet['line']} | P/L: ${profit_loss:+.2f}")
+                print(
+                    f"   Bet: {bet['direction']} {bet['line']} | P/L: ${profit_loss:+.2f}"
+                )  # noqa: E501
                 print()
 
             updates += 1
@@ -157,7 +164,7 @@ def update_ledger():
     roi = (total_profit / total_wagered * 100) if total_wagered > 0 else 0
     win_rate = wins / (wins + losses) * 100 if (wins + losses) > 0 else 0
 
-    print(f"\n📊 ALL 32 BETS:")
+    print("\n📊 ALL 32 BETS:")
     print(f"   Record: {wins}W - {losses}L - {pushes}P")
     print(f"   Win Rate: {win_rate:.1f}%")
     print(f"   Total Wagered: ${total_wagered:.2f}")
@@ -175,7 +182,7 @@ def update_ledger():
         top10_wins / (top10_wins + top10_losses) * 100 if (top10_wins + top10_losses) > 0 else 0
     )
 
-    print(f"\n📊 TOP 10 BETS (Highest Edge):")
+    print("\n📊 TOP 10 BETS (Highest Edge):")
     print(f"   Record: {top10_wins}W - {top10_losses}L")
     print(f"   Win Rate: {top10_wr:.1f}%")
     print(f"   Total Wagered: ${top10_wagered:.2f}")

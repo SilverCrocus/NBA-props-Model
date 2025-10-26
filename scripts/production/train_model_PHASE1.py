@@ -9,9 +9,9 @@ This version extends FIXED V2 with 139 Phase 1 features:
 ✅ Recent form features (L3 averages, momentum, hot/cold)
 
 Expected results:
-- Training MAE: 5-7 points (improved from 6-8)
-- Validation MAE: 6-8 points (improved from 7-9)
-- Win rate: 54-55% (improved from 52.94%)
+- Training MAE: 5 - 7 points (improved from 6 - 8)
+- Validation MAE: 6 - 8 points (improved from 7 - 9)
+- Win rate: 54 - 55% (improved from 52.94%)
 
 All features use .shift(1) for temporal isolation (no leakage).
 """
@@ -21,21 +21,20 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import xgboost as xgb
-from sklearn.metrics import mean_absolute_error
-
-# Add project root to path
-sys.path.append(str(Path(__file__).parent.parent.parent))
-sys.path.append("utils")
-
 from ctg_feature_builder import CTGFeatureBuilder
+from sklearn.metrics import mean_absolute_error
 
 from src.features.advanced_stats import AdvancedStatsFeatures
 from src.features.consistency_features import ConsistencyFeatures
 from src.features.opponent_features import OpponentFeatures
 from src.features.recent_form_features import RecentFormFeatures
+
+# Add project root to path
+sys.path.append(str(Path(__file__).parent.parent.parent))
+sys.path.append("utils")
+
 
 print("=" * 80)
 print("PHASE 1 MODEL TRAINING - FEATURE IMPROVEMENT")
@@ -65,7 +64,7 @@ df = df.sort_values(["PLAYER_ID", "GAME_DATE"])
 
 print(f"✅ Loaded {len(df):,} games")
 print(f"   Date range: {df['GAME_DATE'].min()} to {df['GAME_DATE'].max()}")
-print(f"   ✅ Includes 8 opponent defense features (OPP_DEF_RATING, OPP_PACE, etc.)")
+print("   ✅ Includes 8 opponent defense features (OPP_DEF_RATING, OPP_PACE, etc.)")  # noqa: E501
 
 # Add PRA if not present
 if "PRA" not in df.columns:
@@ -73,7 +72,7 @@ if "PRA" not in df.columns:
 
 # Add SEASON if not present (required for some features)
 if "SEASON" not in df.columns:
-    df["SEASON"] = df["GAME_DATE"].apply(lambda x: f"{x.year}-{str(x.year+1)[-2:]}")
+    df["SEASON"] = df["GAME_DATE"].apply(lambda x: f"{x.year}-{str(x.year + 1)[-2:]}")
 
 # ======================================================================
 # FILTER DNP/GARBAGE TIME GAMES
@@ -118,20 +117,20 @@ df["PRA_trend_L5_L20"] = df["PRA_L5_mean"] - df["PRA_L20_mean"]
 # ======================================================================
 # ADD PRE-GAME CONTEXTUAL FEATURES (FIXED V2)
 # ======================================================================
-print(f"\n5. Adding pre-game contextual features...")
+print("\n5. Adding pre-game contextual features...")
 
 # Minutes Projected (L5 average of past games)
 df["Minutes_Projected"] = player_groups["MIN"].shift(1).rolling(5, min_periods=1).mean()
-print(f"   ✅ Minutes_Projected (L5 average)")
+print("   ✅ Minutes_Projected (L5 average)")
 
 # Days rest (days since last game)
 df["Days_Since_Last_Game"] = df.groupby("PLAYER_ID")["GAME_DATE"].diff().dt.days
 df["Days_Rest"] = df["Days_Since_Last_Game"].fillna(7).clip(upper=7)
-print(f"   ✅ Days_Rest")
+print("   ✅ Days_Rest")
 
 # Back-to-back games
 df["Is_BackToBack"] = (df["Days_Rest"] <= 1).astype(int)
-print(f"   ✅ Is_BackToBack")
+print("   ✅ Is_BackToBack")
 
 
 # Games in last 7 days
@@ -150,7 +149,7 @@ df["Games_Last7"] = (
     df.groupby("PLAYER_ID").apply(calculate_games_last_7).reset_index(level=0, drop=True)
 )
 df["Games_Last7"] = df["Games_Last7"].fillna(0).astype(int)
-print(f"   ✅ Games_Last7")
+print("   ✅ Games_Last7")
 
 baseline_feature_count = len(
     [
@@ -179,7 +178,7 @@ print(f"\n   Baseline features: {baseline_feature_count}")
 # ======================================================================
 # ADD CTG FEATURES
 # ======================================================================
-print(f"\n6. Adding CTG features (vectorized merge)...")
+print("\n6. Adding CTG features (vectorized merge)...")
 
 df["CTG_SEASON"] = df["SEASON"].apply(lambda x: x if "-" in str(x) else f"{x[:4]}-{x[4:6]}")
 
@@ -199,8 +198,10 @@ for idx, row in unique_player_seasons.iterrows():
 
     if len(ctg_data) % 500 == 0:
         print(
-            f"      Processed {len(ctg_data):,} / {len(unique_player_seasons):,} player-seasons..."
-        )
+            f"      Processed {
+                len(ctg_data):,                                 } / {
+                len(unique_player_seasons):,                                                                                      } player-seasons..."
+        )  # noqa: E501
 
 ctg_df = pd.DataFrame(ctg_data)
 print(f"   ✅ Loaded {len(ctg_df):,} player-season CTG records")
@@ -222,12 +223,12 @@ ctg_defaults = {
 for col, default_val in ctg_defaults.items():
     df[col] = df[col].fillna(default_val)
 
-print(f"   ✅ CTG features merged and imputed")
+print("   ✅ CTG features merged and imputed")
 
 # ======================================================================
 # ADD PHASE 1 FEATURES
 # ======================================================================
-print(f"\n7. Adding Phase 1 features (139 additional features)...")
+print("\n7. Adding Phase 1 features (139 additional features)...")
 print()
 
 initial_col_count = len(df.columns)
@@ -239,7 +240,7 @@ print()
 # Opponent features (skip if no MATCHUP column)
 if "MATCHUP" in df.columns:
     try:
-        opponent_features.load_team_stats("2023-24")
+        opponent_features.load_team_stats("2023 - 24")
         df = opponent_features.add_all_features(df)
     except Exception as e:
         print(f"   ⚠️  Skipping opponent features: {e}")
@@ -259,7 +260,7 @@ print(f"✅ Added {phase1_feature_count} Phase 1 features")
 # ======================================================================
 # IMPUTE MISSING PHASE 1 FEATURES
 # ======================================================================
-print(f"\n8. Imputing missing Phase 1 feature values...")
+print("\n8. Imputing missing Phase 1 feature values...")
 
 # Get all Phase 1 feature columns
 phase1_cols = [
@@ -306,7 +307,7 @@ print(f"   ✅ Imputed {len(phase1_cols)} Phase 1 feature columns")
 # ======================================================================
 # DEFINE FULL FEATURE SET
 # ======================================================================
-print(f"\n9. Defining full feature set (baseline + Phase 1)...")
+print("\n9. Defining full feature set (baseline + Phase 1)...")
 
 # Baseline features (FIXED V2)
 lag_features = [
@@ -357,7 +358,8 @@ phase1_features = [
 ]
 
 # 🚨 CRITICAL DATA LEAKAGE DETECTION 🚨
-# Remove ANY features that use current game stats (not available at prediction time)
+# Remove ANY features that use current game stats (not available at
+# prediction time)
 LEAKED_FEATURES = [
     "TS_pct",  # Uses current FGA, FTA, PTS
     "USG_pct",  # Uses current FGA, FTA, TOV, MIN
@@ -370,18 +372,23 @@ leaked_found = [
     for col in phase1_features
     if any(
         leak in col
-        and not any(safe in col for safe in ["_L", "_lag", "_ewma", "_trend", "_season"])
+        and not any(
+            safe in col for safe in ["_L", "_lag", "_ewma", "_trend", "_season"]
+        )  # noqa: E501
         for leak in LEAKED_FEATURES
     )
 ]
 
 if leaked_found:
-    print(f"\n   🚨 DATA LEAKAGE DETECTED! Removing {len(leaked_found)} leaked features:")
+    print(
+        f"\n   🚨 DATA LEAKAGE DETECTED! Removing {
+            len(leaked_found)} leaked features:"
+    )
     for feat in leaked_found:
         print(f"      - {feat}")
     phase1_features = [col for col in phase1_features if col not in leaked_found]
 else:
-    print(f"\n   ✅ Leak detection passed: No current-game features found")
+    print("\n   ✅ Leak detection passed: No current-game features found")
 
 # Add opponent features if they exist in the dataframe
 opponent_features = [col for col in df.columns if col.startswith("OPP_") and col != "OPP_TEAM"]
@@ -393,13 +400,18 @@ for feat in opponent_features:
 feature_cols = (
     lag_features + ctg_features_list + contextual_features + phase1_features + opponent_features
 )
-feature_cols = list(set([col for col in feature_cols if col in df.columns]))  # Remove duplicates
+# Remove duplicates
+feature_cols = list(set([col for col in feature_cols if col in df.columns]))
 
-print(f"\n   Feature breakdown:")
-print(f"      Baseline lag features: {len([c for c in lag_features if c in df.columns])}")
+print("\n   Feature breakdown:")
+print(
+    f"      Baseline lag features: {len([c for c in lag_features if c in df.columns])}"
+)  # noqa: E501
 print(f"      CTG features: {len(ctg_features_list)}")
 print(f"      Contextual features: {len(contextual_features)}")
-print(f"      Phase 1 features: {len([c for c in phase1_features if c in df.columns])}")
+print(
+    f"      Phase 1 features: {len([c for c in phase1_features if c in df.columns])}"
+)  # noqa: E501
 print(f"      Opponent features: {len(opponent_features)}")
 print(f"      Total features: {len(feature_cols)}")
 
@@ -425,10 +437,11 @@ if found_in_game:
     feature_cols = [f for f in feature_cols if f not in in_game_features]
     print(f"   ✅ Removed in-game features. New total: {len(feature_cols)}")
 else:
-    print(f"\n   ✅ NO in-game features found (correct!)")
+    print("\n   ✅ NO in-game features found (correct!)")
 
 # 🚨 FINAL COMPREHENSIVE LEAK DETECTION (NUCLEAR OPTION) 🚨
-# This catches ANY features that use current game stats, even if they weren't caught above
+# This catches ANY features that use current game stats, even if they
+# weren't caught above
 ALL_GAME_STATS = [
     "FGM",
     "FGA",
@@ -455,7 +468,8 @@ ALL_GAME_STATS = [
     "pace",  # Derived features
 ]
 
-# A feature is SAFE if it has one of these indicators (meaning it's lagged/pre-computed)
+# A feature is SAFE if it has one of these indicators (meaning it's
+# lagged/pre-computed)
 SAFE_INDICATORS = [
     "_lag",
     "_L",
@@ -488,48 +502,78 @@ for feat in feature_cols:
         leaked_features.append(feat)
 
 if leaked_features:
-    print(f"\n   🚨🚨🚨 CRITICAL: LEAKED FEATURES DETECTED! 🚨🚨🚨")
-    print(f"   The following {len(leaked_features)} features use current game stats:")
+    print("\n   🚨🚨🚨 CRITICAL: LEAKED FEATURES DETECTED! 🚨🚨🚨")
+    print(
+        f"   The following {
+            len(leaked_features)} features use current game stats:"
+    )
     for feat in leaked_features:
         print(f"      ❌ {feat}")
-    print(f"\n   These features are NOT available before the game starts!")
-    print(f"   Training will FAIL to prevent data leakage.")
-    raise ValueError(f"DATA LEAKAGE: {len(leaked_features)} features use current game stats")
+    print("\n   These features are NOT available before the game starts!")
+    print("   Training will FAIL to prevent data leakage.")
+    raise ValueError(
+        f"DATA LEAKAGE: {
+            len(leaked_features)} features use current game stats"
+    )
 else:
-    print(f"\n   ✅✅✅ COMPREHENSIVE LEAK CHECK PASSED ✅✅✅")
-    print(f"   All {len(feature_cols)} features are pre-game only (safe for prediction)")
+    print("\n   ✅✅✅ COMPREHENSIVE LEAK CHECK PASSED ✅✅✅")
+    print(
+        f"   All {
+            len(feature_cols)} features are pre-game only (safe for prediction)"
+    )  # noqa: E501
 
 # ======================================================================
 # CREATE TEMPORAL SPLITS
 # ======================================================================
-print(f"\n10. Creating temporal train/val/test splits...")
+print("\n10. Creating temporal train/val/test splits...")
 
 # Only require PRA to be non-null
 valid_mask = df["PRA"].notna() & (df["PRA"] > 0)
 df_clean = df[valid_mask].copy()
 
 zero_pra_count = len(df) - len(df_clean)
-print(f"   Dropped {zero_pra_count:,} rows with PRA <= 0 ({zero_pra_count/len(df)*100:.1f}%)")
-print(f"   Retained {len(df_clean):,} games ({len(df_clean)/len(df)*100:.1f}%)")
+print(
+    f"   Dropped {
+        zero_pra_count:,    } rows with PRA <= 0 ({
+            zero_pra_count /
+            len(df) *
+        100:.1f}%)"
+)
+print(
+    f"   Retained {
+        len(df_clean):,    } games ({
+            len(df_clean) /
+            len(df) *
+        100:.1f}%)"
+)
 
 # Fill any remaining NaN in feature columns with 0
 df_clean[feature_cols] = df_clean[feature_cols].fillna(0)
 
 # Temporal splits
-train_df = df_clean[df_clean["GAME_DATE"] <= "2023-06-30"].copy()
+train_df = df_clean[df_clean["GAME_DATE"] <= "2023 - 06 - 30"].copy()
 val_df = df_clean[
-    (df_clean["GAME_DATE"] > "2023-06-30") & (df_clean["GAME_DATE"] <= "2024-06-30")
+    (df_clean["GAME_DATE"] > "2023 - 06 - 30") & (df_clean["GAME_DATE"] <= "2024 - 06 - 30")
 ].copy()
-test_df = df_clean[df_clean["GAME_DATE"] > "2024-06-30"].copy()
+test_df = df_clean[df_clean["GAME_DATE"] > "2024 - 06 - 30"].copy()
 
 print(
-    f"\n   Train set: {len(train_df):,} games ({train_df['GAME_DATE'].min()} to {train_df['GAME_DATE'].max()})"
+    f"\n   Train set: {
+        len(train_df):,    } games ({
+            train_df['GAME_DATE'].min()} to {
+                train_df['GAME_DATE'].max()})"
 )
 print(
-    f"   Val set:   {len(val_df):,} games ({val_df['GAME_DATE'].min()} to {val_df['GAME_DATE'].max()})"
+    f"   Val set:   {
+        len(val_df):,    } games ({
+            val_df['GAME_DATE'].min()} to {
+                val_df['GAME_DATE'].max()})"
 )
 print(
-    f"   Test set:  {len(test_df):,} games ({test_df['GAME_DATE'].min()} to {test_df['GAME_DATE'].max()})"
+    f"   Test set:  {
+        len(test_df):,    } games ({
+            test_df['GAME_DATE'].min()} to {
+                test_df['GAME_DATE'].max()})"
 )
 
 X_train = train_df[feature_cols]
@@ -544,12 +588,13 @@ y_test = test_df["PRA"]
 # ======================================================================
 # TRAIN XGBOOST WITH REGULARIZATION
 # ======================================================================
-print(f"\n11. Training XGBoost (baseline + Phase 1 features)...")
+print("\n11. Training XGBoost (baseline + Phase 1 features)...")
 
 model = xgb.XGBRegressor(
-    objective="reg:squarederror",  # Changed from reg:gamma for better calibration
-    n_estimators=1500,  # Increased from 1000 (early stopping will prevent overfit)
-    max_depth=5,  # Increased from 4 (research: 5-6 optimal for NBA props)
+    objective="reg:squarederror",  # Changed from reg:gamma for better calibration  # noqa: E501
+    # Increased from 1000 (early stopping will prevent overfit)
+    n_estimators=1500,
+    max_depth=5,  # Increased from 4 (research: 5 - 6 optimal for NBA props)
     learning_rate=0.01,  # Keep conservative
     subsample=0.8,  # Keep (research-backed)
     colsample_bytree=0.8,  # Keep (research-backed)
@@ -572,7 +617,7 @@ print("      - Stronger regularization (alpha=0.5) to prevent overfitting")
 
 model.fit(X_train, y_train, eval_set=[(X_train, y_train), (X_val, y_val)], verbose=100)
 
-print(f"\n✅ Model trained")
+print("\n✅ Model trained")
 
 if hasattr(model, "best_iteration") and model.best_iteration is not None:
     print(f"   Best iteration: {model.best_iteration}")
@@ -583,7 +628,7 @@ else:
 # ======================================================================
 # EVALUATE PERFORMANCE
 # ======================================================================
-print(f"\n12. Evaluating model performance...")
+print("\n12. Evaluating model performance...")
 
 train_pred = model.predict(X_train)
 train_mae = mean_absolute_error(y_train, train_pred)
@@ -606,31 +651,43 @@ neg_train = (train_pred < 0).sum()
 neg_val = (val_pred < 0).sum()
 neg_test = (test_pred < 0).sum()
 
-print(f"\n   Negative predictions:")
-print(f"      Train: {neg_train} / {len(train_pred)} ({neg_train/len(train_pred)*100:.2f}%)")
-print(f"      Val:   {neg_val} / {len(val_pred)} ({neg_val/len(val_pred)*100:.2f}%)")
-print(f"      Test:  {neg_test} / {len(test_pred)} ({neg_test/len(test_pred)*100:.2f}%)")
+print("\n   Negative predictions:")
+print(
+    f"      Train: {neg_train} / {
+        len(train_pred)} ({
+            neg_train /
+            len(train_pred) *
+        100:.2f}%)"
+)
+print(
+    f"      Val:   {neg_val} / {len(val_pred)} ({neg_val / len(val_pred) * 100:.2f}%)"
+)  # noqa: E501
+print(
+    f"      Test:  {neg_test} / {len(test_pred)} ({neg_test / len(test_pred) * 100:.2f}%)"
+)  # noqa: E501
 
 # ======================================================================
 # FEATURE IMPORTANCE
 # ======================================================================
-print(f"\n13. Feature importance analysis...")
+print("\n13. Feature importance analysis...")
 
 importance_df = pd.DataFrame(
     {"feature": feature_cols, "importance": model.feature_importances_}
 ).sort_values("importance", ascending=False)
 
-print(f"\n   Top 20 most important features:")
+print("\n   Top 20 most important features:")
 print(importance_df.head(20).to_string(index=False))
 
 # Check Phase 1 feature importance
 phase1_importance = importance_df[importance_df["feature"].isin(phase1_features)]
-print(f"\n   Phase 1 features in top 20: {len(phase1_importance[phase1_importance.index < 20])}")
+print(
+    f"\n   Phase 1 features in top 20: {len(phase1_importance[phase1_importance.index < 20])}"
+)  # noqa: E501
 
 # ======================================================================
 # SAVE MODEL
 # ======================================================================
-print(f"\n14. Saving model...")
+print("\n14. Saving model...")
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 model_path = f"models/production_model_v2.0_CLEAN_{timestamp}.pkl"
@@ -644,12 +701,12 @@ model_dict = {
     "training_samples": len(train_df),
     "val_samples": len(val_df),
     "test_samples": len(test_df),
-    "date_range": f"{df_clean['GAME_DATE'].min()} to {df_clean['GAME_DATE'].max()}",
+    "date_range": f"{df_clean['GAME_DATE'].min()} to {df_clean['GAME_DATE'].max()}",  # noqa: E501
     "feature_importance": importance_df,
     "hyperparameters": model.get_params(),
     "version": "v2.0_CLEAN",
     "phase1_features": phase1_features,
-    "phase1_feature_count": len([c for c in phase1_features if c in df.columns]),
+    "phase1_feature_count": len([c for c in phase1_features if c in df.columns]),  # noqa: E501
     "fixes_applied": [
         "🚨 v2.0: CRITICAL DATA LEAKAGE FIX",
         "✅ Removed TS_pct and USG_pct (used current game stats)",
@@ -661,9 +718,9 @@ model_dict = {
         "   - max_depth=5 (optimal per Wu et al. 2024)",
         "   - Stronger regularization (alpha=0.5)",
         "   - Early stopping (50 rounds)",
-        "BASELINE: Lag features (L1/3/5/7/10)",
-        "BASELINE: Rolling (L5/10/20 mean/std)",
-        "BASELINE: EWMA (span 5/10/15)",
+        "BASELINE: Lag features (L1 / 3/5 / 7/10)",
+        "BASELINE: Rolling (L5 / 10 / 20 mean/std)",
+        "BASELINE: EWMA (span 5 / 10 / 15)",
         "BASELINE: Contextual (Minutes, Rest, Back-to-back)",
         "CTG: Season-level analytics (USG%, TS%, AST%, REB%)",
         "PHASE 1: Advanced stats (only lagged)",
@@ -701,29 +758,29 @@ print("=" * 80)
 checks_passed = []
 checks_failed = []
 
-# Check 1: Training MAE should be 5-7 (improved from 6-8)
+# Check 1: Training MAE should be 5 - 7 (improved from 6 - 8)
 if 5 <= train_mae <= 7:
     checks_passed.append(f"✅ Training MAE: {train_mae:.2f} (improved)")
 elif 6 <= train_mae <= 8:
     checks_passed.append(f"✅ Training MAE: {train_mae:.2f} (baseline)")
 else:
-    checks_failed.append(f"❌ Training MAE: {train_mae:.2f} (expected 5-7)")
+    checks_failed.append(f"❌ Training MAE: {train_mae:.2f} (expected 5 - 7)")
 
-# Check 2: Validation MAE should be 6-8 (improved from 7-9)
+# Check 2: Validation MAE should be 6 - 8 (improved from 7 - 9)
 if 6 <= val_mae <= 8:
     checks_passed.append(f"✅ Validation MAE: {val_mae:.2f} (improved)")
 elif 7 <= val_mae <= 9:
     checks_passed.append(f"✅ Validation MAE: {val_mae:.2f} (baseline)")
 else:
-    checks_failed.append(f"❌ Validation MAE: {val_mae:.2f} (expected 6-8)")
+    checks_failed.append(f"❌ Validation MAE: {val_mae:.2f} (expected 6 - 8)")
 
-# Check 3: Test MAE should be 7-9 (improved from 8-10)
+# Check 3: Test MAE should be 7 - 9 (improved from 8 - 10)
 if 7 <= test_mae <= 9:
     checks_passed.append(f"✅ Test MAE: {test_mae:.2f} (improved)")
 elif 8 <= test_mae <= 10:
     checks_passed.append(f"✅ Test MAE: {test_mae:.2f} (baseline)")
 else:
-    checks_failed.append(f"⚠️  Test MAE: {test_mae:.2f} (expected 7-9)")
+    checks_failed.append(f"⚠️  Test MAE: {test_mae:.2f} (expected 7 - 9)")
 
 # Check 4: Train/Val gap should be <20%
 if train_val_gap < 20:
@@ -733,9 +790,9 @@ else:
 
 # Check 5: No negative predictions
 if neg_train == 0 and neg_val == 0 and neg_test == 0:
-    checks_passed.append(f"✅ No negative predictions")
+    checks_passed.append("✅ No negative predictions")
 else:
-    checks_failed.append(f"❌ Negative predictions found")
+    checks_failed.append("❌ Negative predictions found")
 
 # Check 6: Phase 1 features added
 phase1_count = len([c for c in phase1_features if c in df.columns])
@@ -751,13 +808,13 @@ if data_retention >= 90:
 else:
     checks_failed.append(f"❌ Data retention: {data_retention:.1f}%")
 
-print(f"\n📊 VALIDATION CHECKS:")
+print("\n📊 VALIDATION CHECKS:")
 for check in checks_passed:
     print(f"   {check}")
 for check in checks_failed:
     print(f"   {check}")
 
-print(f"\n📈 PERFORMANCE SUMMARY:")
+print("\n📈 PERFORMANCE SUMMARY:")
 print(f"   Training MAE: {train_mae:.2f} points")
 print(f"   Validation MAE: {val_mae:.2f} points")
 print(f"   Test MAE: {test_mae:.2f} points")
@@ -766,12 +823,12 @@ print(f"   Phase 1 features: {phase1_count}")
 print(f"   Data retention: {data_retention:.1f}%")
 
 if len(checks_failed) == 0:
-    print(f"\n🎉 ALL VALIDATION CHECKS PASSED!")
-    print(f"   Model is ready for walk-forward validation.")
+    print("\n🎉 ALL VALIDATION CHECKS PASSED!")
+    print("   Model is ready for walk-forward validation.")
 else:
     print(f"\n⚠️  {len(checks_failed)} validation check(s) failed/warnings.")
 
 print("\n" + "=" * 80)
-print("Next step: Run walk-forward validation on 2024-25 to validate win rate")
-print("Expected: 54-55% win rate (improved from 52.94%)")
+print("Next step: Run walk-forward validation on 2024 - 25 to validate win rate")  # noqa: E501
+print("Expected: 54 - 55% win rate (improved from 52.94%)")
 print("=" * 80)

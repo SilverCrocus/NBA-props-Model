@@ -11,10 +11,10 @@ Isotonic regression is ideal for calibration because:
 
 import pickle
 import sys
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from fast_feature_builder import FastFeatureBuilder
 from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import brier_score_loss, log_loss
 
@@ -51,10 +51,11 @@ print("STEP 2: Loading validation data...")
 historical_df = pd.read_csv("data/game_logs/all_game_logs_through_2025.csv")
 historical_df["GAME_DATE"] = pd.to_datetime(historical_df["GAME_DATE"])
 
-# Filter to validation period (2023-24 season)
+# Filter to validation period (2023 - 24 season)
 val_df = historical_df[
-    (historical_df["GAME_DATE"] >= "2023-06-30") & (historical_df["GAME_DATE"] < "2024-10-22")
-].copy()
+    (historical_df["GAME_DATE"] >= "2023 - 06 - 30")
+    & (historical_df["GAME_DATE"] < "2024 - 10 - 22")
+].copy()  # noqa: E501
 
 # Filter to MIN >= 25 (match betting population)
 val_df = val_df[val_df["MIN"] >= 25].copy()
@@ -64,7 +65,11 @@ if "PRA" not in val_df.columns:
     val_df["PRA"] = val_df["PTS"] + val_df["REB"] + val_df["AST"]
 
 print(f"✅ Validation data: {len(val_df):,} games")
-print(f"   Date range: {val_df['GAME_DATE'].min().date()} to {val_df['GAME_DATE'].max().date()}")
+print(
+    f"   Date range: {
+        val_df['GAME_DATE'].min().date()} to {
+            val_df['GAME_DATE'].max().date()}"
+)
 print(f"   PRA avg: {val_df['PRA'].mean():.2f}")
 print()
 
@@ -78,10 +83,9 @@ print()
 
 # Add scripts/utils to path for FastFeatureBuilder
 sys.path.append("scripts/utils")
-from fast_feature_builder import FastFeatureBuilder
 
 # Need historical data before validation for feature building
-train_historical = historical_df[historical_df["GAME_DATE"] < "2023-06-30"].copy()
+train_historical = historical_df[historical_df["GAME_DATE"] < "2023 - 06 - 30"].copy()
 train_historical = train_historical[train_historical["MIN"] >= 25].copy()
 
 # Combine for feature building
@@ -94,7 +98,7 @@ combined_with_features = builder.build_features(combined, pd.DataFrame(), verbos
 
 # Extract validation set
 val_with_features = combined_with_features[
-    combined_with_features["GAME_DATE"] >= "2023-06-30"
+    combined_with_features["GAME_DATE"] >= "2023 - 06 - 30"
 ].copy()
 
 print(f"✅ Features built: {len(val_with_features.columns)} columns")
@@ -139,7 +143,8 @@ for threshold in thresholds:
     went_over = (y_val >= threshold).astype(int)
 
     # Predicted probability of OVER
-    # Assume normal distribution around prediction with std ~7 points (empirical)
+    # Assume normal distribution around prediction with std ~7 points
+    # (empirical)
     from scipy.stats import norm
 
     std_dev = 7.0  # Average prediction error
@@ -178,7 +183,7 @@ y_calib_test = calib_test["actual_outcome"].values
 calibrator = IsotonicRegression(out_of_bounds="clip", y_min=0.0, y_max=1.0)
 calibrator.fit(X_calib_train.ravel(), y_calib_train)
 
-print(f"✅ Calibrator trained")
+print("✅ Calibrator trained")
 print()
 
 # ======================================================================
@@ -203,15 +208,17 @@ logloss_before = log_loss(y_calib_test, y_pred_prob_uncalibrated)
 logloss_after = log_loss(y_calib_test, y_pred_prob_calibrated)
 
 print("Calibration Quality Metrics:")
-print(f"  Brier Score:")
+print("  Brier Score:")
 print(f"    Before: {brier_before:.4f}")
 print(f"    After:  {brier_after:.4f}")
-print(f"    Improvement: {(brier_before - brier_after)/brier_before*100:.1f}%")
+print(f"    Improvement: {(brier_before - brier_after) / brier_before * 100:.1f}%")  # noqa: E501
 print()
-print(f"  Log Loss:")
+print("  Log Loss:")
 print(f"    Before: {logloss_before:.4f}")
 print(f"    After:  {logloss_after:.4f}")
-print(f"    Improvement: {(logloss_before - logloss_after)/logloss_before*100:.1f}%")
+print(
+    f"    Improvement: {(logloss_before - logloss_after) / logloss_before * 100:.1f}%"
+)  # noqa: E501
 print()
 
 # Show calibration curve samples
@@ -249,9 +256,11 @@ with open("models/pra_model.pkl", "wb") as f:
 with open("models/pra_model.pkl", "wb") as f:
     pickle.dump(model_dict, f)
 
-print(f"✅ Calibrator saved to model")
+print("✅ Calibrator saved to model")
 print(f"   Calibration samples: {len(calib_df):,}")
-print(f"   Brier score improvement: {(brier_before - brier_after)/brier_before*100:.1f}%")
+print(
+    f"   Brier score improvement: {(brier_before - brier_after) / brier_before * 100:.1f}%"
+)  # noqa: E501
 print()
 
 # ======================================================================
@@ -264,16 +273,30 @@ print("=" * 80)
 print()
 
 print(f"Model: {model_dict['version']}")
-print(f"Calibration method: Isotonic Regression")
+print("Calibration method: Isotonic Regression")
 print(f"Calibration samples: {len(calib_df):,}")
 print()
 
 print("Performance:")
 print(
-    f"  Brier Score: {brier_before:.4f} → {brier_after:.4f} ({(brier_before - brier_after)/brier_before*100:.1f}% improvement)"
+    f"  Brier Score: {
+        brier_before:.4f} → {
+            brier_after:.4f} ({
+                (
+                    brier_before -
+                    brier_after) /
+        brier_before *
+        100:.1f}% improvement)"
 )
 print(
-    f"  Log Loss: {logloss_before:.4f} → {logloss_after:.4f} ({(logloss_before - logloss_after)/logloss_before*100:.1f}% improvement)"
+    f"  Log Loss: {
+        logloss_before:.4f} → {
+            logloss_after:.4f} ({
+                (
+                    logloss_before -
+                    logloss_after) /
+        logloss_before *
+        100:.1f}% improvement)"
 )
 print()
 

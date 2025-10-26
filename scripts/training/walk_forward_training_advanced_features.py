@@ -6,7 +6,7 @@ Builds on Day 3's leak-free implementation with:
 2. Efficiency features: TS%, PER, usage per 36
 3. Normalization features: Per-36 and per-100 stats
 
-Expected Impact: MAE 6.11 → 5.2-5.5 points
+Expected Impact: MAE 6.11 → 5.2 - 5.5 points
 
 Author: NBA Props Model - Week 1 Day 4
 Date: October 14, 2025
@@ -14,18 +14,22 @@ Date: October 14, 2025
 
 import logging
 import sys
-from datetime import datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import xgboost as xgb
+from ctg_feature_builder import CTGFeatureBuilder
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from tqdm import tqdm
 
+from config import data_config, model_config, validation_config
+from src.features.calculator import FeatureCalculator
+from src.mlflow_integration.tracker import NBAPropsTracker, enable_autologging
+
 # Add utils to path
 sys.path.append(str(Path(__file__).parent.parent.parent / "utils"))
-from ctg_feature_builder import CTGFeatureBuilder
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -33,9 +37,6 @@ logger = logging.getLogger(__name__)
 
 # Initialize MLflow tracking
 sys.path.append(str(Path(__file__).parent.parent.parent))
-from config import data_config, model_config, validation_config
-from src.features.calculator import FeatureCalculator
-from src.mlflow_integration.tracker import NBAPropsTracker, enable_autologging
 
 # Initialize centralized feature calculator
 _feature_calculator = FeatureCalculator()
@@ -209,7 +210,8 @@ def calculate_efficiency_features(player_history: pd.DataFrame) -> dict:
 
     features["USG_per_36"] = (usage_total / min_total * 36) if min_total > 0 else 0
 
-    # Simplified PER (approximate): (PTS + REB + AST + STL + BLK - TOV - (FGA-FGM) - (FTA-FTM)) / MIN * factor
+    # Simplified PER (approximate): (PTS + REB + AST + STL + BLK - TOV -
+    # (FGA-FGM) - (FTA-FTM)) / MIN * factor
     reb_total = history.get("REB", pd.Series([0])).sum()
     ast_total = history.get("AST", pd.Series([0])).sum()
     stl_total = history.get("STL", pd.Series([0])).sum()
@@ -318,7 +320,7 @@ def calculate_opponent_features(
         features["opp_PRA_allowed"] = 30.0  # League average
         return features
 
-    # Use last 20 games for better sample (opponent plays ~2-3x per week)
+    # Use last 20 games for better sample (opponent plays ~2 - 3x per week)
     recent_def = opponent_defense_games.sort_values("GAME_DATE", ascending=False).iloc[:20]
 
     # FIXED: PRA allowed = average PRA scored BY OPPONENTS against this team
@@ -386,8 +388,8 @@ def calculate_all_features(
 
 
 def walk_forward_train_and_validate(
-    train_season: str = "2023-24",
-    val_season: str = "2024-25",
+    train_season: str = "2023 - 24",
+    val_season: str = "2024 - 25",
     min_train_games: int = 10,
     min_history_for_prediction: int = 5,
 ):
@@ -407,8 +409,8 @@ def walk_forward_train_and_validate(
             "validation_type": "walk_forward_advanced_features",
             "train_season": train_season,
             "val_season": val_season,
-            "description": "Day 4: Opponent + Efficiency + Normalization features",
-            "features_added": "opponent_DRtg, opponent_pace, TS%, PER, per_36_stats",
+            "description": "Day 4: Opponent + Efficiency + Normalization features",  # noqa: E501
+            "features_added": "opponent_DRtg, opponent_pace, TS%, PER, per_36_stats",  # noqa: E501
         },
     )
 
@@ -434,7 +436,9 @@ def walk_forward_train_and_validate(
 
         logger.info(f"\n✅ Total games loaded: {len(all_games_df):,}")
         logger.info(
-            f"   Date range: {all_games_df['GAME_DATE'].min()} to {all_games_df['GAME_DATE'].max()}"
+            f"   Date range: {
+                all_games_df['GAME_DATE'].min()} to {
+                all_games_df['GAME_DATE'].max()}"
         )
 
         # Split into training and validation
@@ -453,12 +457,18 @@ def walk_forward_train_and_validate(
             & (all_games_df["GAME_DATE"] <= val_end_date)
         ].copy()
 
-        logger.info(f"\n3. Data split:")
+        logger.info("\n3. Data split:")
         logger.info(
-            f"   Training: {len(train_games):,} games ({train_games['GAME_DATE'].min()} to {train_games['GAME_DATE'].max()})"
+            f"   Training: {
+                len(train_games):,} games ({
+                train_games['GAME_DATE'].min()} to {
+                train_games['GAME_DATE'].max()})"
         )
         logger.info(
-            f"   Validation: {len(val_games):,} games ({val_games['GAME_DATE'].min()} to {val_games['GAME_DATE'].max()})"
+            f"   Validation: {
+                len(val_games):,} games ({
+                val_games['GAME_DATE'].min()} to {
+                val_games['GAME_DATE'].max()})"
         )
 
         # Build training dataset
@@ -542,7 +552,7 @@ def walk_forward_train_and_validate(
         logger.info(f"✅ Model trained - Train MAE: {train_mae:.2f}")
 
         # Walk-forward validation
-        logger.info("\n6. Running walk-forward validation on 2024-25...")
+        logger.info("\n6. Running walk-forward validation on 2024 - 25...")
 
         val_predictions = []
         val_dates = sorted(val_games["GAME_DATE"].unique())
@@ -617,16 +627,22 @@ def walk_forward_train_and_validate(
         logger.info("\n" + "=" * 80)
         logger.info("RESULTS - ADVANCED FEATURES (DAY 4)")
         logger.info("=" * 80)
-        logger.info(f"\nValidation Metrics (2024-25 Season):")
+        logger.info("\nValidation Metrics (2024 - 25 Season):")
         logger.info(f"  MAE: {val_mae:.2f} points (Day 3: 6.11)")
         logger.info(f"  Improvement: {6.11 - val_mae:+.2f} points")
         logger.info(f"  RMSE: {val_rmse:.2f} points")
         logger.info(f"  R²: {val_r2:.3f}")
         logger.info(f"  Within ±3 pts: {val_metrics['within_3pts_pct']:.1f}%")
         logger.info(f"  Within ±5 pts: {val_metrics['within_5pts_pct']:.1f}%")
-        logger.info(f"  Within ±10 pts: {val_metrics['within_10pts_pct']:.1f}%")
-        logger.info(f"\nFeature Coverage:")
-        logger.info(f"  CTG data available: {val_metrics['ctg_coverage']:.1f}%")
+        logger.info(
+            f"  Within ±10 pts: {
+                val_metrics['within_10pts_pct']:.1f}%"
+        )
+        logger.info("\nFeature Coverage:")
+        logger.info(
+            f"  CTG data available: {
+                val_metrics['ctg_coverage']:.1f}%"
+        )
         logger.info(f"\n✅ Results saved to {output_path}")
 
         # Log feature importance
@@ -641,7 +657,7 @@ def walk_forward_train_and_validate(
         return {
             "model": model,
             "features": feature_cols,
-            "val_df": val_df,
+            "val_d": val_df,
             "metrics": val_metrics,
             "run_id": tracker.run_id,
         }
@@ -654,8 +670,8 @@ def walk_forward_train_and_validate(
 
 if __name__ == "__main__":
     results = walk_forward_train_and_validate(
-        train_season="2023-24",
-        val_season="2024-25",
+        train_season="2023 - 24",
+        val_season="2024 - 25",
         min_train_games=10,
         min_history_for_prediction=5,
     )
@@ -664,5 +680,8 @@ if __name__ == "__main__":
     logger.info("DAY 4 COMPLETE")
     logger.info("=" * 80)
     logger.info(f"\nRun ID: {results['run_id']}")
-    logger.info(f"MAE Improvement: {results['metrics']['improvement_from_day3']:+.2f} points")
+    logger.info(
+        f"MAE Improvement: {
+            results['metrics']['improvement_from_day3']:+.2f} points"
+    )
     logger.info("\nView in MLflow: uv run mlflow ui")

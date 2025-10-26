@@ -18,13 +18,12 @@ import pickle
 import sys
 from datetime import datetime
 
-import numpy as np
 import pandas as pd
 import xgboost as xgb
+from fast_feature_builder import FastFeatureBuilder
 
 # Add scripts/utils to path
 sys.path.append("scripts/utils")
-from fast_feature_builder import FastFeatureBuilder
 
 print("=" * 80)
 print("TRAIN PRODUCTION MODEL (ALL DATA)")
@@ -70,7 +69,9 @@ historical_df = historical_df.sort_values(["PLAYER_ID", "GAME_DATE"])
 
 print(f"✅ Loaded: {len(historical_df):,} games")
 print(
-    f"   Date range: {historical_df['GAME_DATE'].min().date()} to {historical_df['GAME_DATE'].max().date()}"
+    f"   Date range: {
+        historical_df['GAME_DATE'].min().date()} to {
+            historical_df['GAME_DATE'].max().date()}"
 )
 print()
 
@@ -194,10 +195,12 @@ production_model = {
     "xgboost_params": XGBOOST_PARAMS,
     "ensemble_seeds": ENSEMBLE_SEEDS,
     "training_games": len(X_train),
-    "training_date_range": f"{historical_df['GAME_DATE'].min().date()} to {historical_df['GAME_DATE'].max().date()}",
+    "training_date_range": f"{
+        historical_df['GAME_DATE'].min().date()} to {
+            historical_df['GAME_DATE'].max().date()}",
     "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     "version": "v1",
-    "description": "Production ensemble (3 models) trained on ALL data for live predictions",
+    "description": "Production ensemble (3 models) trained on ALL data for live predictions",  # noqa: E501
 }
 
 with open("models/production.pkl", "wb") as f:
@@ -215,15 +218,19 @@ print("✅ PRODUCTION MODEL READY!")
 print("=" * 80)
 print()
 print("Model Details:")
-print(f"   - 3-model ensemble")
+print("   - 3-model ensemble")
 print(f"   - {len(feature_cols)} features")
 print(f"   - Trained on {len(X_train):,} games")
 print(
-    f"   - Date range: {historical_df['GAME_DATE'].min().date()} to {historical_df['GAME_DATE'].max().date()}"
+    f"   - Date range: {
+        historical_df['GAME_DATE'].min().date()} to {
+            historical_df['GAME_DATE'].max().date()}"
 )
 print()
 print("Usage:")
-print("   1. Load model: production_model = pickle.load(open('models/production.pkl', 'rb'))")
+print(
+    "   1. Load model: production_model = pickle.load(open('models/production.pkl', 'rb'))"
+)  # noqa: E501
 print("   2. Get predictions from each model")
 print("   3. Average the 3 predictions")
 print()

@@ -3,18 +3,18 @@ Run improved NBA props model with opponent features and proper validation
 Simple script to test the improvements
 """
 
-import pandas as pd
-import numpy as np
+import logging
 import sys
 from pathlib import Path
-import logging
 
-# Add src to path
-sys.path.append(str(Path(__file__).parent.parent / 'src'))
+import numpy as np
+import pandas as pd
 
 from models.train_model import NBAPropsTrainer
-from features.opponent_features import OpponentFeatures
-from models.validation import NBATimeSeriesValidator
+
+# Add src to path
+sys.path.append(str(Path(__file__).parent.parent / "src"))
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ def load_sample_data():
     You'll need to implement actual data loading based on your file structure
     """
     # Example structure - adjust based on your actual data
-    data_path = Path("/Users/diyagamah/Documents/nba_props_model/data")
+    __data_path = Path("/Users/diyagamah/Documents/nba_props_model/data")  # noqa: F841
 
     # This is a placeholder - implement actual data loading
     # You need to:
@@ -53,22 +53,24 @@ def main():
 
     # For testing, create sample data structure
     # This shows the expected format
-    sample_df = pd.DataFrame({
-        'Player': ['Player1'] * 50 + ['Player2'] * 50,
-        'Date': pd.date_range('2024-01-01', periods=50).tolist() * 2,
-        'Season': ['2023-24'] * 100,
-        'Team': ['BOS'] * 50 + ['LAL'] * 50,
-        'Opponent': ['MIA', 'NYK', 'PHI', 'BKN', 'TOR'] * 20,
-        'Points': np.random.normal(20, 5, 100),
-        'Rebounds': np.random.normal(5, 2, 100),
-        'Assists': np.random.normal(5, 2, 100),
-        'Minutes': np.random.normal(30, 5, 100),
-        'Usage': np.random.normal(25, 5, 100),
-        'PSA': np.random.normal(110, 10, 100),
-        'AST%': np.random.normal(20, 5, 100),
-        'fgDR%': np.random.normal(15, 3, 100),
-        'fgOR%': np.random.normal(5, 2, 100),
-    })
+    sample_df = pd.DataFrame(
+        {
+            "Player": ["Player1"] * 50 + ["Player2"] * 50,
+            "Date": pd.date_range("2024 - 01 - 01", periods=50).tolist() * 2,
+            "Season": ["2023 - 24"] * 100,
+            "Team": ["BOS"] * 50 + ["LAL"] * 50,
+            "Opponent": ["MIA", "NYK", "PHI", "BKN", "TOR"] * 20,
+            "Points": np.random.normal(20, 5, 100),
+            "Rebounds": np.random.normal(5, 2, 100),
+            "Assists": np.random.normal(5, 2, 100),
+            "Minutes": np.random.normal(30, 5, 100),
+            "Usage": np.random.normal(25, 5, 100),
+            "PSA": np.random.normal(110, 10, 100),
+            "AST%": np.random.normal(20, 5, 100),
+            "fgDR%": np.random.normal(15, 3, 100),
+            "fgOR%": np.random.normal(5, 2, 100),
+        }
+    )
 
     logger.info(f"Data shape: {sample_df.shape}")
 
@@ -78,7 +80,7 @@ def main():
         logger.info(f"Prepared data shape: {df_prepared.shape}")
 
         # Train model
-        model_results = trainer.train_model(df_prepared, model_type='xgboost')
+        model_results = trainer.train_model(df_prepared, model_type="xgboost")
 
         # Print results
         logger.info("\n=== Model Training Complete ===")
@@ -86,15 +88,23 @@ def main():
         logger.info(f"Number of features: {len(model_results['features'])}")
 
         # Print validation metrics
-        val_results = model_results['validation_results']['overall']
-        logger.info(f"\nOverall Validation Metrics:")
-        logger.info(f"  MAE: {val_results['mae']:.2f} ± {val_results['mae_std']:.2f}")
-        logger.info(f"  RMSE: {val_results['rmse']:.2f} ± {val_results['rmse_std']:.2f}")
+        val_results = model_results["validation_results"]["overall"]
+        logger.info("\nOverall Validation Metrics:")
+        logger.info(
+            f"  MAE: {
+                val_results['mae']:.2f} ± {
+                val_results['mae_std']:.2f}"
+        )
+        logger.info(
+            f"  RMSE: {
+                val_results['rmse']:.2f} ± {
+                val_results['rmse_std']:.2f}"
+        )
         logger.info(f"  R²: {val_results['r2']:.3f}")
 
         # Print top features
-        logger.info(f"\nTop 10 Features:")
-        for _, row in model_results['feature_importance'].head(10).iterrows():
+        logger.info("\nTop 10 Features:")
+        for _, row in model_results["feature_importance"].head(10).iterrows():
             logger.info(f"  {row['feature']}: {row['importance']:.3f}")
 
         # Save model

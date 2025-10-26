@@ -4,9 +4,9 @@ CORRECTED Optimal Betting Strategy Analysis
 ============================================
 
 Re-analyzes betting strategy with CORRECT understanding:
-- Small edges (0-3 pts) have LOW win rates (~53%)
-- Medium edges (3-6 pts) have GOOD win rates (~61%)
-- Large edges (6+ pts) have GREAT win rates (~67-72%)
+- Small edges (0 - 3 pts) have LOW win rates (~53%)
+- Medium edges (3 - 6 pts) have GOOD win rates (~61%)
+- Large edges (6+ pts) have GREAT win rates (~67 - 72%)
 
 This finds the optimal balance between edge threshold and volume.
 
@@ -167,14 +167,21 @@ print("=" * 80)
 print()
 
 print(
-    f"{'Threshold':<12} {'Bets':<8} {'Win Rate':<12} {'Avg Edge':<12} {'ROI':<12} {'Profit':<15} {'Final $':<12}"
+    f"{
+        'Threshold':<12} {
+            'Bets':<8} {
+                'Win Rate':<12} {
+                    'Avg Edge':<12} {
+                        'ROI':<12} {
+                            'Profit':<15} {
+                                'Final $':<12}"
 )
 print("-" * 90)
 for _, row in results_df.iterrows():
     print(
         f"{row['edge_threshold']:>3.0f} pts     "
         f"{row['total_bets']:>5.0f}    "
-        f"{row['win_rate']*100:>5.1f}%       "
+        f"{row['win_rate'] * 100:>5.1f}%       "
         f"{row['avg_edge']:>5.1f} pts    "
         f"{row['roi']:>6.1f}%      "
         f"${row['total_profit']:>8,.0f}       "
@@ -198,12 +205,14 @@ best_profit = results_df.loc[best_profit_idx]
 print("1. MAXIMUM PROFIT:")
 print(f"   Edge threshold: {best_profit['edge_threshold']:.0f} pts")
 print(f"   Total bets: {best_profit['total_bets']:.0f}")
-print(f"   Win rate: {best_profit['win_rate']*100:.1f}%")
+print(f"   Win rate: {best_profit['win_rate'] * 100:.1f}%")
 print(f"   Average edge: {best_profit['avg_edge']:.1f} pts")
 print(f"   ROI on wagered: {best_profit['roi']:.1f}%")
 print(f"   Final bankroll: ${best_profit['final_bankroll']:,.0f}")
 print(
-    f"   Total profit: ${best_profit['total_profit']:,.0f} ({best_profit['roi_on_bankroll']:.1f}%)"
+    f"   Total profit: ${
+        best_profit['total_profit']:,.0f} ({
+            best_profit['roi_on_bankroll']:.1f}%)"
 )
 print()
 
@@ -214,11 +223,15 @@ best_roi = results_df.loc[best_roi_idx]
 print("2. MAXIMUM ROI:")
 print(f"   Edge threshold: {best_roi['edge_threshold']:.0f} pts")
 print(f"   Total bets: {best_roi['total_bets']:.0f}")
-print(f"   Win rate: {best_roi['win_rate']*100:.1f}%")
+print(f"   Win rate: {best_roi['win_rate'] * 100:.1f}%")
 print(f"   Average edge: {best_roi['avg_edge']:.1f} pts")
 print(f"   ROI on wagered: {best_roi['roi']:.1f}%")
 print(f"   Final bankroll: ${best_roi['final_bankroll']:,.0f}")
-print(f"   Total profit: ${best_roi['total_profit']:,.0f} ({best_roi['roi_on_bankroll']:.1f}%)")
+print(
+    f"   Total profit: ${
+        best_roi['total_profit']:,.0f} ({
+            best_roi['roi_on_bankroll']:.1f}%)"
+)
 print()
 
 # Best win rate (with minimum 50 bets)
@@ -231,12 +244,14 @@ if len(high_volume) > 0:
     print(f"3. HIGHEST WIN RATE (min {min_bets} bets):")
     print(f"   Edge threshold: {best_winrate['edge_threshold']:.0f} pts")
     print(f"   Total bets: {best_winrate['total_bets']:.0f}")
-    print(f"   Win rate: {best_winrate['win_rate']*100:.1f}%")
+    print(f"   Win rate: {best_winrate['win_rate'] * 100:.1f}%")
     print(f"   Average edge: {best_winrate['avg_edge']:.1f} pts")
     print(f"   ROI on wagered: {best_winrate['roi']:.1f}%")
     print(f"   Final bankroll: ${best_winrate['final_bankroll']:,.0f}")
     print(
-        f"   Total profit: ${best_winrate['total_profit']:,.0f} ({best_winrate['roi_on_bankroll']:.1f}%)"
+        f"   Total profit: ${
+            best_winrate['total_profit']:,.0f} ({
+            best_winrate['roi_on_bankroll']:.1f}%)"
     )
     print()
 
@@ -249,12 +264,14 @@ best_sharpe = results_df.loc[best_sharpe_idx]
 print("4. BEST RISK-ADJUSTED RETURN:")
 print(f"   Edge threshold: {best_sharpe['edge_threshold']:.0f} pts")
 print(f"   Total bets: {best_sharpe['total_bets']:.0f}")
-print(f"   Win rate: {best_sharpe['win_rate']*100:.1f}%")
+print(f"   Win rate: {best_sharpe['win_rate'] * 100:.1f}%")
 print(f"   Average edge: {best_sharpe['avg_edge']:.1f} pts")
 print(f"   ROI on wagered: {best_sharpe['roi']:.1f}%")
 print(f"   Final bankroll: ${best_sharpe['final_bankroll']:,.0f}")
 print(
-    f"   Total profit: ${best_sharpe['total_profit']:,.0f} ({best_sharpe['roi_on_bankroll']:.1f}%)"
+    f"   Total profit: ${
+        best_sharpe['total_profit']:,.0f} ({
+            best_sharpe['roi_on_bankroll']:.1f}%)"
 )
 print()
 
@@ -267,7 +284,7 @@ print("CORRECTED RECOMMENDATIONS")
 print("=" * 80)
 print()
 
-print("KEY INSIGHT: Small edges (0-3 pts) have only 53.6% win rate!")
+print("KEY INSIGHT: Small edges (0 - 3 pts) have only 53.6% win rate!")
 print("This is barely above the 52.4% breakeven at -110 odds.")
 print()
 
@@ -277,27 +294,39 @@ print()
 print("🥇 AGGRESSIVE (Maximum Profit):")
 print(f"   → Use {best_profit['edge_threshold']:.0f} pts threshold")
 print(
-    f"   → Expected: {best_profit['total_bets']:.0f} bets, {best_profit['win_rate']*100:.1f}% win rate, ${best_profit['total_profit']:,.0f} profit"
+    f"   → Expected: {
+        best_profit['total_bets']:.0f} bets, {
+            best_profit['win_rate'] *
+            100:.1f}% win rate, ${
+                best_profit['total_profit']:,.0f} profit"
 )
 print()
 
 print("🥈 CONSERVATIVE (High Win Rate):")
 print(f"   → Use {best_winrate['edge_threshold']:.0f} pts threshold")
 print(
-    f"   → Expected: {best_winrate['total_bets']:.0f} bets, {best_winrate['win_rate']*100:.1f}% win rate, ${best_winrate['total_profit']:,.0f} profit"
+    f"   → Expected: {
+        best_winrate['total_bets']:.0f} bets, {
+            best_winrate['win_rate'] *
+            100:.1f}% win rate, ${
+                best_winrate['total_profit']:,.0f} profit"
 )
 print()
 
 print("🥉 RISK-ADJUSTED (Best Sharpe):")
 print(f"   → Use {best_sharpe['edge_threshold']:.0f} pts threshold")
 print(
-    f"   → Expected: {best_sharpe['total_bets']:.0f} bets, {best_sharpe['win_rate']*100:.1f}% win rate, ${best_sharpe['total_profit']:,.0f} profit"
+    f"   → Expected: {
+        best_sharpe['total_bets']:.0f} bets, {
+            best_sharpe['win_rate'] *
+            100:.1f}% win rate, ${
+                best_sharpe['total_profit']:,.0f} profit"
 )
 print()
 
 print("Strategy Parameters (keep same):")
-print(f"  - Kelly fraction: {KELLY_FRACTION*100:.0f}%")
-print(f"  - Max bet: {MAX_BET_PCT*100:.0f}% of bankroll")
+print(f"  - Kelly fraction: {KELLY_FRACTION * 100:.0f}%")
+print(f"  - Max bet: {MAX_BET_PCT * 100:.0f}% of bankroll")
 print()
 
 # Save results
